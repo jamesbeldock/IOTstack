@@ -1,0 +1,1779 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Docker stack for getting started on IOT on the Raspberry PI">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.2">
+    
+    
+      
+        <title>Prometheus - IOTstack</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.816931ca.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.9204c3b2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>function __md_scope(e,t,_){return new URL(_||(t===localStorage?"../..":"../.."),location).pathname+"."+e}function __md_get(e,t=localStorage,_){return JSON.parse(t.getItem(__md_scope(e,t,_)))}function __md_set(e,t,_=localStorage,o){try{_.setItem(__md_scope(e,_,o),JSON.stringify(t))}catch(e){}}</script>
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#prometheus" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="IOTstack" class="md-header__button md-logo" aria-label="IOTstack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            IOTstack
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Prometheus
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SensorsIot/IOTstack/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="IOTstack" class="md-nav__button md-logo" aria-label="IOTstack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    IOTstack
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SensorsIot/IOTstack/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        IOTStack Wiki
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Accessing-your-Device-from-the-internet/" class="md-nav__link">
+        Accessing your device from the internet
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Backup-and-Restore/" class="md-nav__link">
+        Backing up and restoring IOTstack
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BuildStack-RandomPassword/" class="md-nav__link">
+        Build Stack Random Services Password
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BuildStack-Services/" class="md-nav__link">
+        Build Stack Services system
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Contributing-Services/" class="md-nav__link">
+        Contributing a service to IOTstack
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Custom/" class="md-nav__link">
+        Custom services and overriding default settings for IOTstack
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Default-Configs/" class="md-nav__link">
+        Build Stack Default Passwords for Services
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Docker-commands/" class="md-nav__link">
+        Docker commands
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Getting-Started/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Home/" class="md-nav__link">
+        Wiki
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How-the-script-works/" class="md-nav__link">
+        How the script works
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Menu-System/" class="md-nav__link">
+        Menu system
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Misc/" class="md-nav__link">
+        Miscellaneous
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Native-RTL_433/" class="md-nav__link">
+        Native RTL_433
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Networking/" class="md-nav__link">
+        Networking
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../New-Menu-Release-Notes/" class="md-nav__link">
+        New IOTstack Menu
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PostBuild-Script/" class="md-nav__link">
+        Postbuild BASH Script
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RPIEasy_native/" class="md-nav__link">
+        RPIEasy
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Understanding-Containers/" class="md-nav__link">
+        What is Docker?
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Updating-the-Project/" class="md-nav__link">
+        Updating the project
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gcgarner-migration/" class="md-nav__link">
+        Migrating from gcgarner to SensorsIot
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_23" type="checkbox" id="__nav_23" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_23">
+          Containers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Containers" data-md-level="1">
+        <label class="md-nav__title" for="__nav_23">
+          <span class="md-nav__icon md-icon"></span>
+          Containers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AdGuardHome/" class="md-nav__link">
+        AdGuard Home
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Adminer/" class="md-nav__link">
+        Adminer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Blynk_server/" class="md-nav__link">
+        Blynk server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chronograf/" class="md-nav__link">
+        Chronograf
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DashMachine/" class="md-nav__link">
+        DashMachine
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EspruinoHub/" class="md-nav__link">
+        Espruinohub
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Grafana/" class="md-nav__link">
+        Grafana
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Heimdall/" class="md-nav__link">
+        Heimdall
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Home-Assistant/" class="md-nav__link">
+        Home Assistant
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Homer/" class="md-nav__link">
+        Homer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InfluxDB/" class="md-nav__link">
+        InfluxDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Kapacitor/" class="md-nav__link">
+        Kapacitor
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MariaDB/" class="md-nav__link">
+        MariaDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Mosquitto/" class="md-nav__link">
+        Mosquitto
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MotionEye/" class="md-nav__link">
+        MotionEye
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NextCloud/" class="md-nav__link">
+        Nextcloud
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Node-RED/" class="md-nav__link">
+        Node-RED
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Octoprint/" class="md-nav__link">
+        OctoPrint – the snappy web interface for your 3D printer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Pi-hole/" class="md-nav__link">
+        Pi-hole
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Plex/" class="md-nav__link">
+        Plex
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Portainer-agent/" class="md-nav__link">
+        Portainer agent
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Portainer-ce/" class="md-nav__link">
+        Portainer CE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PostgreSQL/" class="md-nav__link">
+        PostgreSQL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Prometheus
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Prometheus
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+     References 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+     Overview 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#significant-directories-and-files" class="md-nav__link">
+     Significant directories and files 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-prometheus-gets-built-for-iotstack" class="md-nav__link">
+     How Prometheus gets built for IOTstack 
+  </a>
+  
+    <nav class="md-nav" aria-label=" How Prometheus gets built for IOTstack ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prometheus-source-code-github" class="md-nav__link">
+     Prometheus source code (GitHub) 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prometheus-images-dockerhub" class="md-nav__link">
+     Prometheus images (DockerHub) 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iotstack-menu" class="md-nav__link">
+     IOTstack menu 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iotstack-first-run" class="md-nav__link">
+     IOTstack first run 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencies-cadvisor-and-node-exporter" class="md-nav__link">
+     Dependencies: CAdvisor and Node Exporter 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-prometheus" class="md-nav__link">
+     Configuring Prometheus 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Configuring Prometheus ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration-directory" class="md-nav__link">
+     Configuration directory 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Configuration directory ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#active-configuration-file" class="md-nav__link">
+     Active configuration file 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reference-configuration-file" class="md-nav__link">
+     Reference configuration file 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+     Environment variables 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-considerations" class="md-nav__link">
+     Migration considerations 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrading-prometheus" class="md-nav__link">
+     Upgrading Prometheus 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Upgrading Prometheus ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prometheus-version-pinning" class="md-nav__link">
+     Prometheus version pinning 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Python/" class="md-nav__link">
+        Python
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RTL_433-docker/" class="md-nav__link">
+        RTL_433 Docker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TasmoAdmin/" class="md-nav__link">
+        TasmoAdmin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Telegraf/" class="md-nav__link">
+        Telegraf
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WireGuard/" class="md-nav__link">
+        WireGuard
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zigbee2MQTT/" class="md-nav__link">
+        Zigbee2MQTT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zigbee2mqttassistant/" class="md-nav__link">
+        Zigbee2Mqtt Assistant
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deconz/" class="md-nav__link">
+        deCONZ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diyHue/" class="md-nav__link">
+        DIY hue
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openHAB/" class="md-nav__link">
+        openHAB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../x2go/" class="md-nav__link">
+        x2go
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+     References 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+     Overview 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#significant-directories-and-files" class="md-nav__link">
+     Significant directories and files 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-prometheus-gets-built-for-iotstack" class="md-nav__link">
+     How Prometheus gets built for IOTstack 
+  </a>
+  
+    <nav class="md-nav" aria-label=" How Prometheus gets built for IOTstack ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prometheus-source-code-github" class="md-nav__link">
+     Prometheus source code (GitHub) 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prometheus-images-dockerhub" class="md-nav__link">
+     Prometheus images (DockerHub) 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iotstack-menu" class="md-nav__link">
+     IOTstack menu 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iotstack-first-run" class="md-nav__link">
+     IOTstack first run 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependencies-cadvisor-and-node-exporter" class="md-nav__link">
+     Dependencies: CAdvisor and Node Exporter 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuring-prometheus" class="md-nav__link">
+     Configuring Prometheus 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Configuring Prometheus ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration-directory" class="md-nav__link">
+     Configuration directory 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Configuration directory ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#active-configuration-file" class="md-nav__link">
+     Active configuration file 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reference-configuration-file" class="md-nav__link">
+     Reference configuration file 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+     Environment variables 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-considerations" class="md-nav__link">
+     Migration considerations 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrading-prometheus" class="md-nav__link">
+     Upgrading Prometheus 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Upgrading Prometheus ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prometheus-version-pinning" class="md-nav__link">
+     Prometheus version pinning 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/SensorsIot/IOTstack/edit/master/docs/Containers/Prometheus.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<h1 id="prometheus">Prometheus</h1>
+<ul>
+<li><a href="#references">References</a></li>
+<li><a href="#significantFiles">Significant directories and files</a></li>
+<li><a href="#howPrometheusIOTstackGetsBuilt">How Prometheus gets built for IOTstack</a><ul>
+<li><a href="#githubSourceCode">Prometheus source code</a></li>
+<li><a href="#dockerHubImages">Prometheus images</a></li>
+<li><a href="#iotstackMenu">IOTstack menu</a></li>
+<li><a href="#iotstackFirstRun">IOTstack first run</a></li>
+<li><a href="#dependencies">Dependencies: <em>CAdvisor</em> and <em>Node Exporter</em></a></li>
+</ul>
+</li>
+<li><a href="#configuringPrometheus">Configuring Prometheus</a><ul>
+<li><a href="#configDir">Configuration directory</a><ul>
+<li><a href="#activeConfig">Active configuration file</a></li>
+<li><a href="#referenceConfig">Reference configuration file</a></li>
+</ul>
+</li>
+<li><a href="#environmentVars">Environment variables</a></li>
+<li><a href="#migration">Migration considerations</a></li>
+</ul>
+</li>
+<li><a href="#upgradingPrometheus">Upgrading Prometheus</a><ul>
+<li><a href="#versionPinning">Prometheus version pinning</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+
+<h2 id="references"><a name="references"> References </a></h2>
+<ul>
+<li><a href="https://prometheus.io"><em>Prometheus</em> home</a></li>
+<li>
+<p><em>GitHub</em>:</p>
+<ul>
+<li><a href="https://github.com/prometheus/prometheus"><em>Prometheus</em></a></li>
+<li><a href="https://github.com/google/cadvisor"><em>CAdvisor</em></a></li>
+<li><a href="https://github.com/prometheus/node_exporter"><em>Node Exporter</em></a></li>
+</ul>
+</li>
+<li>
+<p><em>DockerHub</em>:</p>
+<ul>
+<li><a href="https://hub.docker.com/r/prom/prometheus"><em>Prometheus</em></a></li>
+<li><a href="https://hub.docker.com/r/zcube/cadvisor"><em>CAdvisor</em></a></li>
+<li><a href="https://hub.docker.com/r/prom/node-exporter"><em>Node Exporter</em></a></li>
+</ul>
+</li>
+</ul>
+<h2 id="overview"><a name="overview"> Overview </a></h2>
+<p>Three containers are installed when you select <em>Prometheus</em> in the IOTstack menu:</p>
+<ul>
+<li><em>Prometheus</em></li>
+<li><em>CAdvisor</em></li>
+<li><em>Node Exporter</em></li>
+</ul>
+<p>The <a href="#activeConfig">default configuration</a> for <em>Prometheus</em> supplied with IOTstack scrapes information from all three containers.</p>
+<h2 id="significant-directories-and-files"><a name="significantFiles"> Significant directories and files </a></h2>
+<div class="highlight"><pre><span></span><code>~/IOTstack
+├── .templates
+│   └── prometheus
+│       ├── service.yml ❶
+│       ├── Dockerfile ❷
+│       ├── docker-entrypoint.sh ❸
+│       └── iotstack_defaults ❹
+│           └── config.yml
+├── services
+│   └── prometheus
+│       └── service.yml ❺
+├── docker-compose.yml ❻
+└── volumes
+    └── prometheus ❼
+        └── data
+            ├── config ❽
+            │   ├── config.yml
+            │   └── prometheus.yml
+            └── data
+</code></pre></div>
+<ol>
+<li>The <em>template service definition</em>.</li>
+<li>The <em>Dockerfile</em> used to customise <em>Prometheus</em> for IOTstack.</li>
+<li>A pre-launch script to handle container self-repair before launching the <em>Prometheus</em> service.</li>
+<li>Defaults for IOTstack, used to initialise on first run, and for container self-repair.</li>
+<li>The <em>working service definition</em> (only relevant to old-menu, copied from ❶).</li>
+<li>The <em>Compose</em> file (includes ❶).</li>
+<li>The <em>persistent storage area</em>.</li>
+<li>The <a href="#configDir">configuration directory</a>.</li>
+</ol>
+<h2 id="how-prometheus-gets-built-for-iotstack"><a name="howPrometheusIOTstackGetsBuilt"> How <em>Prometheus</em> gets built for IOTstack </a></h2>
+<h3 id="prometheus-source-code-github"><a name="githubSourceCode"> <em>Prometheus</em> source code (<a href="https://github.com"><em>GitHub</em></a>) </a></h3>
+<p>The source code for <em>Prometheus</em> lives at <a href="https://github.com/prometheus/prometheus"><em>GitHub</em> prometheus/prometheus</a>.</p>
+<h3 id="prometheus-images-dockerhub"><a name="dockerHubImages"> <em>Prometheus</em> images (<a href="https://hub.docker.com"><em>DockerHub</em></a>) </a></h3>
+<p>Periodically, the source code is recompiled and the resulting image is pushed to <a href="https://hub.docker.com/r/prom/prometheus">prom/prometheus</a> on <em>DockerHub</em>.</p>
+<h3 id="iotstack-menu"><a name="iotstackMenu"> IOTstack menu </a></h3>
+<p>When you select <em>Prometheus</em> in the IOTstack menu, the <em>template service definition</em> is copied into the <em>Compose</em> file.</p>
+<blockquote>
+<p>Under old menu, it is also copied to the <em>working service definition</em> and then not really used.</p>
+</blockquote>
+<h3 id="iotstack-first-run"><a name="iotstackFirstRun"> IOTstack first run </a></h3>
+<p>On a first install of IOTstack, you run the menu, choose <em>Prometheus</em> as one of your containers, and are told to do this:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ docker-compose up -d
+</code></pre></div>
+<p><code>docker-compose</code> reads the <em>Compose</em> file. When it arrives at the <code>prometheus</code> fragment, it finds:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">prometheus</span><span class="p">:</span>
+  <span class="nt">container_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">prometheus</span>
+  <span class="nt">build</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./.templates/prometheus/.</span>
+</code></pre></div>
+<p>The <code>build</code> statement tells <code>docker-compose</code> to look for:</p>
+<div class="highlight"><pre><span></span><code>~/IOTstack/.templates/prometheus/Dockerfile
+</code></pre></div>
+<blockquote>
+<p>The <em>Dockerfile</em> is in the <code>.templates</code> directory because it is intended to be a common build for <strong>all</strong> IOTstack users. This is different to the arrangement for Node-RED where the <em>Dockerfile</em> is in the <code>services</code> directory because it is how each individual IOTstack user's version of Node-RED is customised.</p>
+</blockquote>
+<p>The <em>Dockerfile</em> begins with:</p>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span> <span class="s">prom/prometheus:latest</span>
+</code></pre></div>
+<blockquote>
+<p>If you need to pin to a particular version of <em>Prometheus</em>, the <em>Dockerfile</em> is the place to do it. See <a href="#versionPinning"><em>Prometheus</em> version pinning</a>.</p>
+</blockquote>
+<p>The <code>FROM</code> statement tells the build process to pull down the <strong><em>base image</em></strong> from <a href="https://hub.docker.com"><em>DockerHub</em></a>.</p>
+<blockquote>
+<p>It is a <strong><em>base</em></strong> image in the sense that it never actually runs as a container on your Raspberry Pi.</p>
+</blockquote>
+<p>The remaining instructions in the <em>Dockerfile</em> customise the <em>base image</em> to produce a <strong><em>local image</em></strong>. The customisations are:</p>
+<ol>
+<li>Add configuration defaults appropriate for IOTstack.</li>
+<li>
+<p>Add <code>docker-entrypoint.sh</code> which:</p>
+<ul>
+<li>Ensures the <em>internal</em> directory <code>/prometheus/config/</code> exists;</li>
+<li>Copies any configuration files that have gone missing into that directory.</li>
+<li>Enforces "pi:pi" ownership in <code>~/IOTstack/volumes/prometheus/data/config</code>.</li>
+<li>Launches the <em>Prometheus</em> service.</li>
+</ul>
+</li>
+</ol>
+<p>The <em>local image</em> is instantiated to become your running container.</p>
+<p>When you run the <code>docker images</code> command after <em>Prometheus</em> has been built, you will see two rows for <em>Prometheus</em>:</p>
+<div class="highlight"><pre><span></span><code>$ docker images
+REPOSITORY           TAG         IMAGE ID       CREATED          SIZE
+iotstack_prometheus  latest      1815f63da5f0   <span class="m">23</span> minutes ago   169MB
+prom/prometheus      latest      3f9575991a6c   <span class="m">3</span> days ago       169MB
+</code></pre></div>
+<ul>
+<li><code>prom/prometheus</code> is the <em>base image</em>; and</li>
+<li><code>iotstack_prometheus</code>  is the <em>local image</em>.</li>
+</ul>
+<p>You will see the same pattern in Portainer, which reports the <em>base image</em> as "unused". You should not remove the <em>base</em> image, even though it appears to be unused.</p>
+<h3 id="dependencies-cadvisor-and-node-exporter"><a name="dependencies"> Dependencies: <em>CAdvisor</em> and <em>Node Exporter</em> </a></h3>
+<p>The <em>CAdvisor</em> and <em>Node Exporter</em> are included in the <em>Prometheus</em> service definition as dependent containers. What that means is that each time you start <em>Prometheus</em>, <code>docker-compose</code> ensures that <em>CAdvisor</em> and <em>Node Exporter</em> are already running, and keeps them running.</p>
+<p>The <a href="#activeConfig">default configuration</a> for <em>Prometheus</em> assumes <em>CAdvisor</em> and <em>Node Exporter</em> are running and starts scraping information from those targets as soon as it launches.</p>
+<h2 id="configuring-prometheus"><a name="configuringPrometheus"> Configuring <strong>Prometheus</strong> </a></h2>
+<h3 id="configuration-directory"><a name="configDir"> Configuration directory </a></h3>
+<p>The configuration directory for the IOTstack implementation of <em>Prometheus</em> is at the path:</p>
+<div class="highlight"><pre><span></span><code>~/IOTstack/volumes/prometheus/data/config
+</code></pre></div>
+<p>That directory contains two files:</p>
+<ul>
+<li><code>config.yml</code>; and</li>
+<li><code>prometheus.yml</code>.</li>
+</ul>
+<p>If you delete either file, <em>Prometheus</em> will replace it with a default the next time the container starts. This "self-repair" function is intended to provide reasonable assurance that <em>Prometheus</em> will at least <strong>start</strong> instead of going into a restart loop.</p>
+<p>Unless you <a href="#environmentVars">decide to change it</a>, the <code>config</code> folder and its contents are owned by "pi:pi". This means you can edit the files in the configuration directory without needing the <code>sudo</code> command. Ownership is enforced each time the container restarts.</p>
+<h4 id="active-configuration-file"><a name="activeConfig"> Active configuration file </a></h4>
+<p>The file named <code>config.yml</code> is the active configuration. This is the file you should edit if you want to make changes. The default structure of the file is:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">global</span><span class="p">:</span>
+  <span class="nt">scrape_interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10s</span>
+  <span class="nt">evaluation_interval</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10s</span>
+
+<span class="nt">scrape_configs</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="nt">job_name</span><span class="p">:</span> <span class="s">&quot;iotstack&quot;</span>
+    <span class="nt">static_configs</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="nt">targets</span><span class="p">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">localhost:9090</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">cadvisor:8080</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">nodeexporter:9100</span>
+</code></pre></div>
+<p>To cause a running instance of <em>Prometheus</em> to notice a change to this file:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ docker-compose restart prometheus
+$ docker logs prometheus
+</code></pre></div>
+<p>Note:</p>
+<ul>
+<li>The YAML parser used by <em>Prometheus</em> seems to be <strong><em>exceptionally</em></strong> sensitive to syntax errors (far less tolerant than <code>docker-compose</code>). For this reason, you should <strong>always</strong> check the <em>Prometheus</em> log after any configuration change.</li>
+</ul>
+<h4 id="reference-configuration-file"><a name="referenceConfig"> Reference configuration file </a></h4>
+<p>The file named <code>prometheus.yml</code> is a reference configuration. It is a <strong>copy</strong> of the original configuration file that ships inside the <em>Prometheus</em> container at the path:</p>
+<div class="highlight"><pre><span></span><code>/etc/prometheus/prometheus.yml
+</code></pre></div>
+<p>Editing <code>prometheus.yml</code> has no effect. It is provided as a convenience to help you follow examples on the web. If you want to make the contents of <code>prometheus.yml</code> the active configuration, you need to do this:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack/volumes/prometheus/data/config
+$ cp prometheus.yml config.yml
+$ <span class="nb">cd</span> ~/IOTstack
+$ docker-compose restart prometheus
+$ docker logs prometheus
+</code></pre></div>
+<h3 id="environment-variables"><a name="environmentVars"> Environment variables </a></h3>
+<p>The IOTstack implementation of <em>Prometheus</em> supports two environment variables:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">environment</span><span class="p">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">IOTSTACK_UID=1000</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">IOTSTACK_GID=1000</span>
+</code></pre></div>
+<p>Those variables control ownership of the <a href="#configDir">Configuration directory</a> and its contents. Those environment variables are present in the standard IOTstack service definition for <em>Prometheus</em> and have the effect of assigning ownership to "pi:pi".</p>
+<p>If you delete those environment variables from your <em>Compose</em> file, the <a href="#configDir">Configuration directory</a> will be owned by "nobody:nobody"; otherwise the directory and its contents will be owned by whatever values you pass for those variables.</p>
+<h3 id="migration-considerations"><a name="migration"> Migration considerations </a></h3>
+<p>Under the original IOTstack implementation of <em>Prometheus</em> (just "as it comes" from <em>DockerHub</em>), the service definition expected the configuration file to be at:</p>
+<div class="highlight"><pre><span></span><code>~/IOTstack/services/prometheus/config.yml
+</code></pre></div>
+<p>Under this implementation of <em>Prometheus</em>, the configuration file has moved to:</p>
+<div class="highlight"><pre><span></span><code>~/IOTstack/volumes/prometheus/data/config/config.yml
+</code></pre></div>
+<blockquote>
+<p>The change of location is one of the things that allows self-repair to work properly. </p>
+</blockquote>
+<p>Some of the assumptions behind the default configuration file have changed. In particular, instead of the entire <code>scrape_configs</code> block being commented-out, it is active and defines <code>localhost</code>, <code>cadvisor</code> and <code>nodeexporter</code> as targets.</p>
+<p>You should compare the old and new versions and decide which settings need to be migrated into the new configuration file.</p>
+<p>If you change the configuration file, restart <em>Prometheus</em> and then check the log for errors:</p>
+<div class="highlight"><pre><span></span><code>$ docker-compose restart prometheus
+$ docker logs prometheus
+</code></pre></div>
+<p>Note:</p>
+<ul>
+<li>The YAML parser used by <em>Prometheus</em> is very sensitive to syntax errors. Always check the <em>Prometheus</em> log after any configuration change.</li>
+</ul>
+<h2 id="upgrading-prometheus"><a name="upgradingPrometheus"> Upgrading <em>Prometheus</em> </a></h2>
+<p>You can update most containers like this:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ docker-compose pull
+$ docker-compose up -d
+$ docker system prune
+</code></pre></div>
+<p>In words:</p>
+<ul>
+<li><code>docker-compose pull</code> downloads any newer images;</li>
+<li><code>docker-compose up -d</code> causes any newly-downloaded images to be instantiated as containers (replacing the old containers); and</li>
+<li>the <code>prune</code> gets rid of the outdated images.</li>
+</ul>
+<p>The auxiliary containers <code>cadvisor</code> and <code>nodeexporter</code> are updated via this method.</p>
+<p>This "simple pull" strategy doesn't work when a <em>Dockerfile</em> is used to build a <em>local image</em> on top of a <em>base image</em> downloaded from <a href="https://hub.docker.com"><em>DockerHub</em></a>. The <em>local image</em> is what is running so there is no way for the <code>pull</code> to sense when a newer version becomes available.</p>
+<p>The only way to know when an update to <em>Prometheus</em> is available is to check the <a href="https://hub.docker.com/r/prom/prometheus/tags?page=1&amp;ordering=last_updated">prom/prometheus tags page</a> on <em>DockerHub</em>.</p>
+<p>Once a new version appears on <em>DockerHub</em>, you can upgrade <em>Prometheus</em> like this:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ docker-compose build --no-cache --pull prometheus
+$ docker-compose up -d prometheus
+$ docker system prune
+$ docker system prune
+</code></pre></div>
+<p>Breaking it down into parts:</p>
+<ul>
+<li><code>build</code> causes the named container to be rebuilt;</li>
+<li><code>--no-cache</code> tells the <em>Dockerfile</em> process that it must not take any shortcuts. It really <strong>must</strong> rebuild the <em>local image</em>;</li>
+<li><code>--pull</code> tells the <em>Dockerfile</em> process to actually check with <a href="https://hub.docker.com"><em>DockerHub</em></a> to see if there is a later version of the <em>base image</em> and, if so, to download it before starting the build;</li>
+<li><code>prometheus</code> is the named container argument required by the <code>build</code> command.</li>
+</ul>
+<p>Your existing <em>Prometheus</em> container continues to run while the rebuild proceeds. Once the freshly-built <em>local image</em> is ready, the <code>up</code> tells <code>docker-compose</code> to do a new-for-old swap. There is barely any downtime for your service.</p>
+<p>The <code>prune</code> is the simplest way of cleaning up. The first call removes the old <em>local image</em>. The second call cleans up the old <em>base image</em>.</p>
+<h3 id="prometheus-version-pinning"><a name="versionPinning"> <em>Prometheus</em> version pinning </a></h3>
+<p>If you need to pin <em>Prometheus</em> to a particular version:</p>
+<ol>
+<li>
+<p>Use your favourite text editor to open the following file:</p>
+<div class="highlight"><pre><span></span><code>~/IOTstack/.templates/prometheus/Dockerfile
+</code></pre></div>
+</li>
+<li>
+<p>Find the line:</p>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span> <span class="s">prom/prometheus:latest</span>
+</code></pre></div>
+</li>
+<li>
+<p>Replace <code>latest</code> with the version you wish to pin to. For example, to pin to version 2.30.2:</p>
+<div class="highlight"><pre><span></span><code><span class="k">FROM</span> <span class="s">prom/prometheus:2.30.2</span>
+</code></pre></div>
+</li>
+<li>
+<p>Save the file and tell <code>docker-compose</code> to rebuild the local image:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ docker-compose up -d --build prometheus
+$ docker system prune
+</code></pre></div>
+<p>The new <em>local image</em> is built, then the new container is instantiated based on that image. The <code>prune</code> deletes the old <em>local image</em>.</p>
+</li>
+</ol>
+<p>Note:</p>
+<ul>
+<li>As well as preventing Docker from updating the <em>base image</em>, pinning will also block incoming updates to the <em>Dockerfile</em> from a <code>git pull</code>. Nothing will change until you decide to remove the pin.</li>
+</ul>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../PostgreSQL/" class="md-footer__link md-footer__link--prev" aria-label="Previous: PostgreSQL" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              PostgreSQL
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../Python/" class="md-footer__link md-footer__link--next" aria-label="Next: Python" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Python
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.01824240.min.js"}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.ff0eccb3.min.js"></script>
+      
+    
+  </body>
+</html>

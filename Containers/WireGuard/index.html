@@ -1,0 +1,2080 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Docker stack for getting started on IOT on the Raspberry PI">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.2">
+    
+    
+      
+        <title>WireGuard - IOTstack</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.816931ca.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.9204c3b2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>function __md_scope(e,t,_){return new URL(_||(t===localStorage?"../..":"../.."),location).pathname+"."+e}function __md_get(e,t=localStorage,_){return JSON.parse(t.getItem(__md_scope(e,t,_)))}function __md_set(e,t,_=localStorage,o){try{_.setItem(__md_scope(e,_,o),JSON.stringify(t))}catch(e){}}</script>
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#wireguard" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="IOTstack" class="md-header__button md-logo" aria-label="IOTstack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            IOTstack
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              WireGuard
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SensorsIot/IOTstack/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="IOTstack" class="md-nav__button md-logo" aria-label="IOTstack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    IOTstack
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SensorsIot/IOTstack/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        IOTStack Wiki
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Accessing-your-Device-from-the-internet/" class="md-nav__link">
+        Accessing your device from the internet
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Backup-and-Restore/" class="md-nav__link">
+        Backing up and restoring IOTstack
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BuildStack-RandomPassword/" class="md-nav__link">
+        Build Stack Random Services Password
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BuildStack-Services/" class="md-nav__link">
+        Build Stack Services system
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Contributing-Services/" class="md-nav__link">
+        Contributing a service to IOTstack
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Custom/" class="md-nav__link">
+        Custom services and overriding default settings for IOTstack
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Default-Configs/" class="md-nav__link">
+        Build Stack Default Passwords for Services
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Docker-commands/" class="md-nav__link">
+        Docker commands
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Getting-Started/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Home/" class="md-nav__link">
+        Wiki
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How-the-script-works/" class="md-nav__link">
+        How the script works
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Menu-System/" class="md-nav__link">
+        Menu system
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Misc/" class="md-nav__link">
+        Miscellaneous
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Native-RTL_433/" class="md-nav__link">
+        Native RTL_433
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Networking/" class="md-nav__link">
+        Networking
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../New-Menu-Release-Notes/" class="md-nav__link">
+        New IOTstack Menu
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PostBuild-Script/" class="md-nav__link">
+        Postbuild BASH Script
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RPIEasy_native/" class="md-nav__link">
+        RPIEasy
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Understanding-Containers/" class="md-nav__link">
+        What is Docker?
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Updating-the-Project/" class="md-nav__link">
+        Updating the project
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gcgarner-migration/" class="md-nav__link">
+        Migrating from gcgarner to SensorsIot
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_23" type="checkbox" id="__nav_23" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_23">
+          Containers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Containers" data-md-level="1">
+        <label class="md-nav__title" for="__nav_23">
+          <span class="md-nav__icon md-icon"></span>
+          Containers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AdGuardHome/" class="md-nav__link">
+        AdGuard Home
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Adminer/" class="md-nav__link">
+        Adminer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Blynk_server/" class="md-nav__link">
+        Blynk server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chronograf/" class="md-nav__link">
+        Chronograf
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DashMachine/" class="md-nav__link">
+        DashMachine
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EspruinoHub/" class="md-nav__link">
+        Espruinohub
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Grafana/" class="md-nav__link">
+        Grafana
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Heimdall/" class="md-nav__link">
+        Heimdall
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Home-Assistant/" class="md-nav__link">
+        Home Assistant
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Homer/" class="md-nav__link">
+        Homer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InfluxDB/" class="md-nav__link">
+        InfluxDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Kapacitor/" class="md-nav__link">
+        Kapacitor
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MariaDB/" class="md-nav__link">
+        MariaDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Mosquitto/" class="md-nav__link">
+        Mosquitto
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MotionEye/" class="md-nav__link">
+        MotionEye
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NextCloud/" class="md-nav__link">
+        Nextcloud
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Node-RED/" class="md-nav__link">
+        Node-RED
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Octoprint/" class="md-nav__link">
+        OctoPrint – the snappy web interface for your 3D printer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Pi-hole/" class="md-nav__link">
+        Pi-hole
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Plex/" class="md-nav__link">
+        Plex
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Portainer-agent/" class="md-nav__link">
+        Portainer agent
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Portainer-ce/" class="md-nav__link">
+        Portainer CE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PostgreSQL/" class="md-nav__link">
+        PostgreSQL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Prometheus/" class="md-nav__link">
+        Prometheus
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Python/" class="md-nav__link">
+        Python
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RTL_433-docker/" class="md-nav__link">
+        RTL_433 Docker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TasmoAdmin/" class="md-nav__link">
+        TasmoAdmin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Telegraf/" class="md-nav__link">
+        Telegraf
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          WireGuard
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        WireGuard
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installing-wireguard-under-iotstack" class="md-nav__link">
+     Installing WireGuard under IOTstack 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Installing WireGuard under IOTstack ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-update-your-raspberry-pi-os" class="md-nav__link">
+     Step 1: Update your Raspberry Pi OS 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-set-up-a-dynamic-dns-name" class="md-nav__link">
+     Step 2: Set up a Dynamic DNS name 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-understand-the-service-definition" class="md-nav__link">
+     Step 3: Understand the Service Definition 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-decide-what-to-configure" class="md-nav__link">
+     Step 4: Decide what to configure 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Step 4: Decide what to configure ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fields-that-you-should-always-configure" class="md-nav__link">
+    Fields that you should always configure 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-configuration-dns-resolution-for-peers" class="md-nav__link">
+     Optional configuration - DNS resolution for peers 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-configuration-wireguard-ports" class="md-nav__link">
+     Optional configuration - WireGuard ports 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-configure-wireguard" class="md-nav__link">
+     Step 5: Configure WireGuard 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Step 5: Configure WireGuard ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#method-1-configure-wireguard-by-editing-docker-composeyml" class="md-nav__link">
+     Method 1: Configure WireGuard by editing docker-compose.yml 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-2-configure-wireguard-using-compose-overrideyml" class="md-nav__link">
+     Method 2: Configure WireGuard using compose-override.yml 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-start-wireguard" class="md-nav__link">
+     Step 6: Start WireGuard 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7-save-your-wireguard-client-configuration-files-qr-codes" class="md-nav__link">
+     Step 7: Save your WireGuard client configuration files (QR codes) 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-8-configure-your-router-with-a-nat-rule" class="md-nav__link">
+     Step 8: Configure your router with a NAT rule 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-9-configure-your-remote-wireguard-clients" class="md-nav__link">
+     Step 9: Configure your remote WireGuard clients 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-wireguards-port-numbers" class="md-nav__link">
+     Understanding WireGuard's port numbers 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debugging-techniques" class="md-nav__link">
+     Debugging techniques 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Debugging techniques ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#monitor-wireguard-traffic-between-your-router-and-your-raspberry-pi" class="md-nav__link">
+     Monitor WireGuard traffic between your router and your Raspberry Pi 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitor-wireguard-traffic-between-your-raspberry-pi-and-the-wireguard-container" class="md-nav__link">
+     Monitor WireGuard traffic between your Raspberry Pi and the WireGuard container 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is-docker-listening-on-the-raspberry-pis-external-port" class="md-nav__link">
+     Is Docker listening on the Raspberry Pi's «external» port? 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is-your-router-listening-on-the-public-port" class="md-nav__link">
+     Is your router listening on the «public» port? 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-read-only-flag" class="md-nav__link">
+     The read-only flag 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updating-wireguard" class="md-nav__link">
+     Updating WireGuard 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-a-clean-slate" class="md-nav__link">
+     Getting a clean slate 
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zigbee2MQTT/" class="md-nav__link">
+        Zigbee2MQTT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zigbee2mqttassistant/" class="md-nav__link">
+        Zigbee2Mqtt Assistant
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deconz/" class="md-nav__link">
+        deCONZ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diyHue/" class="md-nav__link">
+        DIY hue
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openHAB/" class="md-nav__link">
+        openHAB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../x2go/" class="md-nav__link">
+        x2go
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installing-wireguard-under-iotstack" class="md-nav__link">
+     Installing WireGuard under IOTstack 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Installing WireGuard under IOTstack ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-update-your-raspberry-pi-os" class="md-nav__link">
+     Step 1: Update your Raspberry Pi OS 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-set-up-a-dynamic-dns-name" class="md-nav__link">
+     Step 2: Set up a Dynamic DNS name 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-understand-the-service-definition" class="md-nav__link">
+     Step 3: Understand the Service Definition 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-decide-what-to-configure" class="md-nav__link">
+     Step 4: Decide what to configure 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Step 4: Decide what to configure ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fields-that-you-should-always-configure" class="md-nav__link">
+    Fields that you should always configure 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-configuration-dns-resolution-for-peers" class="md-nav__link">
+     Optional configuration - DNS resolution for peers 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-configuration-wireguard-ports" class="md-nav__link">
+     Optional configuration - WireGuard ports 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-configure-wireguard" class="md-nav__link">
+     Step 5: Configure WireGuard 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Step 5: Configure WireGuard ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#method-1-configure-wireguard-by-editing-docker-composeyml" class="md-nav__link">
+     Method 1: Configure WireGuard by editing docker-compose.yml 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#method-2-configure-wireguard-using-compose-overrideyml" class="md-nav__link">
+     Method 2: Configure WireGuard using compose-override.yml 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-start-wireguard" class="md-nav__link">
+     Step 6: Start WireGuard 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7-save-your-wireguard-client-configuration-files-qr-codes" class="md-nav__link">
+     Step 7: Save your WireGuard client configuration files (QR codes) 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-8-configure-your-router-with-a-nat-rule" class="md-nav__link">
+     Step 8: Configure your router with a NAT rule 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-9-configure-your-remote-wireguard-clients" class="md-nav__link">
+     Step 9: Configure your remote WireGuard clients 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-wireguards-port-numbers" class="md-nav__link">
+     Understanding WireGuard's port numbers 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debugging-techniques" class="md-nav__link">
+     Debugging techniques 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Debugging techniques ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#monitor-wireguard-traffic-between-your-router-and-your-raspberry-pi" class="md-nav__link">
+     Monitor WireGuard traffic between your router and your Raspberry Pi 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitor-wireguard-traffic-between-your-raspberry-pi-and-the-wireguard-container" class="md-nav__link">
+     Monitor WireGuard traffic between your Raspberry Pi and the WireGuard container 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is-docker-listening-on-the-raspberry-pis-external-port" class="md-nav__link">
+     Is Docker listening on the Raspberry Pi's «external» port? 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is-your-router-listening-on-the-public-port" class="md-nav__link">
+     Is your router listening on the «public» port? 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-read-only-flag" class="md-nav__link">
+     The read-only flag 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updating-wireguard" class="md-nav__link">
+     Updating WireGuard 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-a-clean-slate" class="md-nav__link">
+     Getting a clean slate 
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/SensorsIot/IOTstack/edit/master/docs/Containers/WireGuard.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<h1 id="wireguard">WireGuard</h1>
+<p>WireGuard is a fast, modern, secure Virtual Private Network (VPN) tunnel. It can securely connect you to your home network, allowing you to access your home network's local services from anywhere. It can also secure your traffic when using public internet connections.</p>
+<p>Reference:</p>
+<ul>
+<li><a href="https://www.wireguard.com">WireGuard home page</a></li>
+</ul>
+<p>Assumptions:</p>
+<ul>
+<li>These instructions assume that you have privileges to configure your network's gateway (router). If you are not able to make changes to your network's firewall settings, then you will not be able to finish this setup.</li>
+<li>In common with most VPN technologies, WireGuard assumes that the WAN side of your network's gateway has a public IP address which is reachable directly. WireGuard may not work if that assumption does not hold. If you strike this problem, you have to take it up with your ISP.</li>
+</ul>
+<h2 id="installing-wireguard-under-iotstack"><a name="installWireguard"> Installing WireGuard under IOTstack </a></h2>
+<p>You increase your chances of a trouble-free installation by performing the installation steps in the following order.</p>
+<h3 id="step-1-update-your-raspberry-pi-os"><a name="updateRaspbian"> Step 1: Update your Raspberry Pi OS </a></h3>
+<p>To be able to run WireGuard successfully, your Raspberry Pi needs to be <strong>fully</strong> up-to-date. If you want to understand why, see <a href="#readOnlyFlag">the read only flag</a>.</p>
+<div class="highlight"><pre><span></span><code>$ sudo apt update
+$ sudo apt upgrade -y
+</code></pre></div>
+<h3 id="step-2-set-up-a-dynamic-dns-name"><a name="obtainDDNS"> Step 2: Set up a Dynamic DNS name </a></h3>
+<p>Before you can use WireGuard (or any VPN solution), you need a mechanism for your remote clients to reach your home router. You have two choices:</p>
+<ol>
+<li>Obtain a permanent IP address for your home router from your Internet Service Provider (ISP). Approach your ISP if you wish to pursue this option. It generally involves additional charges.</li>
+<li>Use a Dynamic DNS service. See IOTstack documentation <a href="https://sensorsiot.github.io/IOTstack/Accessing-your-Device-from-the-internet.html">Accessing your device from the internet</a>. The rest of this documentation assumes you have chosen this option.</li>
+</ol>
+<h3 id="step-3-understand-the-service-definition"><a name="serviceDefinition"> Step 3: Understand the Service Definition </a></h3>
+<p>This is the service definition <em>template</em> that IOTstack uses for WireGuard:</p>
+<div class="highlight"><pre><span></span><code>  wireguard:
+    container_name: wireguard
+    image: ghcr.io/linuxserver/wireguard
+    restart: unless-stopped
+    environment:
+    - PUID=1000
+    - PGID=1000
+    - TZ=Etc/UTC
+    - SERVERURL=your.dynamic.dns.name
+    - SERVERPORT=51820
+    - PEERS=laptop,phone,tablet
+    - PEERDNS=auto
+    - ALLOWEDIPS=0.0.0.0/0
+    ports:
+    - &quot;51820:51820/udp&quot;
+    volumes:
+    - ./volumes/wireguard:/config
+    - /lib/modules:/lib/modules:ro
+    cap_add:
+    - NET_ADMIN
+    - SYS_MODULE
+    sysctls:
+    - net.ipv4.conf.all.src_valid_mark=1
+</code></pre></div>
+<p>Unfortunately, that service definition will not work "as is". It needs to be configured.</p>
+<p>Key points:</p>
+<ul>
+<li>Everything in the <code>environment:</code> section from <code>SERVERURL=</code> down to <code>PEERDNS=</code> (inclusive) affects WireGuard's generated configurations (the QR codes). In other words, any time you change any of those values, any existing QR codes will stop working.</li>
+<li>WireGuard does not need to communicate directly with other Docker containers so there is no need for it to join <code>iotstack_nw</code>.</li>
+</ul>
+<h3 id="step-4-decide-what-to-configure"><a name="configureWhat"> Step 4: Decide what to configure </a></h3>
+<p>With most containers, you can continue to tweak environment variables and settings without upsetting the container's basic behaviour. WireGuard is a little different. You really need to think, carefully, about how you want to configure the service before you start. If you change your mind later, you generally have to <a href="#cleanSlate">start from a clean slate</a>.</p>
+<h4 id="fields-that-you-should-always-configure"><a name="configureAlways">Fields that you should always configure </a></h4>
+<ul>
+<li>
+<p><code>TZ=</code> should be set to your local timezone. Example:</p>
+<div class="highlight"><pre><span></span><code>- TZ=Australia/Sydney
+</code></pre></div>
+<p>Note:</p>
+<ul>
+<li>Never use quote marks around the right hand side of a time-zone definition.</li>
+</ul>
+</li>
+<li>
+<p><code>SERVERURL=</code> should be set to the domain name you have registered with a Dynamic DNS service provider. Example:</p>
+<div class="highlight"><pre><span></span><code>- SERVERURL=downunda.duckdns.org
+</code></pre></div>
+</li>
+<li>
+<p><code>PEERS=</code> should be a comma-separated list of your client devices (all the phones, tablets, laptops, desktops you want to use remotely to get back into your home network). Example:</p>
+<div class="highlight"><pre><span></span><code>- PEERS=jill-macbook,jack-chromebook,alex-nokia-g10
+</code></pre></div>
+<p>Note:</p>
+<ul>
+<li>Many examples on the web use "PEERS=n" where "n" is a number. In practice, that approach seems to be a little fragile and is not recommended for IOTstack.</li>
+</ul>
+</li>
+</ul>
+<h4 id="optional-configuration-dns-resolution-for-peers"><a name="configurePeerDNS"> Optional configuration - DNS resolution for peers </a></h4>
+<ul>
+<li>
+<p><code>PEERDNS=</code>. The default value of <code>auto</code> instructs the WireGuard container to use the same DNS as other containers when resolving requests from connected peers. In practice, that means the container directs queries to 127.0.0.11, which Docker intercepts and forwards to whichever resolvers are specified in the Raspberry Pi's <code>/etc/resolv.conf</code>.</p>
+<p>If you have a local upstream DNS server, you can change this setting so that queries are directed to that server. For example:</p>
+<div class="highlight"><pre><span></span><code>- PEERDNS=192.168.203.65
+</code></pre></div>
+</li>
+</ul>
+<h4 id="optional-configuration-wireguard-ports"><a name="configurePorts"> Optional configuration - WireGuard ports </a></h4>
+<p>The WireGuard service definition template follows the convention of using UDP port "51820" in three places. You can leave it like that and it will just work. There is no reason to change the defaults unless you want to.</p>
+<p>To understand what each port number does, it is better to think of them like this:</p>
+<div class="highlight"><pre><span></span><code>environment:
+- SERVERPORT=«public»
+ports:
+- &quot;«external»:«internal»/udp&quot;
+</code></pre></div>
+<p>These definitions are going to be used throughout this documentation:</p>
+<ul>
+<li>
+<p>The <em>«public»</em> port is the port number that your remote WireGuard clients (phone, laptop etc) will try to reach. This is the port number that your router needs to expose to the outside world.</p>
+</li>
+<li>
+<p>The <em>«external»</em> port is the port number that Docker, running on your Raspberry Pi, will be listening on. Your router needs to forward WireGuard incoming traffic to the <em>«external»</em> port on your Raspberry Pi.</p>
+</li>
+<li>
+<p>The <em>«internal»</em> port is the port number that WireGuard (the server process) will be listening on inside the WireGuard container. Docker handles forwarding between the <em>«external»</em> and <em>«internal»</em> port.</p>
+</li>
+</ul>
+<p>Rule #1:</p>
+<ul>
+<li>You <strong>can</strong> change the <em>«public»</em> and <em>«external»</em> ports but you <strong>can't</strong> change the <em>«internal»</em> port unless you are prepared to do a lot more work.</li>
+</ul>
+<p>Rule #2:</p>
+<ul>
+<li>The <em>«public»</em> port forms part of the QR codes. If you decide to change the <em>«public»</em> port after you generate the QR codes, you will have to <a href="#cleanSlate">start over from a clean slate</a>.</li>
+</ul>
+<p>Rule #3:</p>
+<ul>
+<li>Your router needs to know about both the <em>«public»</em> and <em>«external»</em> ports so, if you decide to change either of those, you must also reconfigure your router.</li>
+</ul>
+<p>See <a href="#understandingPorts">Understanding WireGuard's port numbers</a> if you want more information on how the various port numbers are used.</p>
+<h3 id="step-5-configure-wireguard"><a name="configureWireGuard"> Step 5: Configure WireGuard </a></h3>
+<p>There are two approaches:</p>
+<ol>
+<li>Let the menu generate a <code>docker-compose.yml</code> with the default WireGuard service definition template, and then edit <code>docker-compose.yml</code>.</li>
+<li>Prepare a <code>compose-override.yml</code> file, then run the menu and have it perform the substitutions for you.</li>
+</ol>
+<p>Of the two, the first is generally the simpler and means you don't have to re-run the menu whenever you want to change WireGuard's configuration.</p>
+<h4 id="method-1-configure-wireguard-by-editing-docker-composeyml"><a name="editCompose"> Method 1: Configure WireGuard by editing <code>docker-compose.yml</code> </a></h4>
+<ol>
+<li>
+<p>Run the menu:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ ./menu.sh
+</code></pre></div>
+</li>
+<li>
+<p>Choose the "Build Stack" option.</p>
+</li>
+<li>If WireGuard is not already selected, select it.</li>
+<li>Press <kbd>enter</kbd> to begin the build.</li>
+<li>Choose Exit.</li>
+<li>Open <code>docker-compose.yml</code> in your favourite text editor.</li>
+<li>Navigate to the WireGuard service definition.</li>
+<li>Implement the decisions you took in <a href="#configureWhat">decide what to configure</a>.</li>
+<li>Save your work.</li>
+</ol>
+<h4 id="method-2-configure-wireguard-using-compose-overrideyml"><a name="editOverride"> Method 2: Configure WireGuard using <code>compose-override.yml</code> </a></h4>
+<p>The <a href="https://sensorsiot.github.io/IOTstack/Custom/">Custom services and overriding default settings for IOTstack</a> page describes how to use an override file to allow the menu to incorporate your custom configurations into the final <code>docker-compose.yml</code> file.</p>
+<p>You will need to create the <code>compose-override.yml</code> <strong>before</strong> running the menu to build your stack. If you have already built your stack, you'll have to rebuild it after creating <code>compose-override.yml</code>.</p>
+<ol>
+<li>
+<p>Use your favourite text editor to create (or open) the override file. The file is expected to be at the path:</p>
+<div class="highlight"><pre><span></span><code>~/IOTstack/compose-override.yml
+</code></pre></div>
+</li>
+<li>
+<p>Define overrides to implement the decisions you took in <a href="#configureWhat">Decide what to configure</a>. For example:</p>
+<div class="highlight"><pre><span></span><code>services:
+  wireguard:
+    environment:
+    - PUID=1000
+    - PGID=1000
+    - TZ=Australia/Sydney
+    - SERVERURL=downunda.duckdns.org
+    - SERVERPORT=51820
+    - PEERS=laptop,phone,tablet
+    - PEERDNS=auto
+    - ALLOWEDIPS=0.0.0.0/0
+</code></pre></div>
+<p>Key points:</p>
+<ul>
+<li>The override file works at the <strong>section</strong> level. Therefore, you have to include <em>all</em> of the environment variables from the template, not just the ones you want to alter.</li>
+<li>If your override file contains configurations for other containers, make sure the file only has a single <code>services:</code> directive at the start.</li>
+</ul>
+</li>
+<li>
+<p>Save your work.</p>
+</li>
+<li>
+<p>Run the menu:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ ./menu.sh
+</code></pre></div>
+</li>
+<li>
+<p>Choose the "Build Stack" option.</p>
+</li>
+<li>If WireGuard is not already selected, select it.</li>
+<li>Press <kbd>enter</kbd> to begin the build.</li>
+<li>Choose Exit.</li>
+<li>
+<p>Check your work by running:</p>
+<div class="highlight"><pre><span></span><code>$ cat docker-compose.yml
+</code></pre></div>
+<p>and verify that the <code>wireguard</code> service definition is as you expect.</p>
+</li>
+</ol>
+<h3 id="step-6-start-wireguard"><a name="startWireGuard"> Step 6: Start WireGuard </a></h3>
+<ol>
+<li>
+<p>To start WireGuard, bring up your stack:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ docker-compose up -d
+</code></pre></div>
+</li>
+<li>
+<p>Confirm that WireGuard has started properly by running:</p>
+<div class="highlight"><pre><span></span><code>$ docker ps --format <span class="s2">&quot;table {{.Names}}\t{{.RunningFor}}\t{{.Status}}&quot;</span> --filter <span class="nv">name</span><span class="o">=</span>wireguard
+</code></pre></div>
+<p>Repeat the command a few times with a short delay in between. You are looking for signs that the WireGuard container is restarting. If the container seems to be restarting then this command is your friend:</p>
+<div class="highlight"><pre><span></span><code>$ docker logs wireguard
+</code></pre></div>
+<p>See also discussion of <a href="#readOnlyFlag">the read-only flag</a>.</p>
+</li>
+<li>
+<p>Confirm that WireGuard has generated the expected configurations. For example, given the following setting in <code>docker-compose.yml</code>:</p>
+<div class="highlight"><pre><span></span><code>- PEERS=jill-macbook,jack-chromebook,alex-nokia-g10
+</code></pre></div>
+<p>you would expect a result something like this:</p>
+<div class="highlight"><pre><span></span><code>$ tree ./volumes/wireguard
+volumes/wireguard/
+├── coredns
+│   └── Corefile
+├── custom-cont-init.d
+├── custom-services.d
+├── peer_jack-chromebook
+│   ├── peer_jack-chromebook.conf
+│   ├── peer_jack-chromebook.png
+│   ├── privatekey-peer_jack-chromebook
+│   └── publickey-peer_jack-chromebook
+├── peer_jill-macbook
+│   ├── peer_jill-macbook.conf
+│   ├── peer_jill-macbook.png
+│   ├── privatekey-peer_jill-macbook
+│   └── publickey-peer_jill-macbook
+├── peer_alex-nokia-g10
+│   ├── peer_alex-nokia-g10.conf
+│   ├── peer_alex-nokia-g10.png
+│   ├── privatekey-peer_alex-nokia-g10
+│   └── publickey-peer_alex-nokia-g10
+├── server
+│   ├── privatekey-server
+│   └── publickey-server
+├── templates
+│   ├── peer.conf
+│   └── server.conf
+└── wg0.conf
+</code></pre></div>
+<p>Notice how each element in the <code>PEERS=</code> list is represented by a sub-directory prefixed with <code>peer_</code>. You should expect the same pattern for your peers.</p>
+</li>
+</ol>
+<h3 id="step-7-save-your-wireguard-client-configuration-files-qr-codes"><a name="clientQRcodes"> Step 7: Save your WireGuard client configuration files (QR codes) </a></h3>
+<p>The first time you launch WireGuard, it generates cryptographically protected configurations for your remote clients and encapsulates those configurations in QR codes. You can see the QR codes by running:</p>
+<div class="highlight"><pre><span></span><code>$ docker logs wireguard
+</code></pre></div>
+<p>WireGuard's log is ephemeral, which means it resets each time the container is re-created. In other words, you can't rely on going back to the log to obtain your QR codes if you lose them.</p>
+<p>WireGuard also records the QR codes as <code>.png</code> files. In fact, the QR codes shown by <code>docker logs wireguard</code> are just side-effects of the <code>.png</code> files as they are created.</p>
+<p>If your Raspberry Pi has a GUI (such as a screen attached to an HDMI port or a VNC connection), you can always retrieve the QR codes by opening the <code>.png</code> files in the GUI.</p>
+<p>If, however, your Raspberry Pi is running headless, you will need to copy the <code>.png</code> files to a system that is capable of displaying them, such as a Mac or PC. You can use SCP to do that.</p>
+<blockquote>
+<p>See <a href="https://github.com/Paraphraser/IOTstackBackup/blob/master/ssh_tutorial.md">ssh tutorial</a> if you need help setting up SSH (of which SCP is a part).</p>
+</blockquote>
+<p>For example, to copy <strong>all</strong> PNG files from your Raspberry Pi to a target system:</p>
+<div class="highlight"><pre><span></span><code>$ find ~/IOTstack/volumes/wireguard -name <span class="s2">&quot;*.png&quot;</span> -exec scp <span class="o">{}</span> user@hostorip:. <span class="se">\;</span>
+</code></pre></div>
+<p>Note:</p>
+<ul>
+<li><code>hostorip</code> is the host name, fully-qualified domain name, multicast domain name or IP address of the GUI-capable target computer; and</li>
+<li><code>user</code> is a valid username on the target computer.</li>
+</ul>
+<p>If you want to work in the other direction (ie from the GUI-capable system), you can try:</p>
+<div class="highlight"><pre><span></span><code>$ scp pi@hostorip:IOTstack/volumes/wireguard/peer_jill-macbook/peer_jill-macbook.png .
+</code></pre></div>
+<p>In this case:</p>
+<ul>
+<li><code>hostorip</code> is the host name, fully-qualified domain name, multicast domain name or IP address of the Raspberry Pi that is running WireGuard.</li>
+</ul>
+<p>Keep in mind that each QR code contains everything needed for <strong>any</strong> device to access your home network via WireGuard. Treat your <code>.png</code> files as "sensitive documents".</p>
+<h3 id="step-8-configure-your-router-with-a-nat-rule"><a name="routerNATConfig"> Step 8: Configure your router with a NAT rule </a></h3>
+<p>A typical home network will have a firewall that effectively blocks all incoming attempts from the Internet to open a new connection with a device on your network.</p>
+<p>To use a VPN from outside of your home network (which is precisely the point of running the service!), you need to configure your router to allow incoming WireGuard traffic to reach the Raspberry Pi running WireGuard. These instructions assume you have the privileges to do that.</p>
+<p>If you have not used your router's administrative interface before, the default login credentials may be physically printed on the device or in its instruction manual.</p>
+<blockquote>
+<p>If you have never changed the default login credentials, you should take the time to do that. </p>
+</blockquote>
+<p>Routers have wildly different user interfaces but the concepts will be the same. This section describes the basic technique but if you are unsure how to do this on your particular router model, the best idea would be to search the web for:</p>
+<ul>
+<li>"[YOUR DEVICE NAME] port forwarding configuration"; or</li>
+<li>"[YOUR DEVICE NAME] NAT configuration"</li>
+</ul>
+<p>A typical configuration process goes something like this:</p>
+<ol>
+<li>The router sub-process you need to configure is called Network Address Translation (NAT) but it's not unheard of for this functionality to be grouped with FireWall.</li>
+<li>
+<p>The NAT component you are looking for probably has a name like "Port Redirection", "Port Forwarding", "NAT Forwarding" or "NAT Virtual Server".</p>
+<ul>
+<li>It might also be under "Open Ports" but those are usually one-to-one mappings (ie incomingPort=outgoingPort), apply to port ranges, and are intended to target a single DMZ host.</li>
+</ul>
+</li>
+<li>
+<p>The configuration screen will contain at least the following fields:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interface</td>
+<td>router's WAN interface</td>
+</tr>
+<tr>
+<td>Private IP</td>
+<td>x.x.x.x</td>
+</tr>
+<tr>
+<td>Private Port</td>
+<td>«external»</td>
+</tr>
+<tr>
+<td>Protocol</td>
+<td>UDP</td>
+</tr>
+<tr>
+<td>Public Port</td>
+<td>«public»</td>
+</tr>
+<tr>
+<td>Service Name</td>
+<td>WireGuard</td>
+</tr>
+</tbody>
+</table>
+<p>The fields in the above list are in alphabetical order. They will almost certainly be in a different order in your router and may also have different names:</p>
+<ul>
+<li><em>Interface</em> is typically a popup menu. Generally it will either default to the name of the physical port on your router that connects to the outside world, or be some other sensible default like "All".</li>
+<li><em>Private IP</em> (or <em>Internal IP</em>) is the IP address of the Raspberry Pi running WireGuard. Note that this pretty much forces you to give your Raspberry Pi a statically-configured IP address (either a static binding in your DHCP server or a hard-coded address in the Raspberry Pi itself).</li>
+<li>
+<p><em>Private Port</em> (or <em>Internal Port</em>) needs to be the value you chose for «external» in the WireGuard service definition (51820 if you didn't change it).</p>
+<blockquote>
+<p>Yes, this does sound counterintuitive but it's a matter of perspective. From the router's perspective, the port is on the <em>private</em> or <em>internal</em> part of your home network. From Docker's perspective, the port is «external» to container-space.</p>
+</blockquote>
+</li>
+<li>
+<p><em>Protocol</em> will usually default to "TCP" but you <strong>must</strong> change it to "UDP".</p>
+</li>
+<li><em>Public Port</em> or <em>External Port</em> needs to be the value you chose for «public» in the WireGuard service definition (51820 if you didn't change it).</li>
+<li><em>Service Name</em> (or <em>Service Type</em>) is typically a text field, an editable menu (where you can either make a choice or type your own value), or a button approximating an editable menu. If you are given the option of choosing "WireGuard", do that, otherwise just type that name into the field. It has no significance other than reminding you what the rule is for. </li>
+</ul>
+</li>
+</ol>
+<h3 id="step-9-configure-your-remote-wireguard-clients"><a name="configureClients"> Step 9: Configure your remote WireGuard clients </a></h3>
+<p>This is a massive topic and one which is well beyond the scope of this guide. You really will have to work it out for yourself. Start by Googling:</p>
+<ul>
+<li>"[YOUR DEVICE NAME] install WireGuard client".</li>
+</ul>
+<p>You will find the list of client software at <a href="https://www.wireguard.com/install/">WireGuard Installation</a>.</p>
+<p>For portable devices (eg iOS and Android) it usually boils down to:</p>
+<ol>
+<li>Install the app on your portable device.</li>
+<li>Display the QR code the WireGuard server generated for the device.</li>
+<li>Launch the app.</li>
+<li>Point the device's camera at the QR code.</li>
+<li>Follow your nose.</li>
+</ol>
+<h2 id="understanding-wireguards-port-numbers"><a name="understandingPorts"> Understanding WireGuard's port numbers </a></h2>
+<p>Here's a concrete example configuration using three different port numbers:</p>
+<div class="highlight"><pre><span></span><code>environment:
+- SERVERURL=downunda.duckdns.org
+- SERVERPORT=51620
+ports:
+- &quot;51720:51820/udp&quot;
+</code></pre></div>
+<p>In other words:</p>
+<ol>
+<li>The «public» port is 51620.</li>
+<li>The «external» port is 51720.</li>
+<li>The «internal» port is 51820.</li>
+</ol>
+<p>You also need to make a few assumptions:</p>
+<ol>
+<li>The host running the remote WireGuard client (eg a mobile phone with the WireGuard app installed) has been allocated the IP address 55.66.77.88 when it connected to the Internet over 3G/4G/5G.</li>
+<li>When the remote WireGuard client initiated the session, it chose UDP port 44524 as its source port. The actual number chosen is (essentially) random and only significant to the client.</li>
+<li>Your Internet Service Provider allocated the IP address 12.13.14.15 to the WAN side of your router.</li>
+<li>You have done all the steps in <a href="#obtainDDNS">Set up a Dynamic DNS name</a> and your WAN IP address (12.13.14.15) is being propagated to your Dynamic DNS service provider.</li>
+</ol>
+<p>Here's a reference model to help explain what occurs:</p>
+<p><img alt="WireGuard port model" src="../images/wireguard-portmodel.png" /></p>
+<p>The remote WireGuard client:</p>
+<ol>
+<li>Obtains the Dynamic DNS domain name ("downunda.duckdns.org") and <em>«public»</em> UDP port (51620) from the configuration contained within the QR code. Recall that those values are obtained from the <code>SERVERURL=</code> and <code>SERVERPORT=</code> environment variables in <code>docker-compose.yml</code>.</li>
+<li>Executes a DNS query for the domain name "downunda.duckdns.org" to obtains the WAN IP address (12.13.14.15) of your home router.</li>
+<li>Addresses outgoing packets to 12.13.14.15:51620.</li>
+</ol>
+<p>You configure a NAT port-forwarding rule in your router which accepts incoming traffic on the <em>«public»</em> UDP port (51620) and uses Network Address Translation to change the destination IP address to the Raspberry Pi and destination port to the <em>«external»</em> UDP port (51720). In other words, each incoming packet is readdressed to 192.168.203.60:51720.</p>
+<p>Docker is listening to the Raspberry Pi's <em>«external»</em> UDP port 51720. Docker uses Network Address Translation to change the destination IP address to the WireGuard container and destination port to the <em>«internal»</em> UDP port (51820). In other words, each incoming packet is readdressed to 172.18.0.6:51820.</p>
+<p>The packet is then routed to the internal bridged network, and delivered to the WireGuard server process running in the container which is listening on the <em>«internal»</em> UDP port (51820).</p>
+<p>A reciprocal process occurs when the WireGuard server process sends packets back to the remote WireGuard client.</p>
+<p>The following table summarises the transformations as the client and server exchange information:</p>
+<p><img alt="WireGuard NAT table" src="../images/wireguard-nattable.png" /></p>
+<p>Even if you use port 51820 everywhere (the default), all this Network Address Translation still occurs. Keep this in mind if you are trying to debug WireGuard because you may actually find it simpler to understand what is going on if you use different numbers for the <em>«public»</em> and <em>«external»</em> ports.</p>
+<p>This model is a slight simplification because the remote client may also be also operating behind a router performing Network Address Translation. It is just easier to understand the basic concepts if you assume the remote client has a publicly-routable IP address.</p>
+<h2 id="debugging-techniques"><a name="debugging"> Debugging techniques </a></h2>
+<h3 id="monitor-wireguard-traffic-between-your-router-and-your-raspberry-pi"><a name="tcpdumpExternal"> Monitor WireGuard traffic between your router and your Raspberry Pi </a></h3>
+<p>If <code>tcpdump</code> is not installed on your Raspberry Pi, you can install it by:</p>
+<div class="highlight"><pre><span></span><code>$ sudo apt install tcpdump
+</code></pre></div>
+<p>After that, you can capture traffic between your router and your Raspberry Pi by:</p>
+<div class="highlight"><pre><span></span><code>$ sudo tcpdump -i eth0 -n udp port «external»
+</code></pre></div>
+<p>Press <kbd>ctrl</kbd><kbd>c</kbd> to terminate the capture.</p>
+<h3 id="monitor-wireguard-traffic-between-your-raspberry-pi-and-the-wireguard-container"><a name="tcpdumpInternal"> Monitor WireGuard traffic between your Raspberry Pi and the WireGuard container </a></h3>
+<p>First, you need to add <code>tcpdump</code> to the container. You only need to do this once per debugging session. The package will remain in place until the next time you re-create the container.</p>
+<div class="highlight"><pre><span></span><code>$ docker <span class="nb">exec</span> wireguard bash -c <span class="s1">&#39;apt update ; apt install -y tcpdump&#39;</span>
+</code></pre></div>
+<p>To monitor traffic:</p>
+<div class="highlight"><pre><span></span><code>$ docker <span class="nb">exec</span> wireguard tcpdump -i eth0 -n udp port «internal»
+</code></pre></div>
+<p>Press <kbd>ctrl</kbd><kbd>c</kbd> to terminate the capture.</p>
+<h3 id="is-docker-listening-on-the-raspberry-pis-external-port"><a name="listenExternal"> Is Docker listening on the Raspberry Pi's «external» port? </a></h3>
+<div class="highlight"><pre><span></span><code>$ <span class="nv">PORT</span><span class="o">=</span>«external»<span class="p">;</span> sudo nmap -sU -p <span class="nv">$PORT</span> <span class="m">127</span>.0.0.1 <span class="p">|</span> grep <span class="s2">&quot;</span><span class="nv">$PORT</span><span class="s2">/udp&quot;</span>
+</code></pre></div>
+<p>There will be a short delay. The expected answer is either:</p>
+<ul>
+<li><code>«external»/udp open|filtered unknown</code> = Docker is listening</li>
+<li><code>«external»/udp closed unknown</code> = Docker is not listening</li>
+</ul>
+<p>Success implies that the container is also listening.</p>
+<h3 id="is-your-router-listening-on-the-public-port"><a name="listenPublic"> Is your router listening on the «public» port? </a></h3>
+<div class="highlight"><pre><span></span><code>$ <span class="nv">PORT</span><span class="o">=</span>«public»<span class="p">;</span> sudo nmap -sU -p <span class="nv">$PORT</span> downunda.duckdns.org <span class="p">|</span> grep <span class="s2">&quot;</span><span class="nv">$PORT</span><span class="s2">/udp&quot;</span>
+</code></pre></div>
+<p>There will be a short delay. The expected answer is either:</p>
+<ul>
+<li><code>«public»/udp open|filtered unknown</code> = router is listening</li>
+<li><code>«public»/udp closed unknown</code> = router is not listening</li>
+</ul>
+<h2 id="the-read-only-flag"><a name="readOnlyFlag"> The read-only flag </a></h2>
+<p>The <code>:ro</code> at the end of the following line in WireGuard's service definition means "read only":</p>
+<div class="highlight"><pre><span></span><code>- /lib/modules:/lib/modules:ro
+</code></pre></div>
+<p>If that flag is omitted then WireGuard <strong>may</strong> try to update the <code>/lib/modules</code> path in your operating system. To be clear, <code>/lib/modules</code> is both <strong>outside</strong> the WireGuard container and <strong>outside</strong> the normal persistent storage area in the <code>./volumes</code> directory.</p>
+<p>The basic idea of containers is that processes are <em>contained</em>, include all their own dependencies, can be added and removed cleanly, and don't change the underlying operating system.</p>
+<p>Writing into <code>/lib/modules</code> is not needed on a Raspberry Pi, providing that Raspberry Pi OS is up-to-date. That is why the first step in the installation procedure tells you to bring the system up-to-date.</p>
+<p>If WireGuard refuses to install and you have good reason to suspect that WireGuard may be trying to write to <code>/lib/modules</code> then you can <em>consider</em> removing the <code>:ro</code> flag and re-trying. Just be aware that WireGuard will likely be modifying your operating system.  </p>
+<h2 id="updating-wireguard"><a name="pullWireguard"> Updating WireGuard </a></h2>
+<p>To update the WireGuard container:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ docker-compose pull wireguard
+</code></pre></div>
+<p>If a new image comes down, then:</p>
+<div class="highlight"><pre><span></span><code>$ docker-compose up -d wireguard
+$ docker system prune
+</code></pre></div>
+<h2 id="getting-a-clean-slate"><a name="cleanSlate"> Getting a clean slate </a></h2>
+<p>If WireGuard misbehaves, you can start over from a clean slate. You also need to do this if you change any of the following environment variables:</p>
+<div class="highlight"><pre><span></span><code>- SERVERURL=
+- SERVERPORT=
+- PEERS=
+- PEERDNS=
+</code></pre></div>
+<p>The procedure is:</p>
+<ol>
+<li>
+<p>If WireGuard is running, terminate it:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ docker-compose rm --force --stop -v wireguard
+</code></pre></div>
+</li>
+<li>
+<p>Erase the persistent storage area (essential):</p>
+<div class="highlight"><pre><span></span><code>$ sudo rm -rf ./volumes/wireguard
+</code></pre></div>
+<blockquote>
+<p>Be very careful with that command and double-check your work <strong>before</strong> you hit <kbd>return</kbd>.</p>
+</blockquote>
+<p>Erasing the persistent storage area destroys the old client configurations and invalidates any copies of QR codes. Existing clients will stop working until presented with a new QR code.</p>
+</li>
+<li>
+<p>Start WireGuard:</p>
+<div class="highlight"><pre><span></span><code>$ docker-compose up -d wireguard
+</code></pre></div>
+<p>This will generate new client configurations and QR codes for your devices.</p>
+</li>
+</ol>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../Telegraf/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Telegraf" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Telegraf
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../Zigbee2MQTT/" class="md-footer__link md-footer__link--next" aria-label="Next: Zigbee2MQTT" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Zigbee2MQTT
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.01824240.min.js"}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.ff0eccb3.min.js"></script>
+      
+    
+  </body>
+</html>

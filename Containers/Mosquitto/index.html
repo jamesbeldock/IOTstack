@@ -1,0 +1,2303 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Docker stack for getting started on IOT on the Raspberry PI">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.2">
+    
+    
+      
+        <title>Mosquitto - IOTstack</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.816931ca.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.9204c3b2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>function __md_scope(e,t,_){return new URL(_||(t===localStorage?"../..":"../.."),location).pathname+"."+e}function __md_get(e,t=localStorage,_){return JSON.parse(t.getItem(__md_scope(e,t,_)))}function __md_set(e,t,_=localStorage,o){try{_.setItem(__md_scope(e,_,o),JSON.stringify(t))}catch(e){}}</script>
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mosquitto" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="IOTstack" class="md-header__button md-logo" aria-label="IOTstack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            IOTstack
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Mosquitto
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SensorsIot/IOTstack/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="IOTstack" class="md-nav__button md-logo" aria-label="IOTstack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    IOTstack
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SensorsIot/IOTstack/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        IOTStack Wiki
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Accessing-your-Device-from-the-internet/" class="md-nav__link">
+        Accessing your device from the internet
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Backup-and-Restore/" class="md-nav__link">
+        Backing up and restoring IOTstack
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BuildStack-RandomPassword/" class="md-nav__link">
+        Build Stack Random Services Password
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BuildStack-Services/" class="md-nav__link">
+        Build Stack Services system
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Contributing-Services/" class="md-nav__link">
+        Contributing a service to IOTstack
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Custom/" class="md-nav__link">
+        Custom services and overriding default settings for IOTstack
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Default-Configs/" class="md-nav__link">
+        Build Stack Default Passwords for Services
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Docker-commands/" class="md-nav__link">
+        Docker commands
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Getting-Started/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Home/" class="md-nav__link">
+        Wiki
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How-the-script-works/" class="md-nav__link">
+        How the script works
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Menu-System/" class="md-nav__link">
+        Menu system
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Misc/" class="md-nav__link">
+        Miscellaneous
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Native-RTL_433/" class="md-nav__link">
+        Native RTL_433
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Networking/" class="md-nav__link">
+        Networking
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../New-Menu-Release-Notes/" class="md-nav__link">
+        New IOTstack Menu
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PostBuild-Script/" class="md-nav__link">
+        Postbuild BASH Script
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RPIEasy_native/" class="md-nav__link">
+        RPIEasy
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Understanding-Containers/" class="md-nav__link">
+        What is Docker?
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Updating-the-Project/" class="md-nav__link">
+        Updating the project
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gcgarner-migration/" class="md-nav__link">
+        Migrating from gcgarner to SensorsIot
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_23" type="checkbox" id="__nav_23" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_23">
+          Containers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Containers" data-md-level="1">
+        <label class="md-nav__title" for="__nav_23">
+          <span class="md-nav__icon md-icon"></span>
+          Containers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AdGuardHome/" class="md-nav__link">
+        AdGuard Home
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Adminer/" class="md-nav__link">
+        Adminer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Blynk_server/" class="md-nav__link">
+        Blynk server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chronograf/" class="md-nav__link">
+        Chronograf
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DashMachine/" class="md-nav__link">
+        DashMachine
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EspruinoHub/" class="md-nav__link">
+        Espruinohub
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Grafana/" class="md-nav__link">
+        Grafana
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Heimdall/" class="md-nav__link">
+        Heimdall
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Home-Assistant/" class="md-nav__link">
+        Home Assistant
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Homer/" class="md-nav__link">
+        Homer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InfluxDB/" class="md-nav__link">
+        InfluxDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Kapacitor/" class="md-nav__link">
+        Kapacitor
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MariaDB/" class="md-nav__link">
+        MariaDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Mosquitto
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Mosquitto
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+     References 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#significant-directories-and-files" class="md-nav__link">
+     Significant directories and files 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-mosquitto-gets-built-for-iotstack" class="md-nav__link">
+     How Mosquitto gets built for IOTstack 
+  </a>
+  
+    <nav class="md-nav" aria-label=" How Mosquitto gets built for IOTstack ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mosquitto-source-code-github" class="md-nav__link">
+     Mosquitto source code (GitHub) 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mosquitto-images-dockerhub" class="md-nav__link">
+     Mosquitto images (DockerHub) 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iotstack-menu" class="md-nav__link">
+     IOTstack menu 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iotstack-first-run" class="md-nav__link">
+     IOTstack first run 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-considerations" class="md-nav__link">
+     Migration considerations 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging" class="md-nav__link">
+     Logging 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+     Security 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Security ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuring-security" class="md-nav__link">
+     Configuring security 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#password-file-management" class="md-nav__link">
+     Password file management 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Password file management ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-username-and-password" class="md-nav__link">
+     create username and password 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-password-file" class="md-nav__link">
+     check password file 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove-entry-from-password-file" class="md-nav__link">
+     remove entry from password file 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reset-the-password-file" class="md-nav__link">
+     reset the password file 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activate-mosquitto-security" class="md-nav__link">
+     Activate Mosquitto security 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-mosquitto-security" class="md-nav__link">
+     Testing Mosquitto security 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Testing Mosquitto security ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#assumptions" class="md-nav__link">
+     assumptions 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-testing-tools" class="md-nav__link">
+     install testing tools 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-anonymous-access-is-prohibited" class="md-nav__link">
+     test: anonymous access is prohibited 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-access-with-credentials-is-permitted" class="md-nav__link">
+     test: access with credentials is permitted 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-round-trip-with-credentials-is-permitted" class="md-nav__link">
+     test: round-trip with credentials is permitted 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-health-check" class="md-nav__link">
+     Container health check 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Container health check ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#theory-of-operation" class="md-nav__link">
+     theory of operation 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-health-check" class="md-nav__link">
+     monitoring health-check 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customising-health-check" class="md-nav__link">
+     customising health-check 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrading-mosquitto" class="md-nav__link">
+     Upgrading Mosquitto 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Upgrading Mosquitto ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mosquitto-version-pinning" class="md-nav__link">
+     Mosquitto version pinning 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-port-9001" class="md-nav__link">
+     About Port 9001 
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MotionEye/" class="md-nav__link">
+        MotionEye
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NextCloud/" class="md-nav__link">
+        Nextcloud
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Node-RED/" class="md-nav__link">
+        Node-RED
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Octoprint/" class="md-nav__link">
+        OctoPrint – the snappy web interface for your 3D printer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Pi-hole/" class="md-nav__link">
+        Pi-hole
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Plex/" class="md-nav__link">
+        Plex
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Portainer-agent/" class="md-nav__link">
+        Portainer agent
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Portainer-ce/" class="md-nav__link">
+        Portainer CE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PostgreSQL/" class="md-nav__link">
+        PostgreSQL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Prometheus/" class="md-nav__link">
+        Prometheus
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Python/" class="md-nav__link">
+        Python
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RTL_433-docker/" class="md-nav__link">
+        RTL_433 Docker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TasmoAdmin/" class="md-nav__link">
+        TasmoAdmin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Telegraf/" class="md-nav__link">
+        Telegraf
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WireGuard/" class="md-nav__link">
+        WireGuard
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zigbee2MQTT/" class="md-nav__link">
+        Zigbee2MQTT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zigbee2mqttassistant/" class="md-nav__link">
+        Zigbee2Mqtt Assistant
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deconz/" class="md-nav__link">
+        deCONZ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diyHue/" class="md-nav__link">
+        DIY hue
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openHAB/" class="md-nav__link">
+        openHAB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../x2go/" class="md-nav__link">
+        x2go
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+     References 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#significant-directories-and-files" class="md-nav__link">
+     Significant directories and files 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-mosquitto-gets-built-for-iotstack" class="md-nav__link">
+     How Mosquitto gets built for IOTstack 
+  </a>
+  
+    <nav class="md-nav" aria-label=" How Mosquitto gets built for IOTstack ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mosquitto-source-code-github" class="md-nav__link">
+     Mosquitto source code (GitHub) 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mosquitto-images-dockerhub" class="md-nav__link">
+     Mosquitto images (DockerHub) 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iotstack-menu" class="md-nav__link">
+     IOTstack menu 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iotstack-first-run" class="md-nav__link">
+     IOTstack first run 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-considerations" class="md-nav__link">
+     Migration considerations 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logging" class="md-nav__link">
+     Logging 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+     Security 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Security ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuring-security" class="md-nav__link">
+     Configuring security 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#password-file-management" class="md-nav__link">
+     Password file management 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Password file management ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-username-and-password" class="md-nav__link">
+     create username and password 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#check-password-file" class="md-nav__link">
+     check password file 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove-entry-from-password-file" class="md-nav__link">
+     remove entry from password file 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reset-the-password-file" class="md-nav__link">
+     reset the password file 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activate-mosquitto-security" class="md-nav__link">
+     Activate Mosquitto security 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-mosquitto-security" class="md-nav__link">
+     Testing Mosquitto security 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Testing Mosquitto security ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#assumptions" class="md-nav__link">
+     assumptions 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-testing-tools" class="md-nav__link">
+     install testing tools 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-anonymous-access-is-prohibited" class="md-nav__link">
+     test: anonymous access is prohibited 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-access-with-credentials-is-permitted" class="md-nav__link">
+     test: access with credentials is permitted 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#test-round-trip-with-credentials-is-permitted" class="md-nav__link">
+     test: round-trip with credentials is permitted 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#container-health-check" class="md-nav__link">
+     Container health check 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Container health check ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#theory-of-operation" class="md-nav__link">
+     theory of operation 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-health-check" class="md-nav__link">
+     monitoring health-check 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#customising-health-check" class="md-nav__link">
+     customising health-check 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrading-mosquitto" class="md-nav__link">
+     Upgrading Mosquitto 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Upgrading Mosquitto ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mosquitto-version-pinning" class="md-nav__link">
+     Mosquitto version pinning 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-port-9001" class="md-nav__link">
+     About Port 9001 
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/SensorsIot/IOTstack/edit/master/docs/Containers/Mosquitto.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<h1 id="mosquitto">Mosquitto</h1>
+<p>This document discusses an IOTstack-specific version of Mosquitto built on top of <a href="https://github.com/eclipse/mosquitto">Eclipse/Mosquitto</a> using a <em>Dockerfile</em>.</p>
+<blockquote>
+<p>If you want the documentation for the original implementation of Mosquitto (just "as it comes" from <em>DockerHub</em>) please see <a href="https://github.com/SensorsIot/IOTstack/blob/old-menu/docs/Containers/Mosquitto.md">Mosquitto.md</a> on the old-menu branch.</p>
+</blockquote>
+<hr>
+
+<h2 id="references"><a name="references"> References </a></h2>
+<ul>
+<li><a href="https://mosquitto.org"><em>Eclipse Mosquitto</em> home</a></li>
+<li><a href="https://github.com/eclipse/mosquitto"><em>GitHub</em>: eclipse/mosquitto</a></li>
+<li><a href="https://hub.docker.com/_/eclipse-mosquitto"><em>DockerHub</em>: eclipse-mosquitto</a></li>
+<li><a href="https://www.youtube.com/watch?v=1msiFQT_flo">Setting up passwords</a> (video)</li>
+<li><a href="https://gist.github.com/Paraphraser/c9db25d131dd4c09848ffb353b69038f">Tutorial: from MQTT to InfluxDB via Node-Red</a></li>
+</ul>
+<h2 id="significant-directories-and-files"><a name="significantFiles"> Significant directories and files </a></h2>
+<div class="highlight"><pre><span></span><code>~/IOTstack
+├── .templates
+│   └── mosquitto
+│       ├── service.yml ❶
+│       ├── Dockerfile ❷
+│       ├── docker-entrypoint.sh ❸
+│       └── iotstack_defaults ❹
+│           ├── config
+│           │   ├── filter.acl
+│           │   └── mosquitto.conf
+│           └── pwfile
+│               └── pwfile
+├── services
+│   └── mosquitto
+│       └── service.yml ❺
+├── docker-compose.yml ❻
+└── volumes
+    └── mosquitto ❼
+        ├── config
+        │   ├── filter.acl 
+        │   └── mosquitto.conf
+        ├── data
+        │   └── mosquitto.db
+        ├── log
+        └── pwfile 
+            └── pwfile
+</code></pre></div>
+<ol>
+<li>The <em>template service definition</em>.</li>
+<li>The <em>Dockerfile</em> used to customise Mosquitto for IOTstack.</li>
+<li>A replacement for the Eclipse-Mosquitto script of the same name, extended to handle container self-repair.</li>
+<li>A standard set of defaults for IOTstack (used to initialise defaults on first run, and for container self-repair).</li>
+<li>The <em>working service definition</em> (only relevant to old-menu, copied from ❶).</li>
+<li>The <em>Compose</em> file (includes ❶).</li>
+<li>
+<p>The <em>persistent storage area</em>:</p>
+<ul>
+<li>Directories and files in ❼ are owned by userID 1883. This is enforced each time Mosquitto starts.</li>
+<li>You will normally need <code>sudo</code> to make changes in this area.</li>
+<li>Each time Mosquitto starts, it automatically replaces anything originating in ❹ that has gone missing from ❼. This "self-repair" function is intended to provide reasonable assurance that Mosquitto will at least <strong>start</strong> instead of going into a restart loop.</li>
+</ul>
+</li>
+</ol>
+<h2 id="how-mosquitto-gets-built-for-iotstack"><a name="howMosquittoIOTstackGetsBuilt"> How Mosquitto gets built for IOTstack </a></h2>
+<h3 id="mosquitto-source-code-github"><a name="githubSourceCode"> Mosquitto source code (<a href="https://github.com"><em>GitHub</em></a>) </a></h3>
+<p>The source code for Mosquitto lives at <a href="https://github.com/eclipse/mosquitto"><em>GitHub</em> eclipse/mosquitto</a>.</p>
+<h3 id="mosquitto-images-dockerhub"><a name="dockerHubImages"> Mosquitto images (<a href="https://hub.docker.com"><em>DockerHub</em></a>) </a></h3>
+<p>Periodically, the source code is recompiled and the resulting image is pushed to <a href="https://hub.docker.com/_/eclipse-mosquitto?tab=tags&amp;page=1&amp;ordering=last_updated">eclipse-mosquitto</a> on <em>DockerHub</em>.</p>
+<h3 id="iotstack-menu"><a name="iotstackMenu"> IOTstack menu </a></h3>
+<p>When you select Mosquitto in the IOTstack menu, the <em>template service definition</em> is copied into the <em>Compose</em> file.</p>
+<blockquote>
+<p>Under old menu, it is also copied to the <em>working service definition</em> and then not really used.</p>
+</blockquote>
+<h3 id="iotstack-first-run"><a name="iotstackFirstRun"> IOTstack first run </a></h3>
+<p>On a first install of IOTstack, you run the menu, choose Mosquitto as one of your containers, and are told to do this:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ docker-compose up -d
+</code></pre></div>
+<blockquote>
+<p>See also the <a href="#migration">Migration considerations</a> (below).</p>
+</blockquote>
+<p><code>docker-compose</code> reads the <em>Compose</em> file. When it arrives at the <code>mosquitto</code> fragment, it finds:</p>
+<div class="highlight"><pre><span></span><code>  mosquitto:
+    container_name: mosquitto
+    build: ./.templates/mosquitto/.
+    …
+</code></pre></div>
+<p>The <code>build</code> statement tells <code>docker-compose</code> to look for:</p>
+<div class="highlight"><pre><span></span><code>~/IOTstack/.templates/mosquitto/Dockerfile
+</code></pre></div>
+<blockquote>
+<p>The <em>Dockerfile</em> is in the <code>.templates</code> directory because it is intended to be a common build for <strong>all</strong> IOTstack users. This is different to the arrangement for Node-RED where the <em>Dockerfile</em> is in the <code>services</code> directory because it is how each individual IOTstack user's version of Node-RED is customised.</p>
+</blockquote>
+<p>The <em>Dockerfile</em> begins with:</p>
+<div class="highlight"><pre><span></span><code>FROM eclipse-mosquitto:latest
+</code></pre></div>
+<blockquote>
+<p>If you need to pin to a particular version of Mosquitto, the <em>Dockerfile</em> is the place to do it. See <a href="#versionPinning">Mosquitto version pinning</a>.</p>
+</blockquote>
+<p>The <code>FROM</code> statement tells the build process to pull down the <strong><em>base image</em></strong> from <a href="https://hub.docker.com"><em>DockerHub</em></a>.</p>
+<blockquote>
+<p>It is a <strong><em>base</em></strong> image in the sense that it never actually runs as a container on your Raspberry Pi.</p>
+</blockquote>
+<p>The remaining instructions in the <em>Dockerfile</em> customise the <em>base image</em> to produce a <strong><em>local image</em></strong>. The customisations are:</p>
+<ol>
+<li>
+<p>Add the <code>rsync</code> and <code>tzdata</code> packages.</p>
+<ul>
+<li><code>rsync</code> helps the container perform self-repair; while</li>
+<li><code>tzdata</code> enables Mosquitto to respect the "TZ" environment variable.</li>
+</ul>
+</li>
+<li>
+<p>Add a standard set of configuration defaults appropriate for IOTstack.</p>
+</li>
+<li>
+<p>Replace <code>docker-entrypoint.sh</code> with a version which:</p>
+<ul>
+<li>Calls <code>rsync</code> to perform self-repair if configuration files go missing; and</li>
+<li>Enforces 1883:1883 ownership in <code>~/IOTstack/volumes/mosquitto</code>.</li>
+</ul>
+</li>
+</ol>
+<p>The <em>local image</em> is instantiated to become your running container.</p>
+<p>When you run the <code>docker images</code> command after Mosquitto has been built, you will see two rows for Mosquitto:</p>
+<div class="highlight"><pre><span></span><code>$ docker images
+REPOSITORY                      TAG         IMAGE ID       CREATED        SIZE
+iotstack_mosquitto              latest      cf0bfe1a34d6   <span class="m">4</span> weeks ago    <span class="m">11</span>.6MB
+eclipse-mosquitto               latest      46ad1893f049   <span class="m">4</span> weeks ago    <span class="m">8</span>.31MB
+</code></pre></div>
+<ul>
+<li><code>eclipse-mosquitto</code> is the <em>base image</em>; and</li>
+<li><code>iotstack_mosquitto</code> is the <em>local image</em>.</li>
+</ul>
+<p>You will see the same pattern in Portainer, which reports the <em>base image</em> as "unused". You should not remove the <em>base</em> image, even though it appears to be unused.</p>
+<h3 id="migration-considerations"><a name="migration"> Migration considerations </a></h3>
+<p>Under the original IOTstack implementation of Mosquitto (just "as it comes" from <em>DockerHub</em>), the service definition expected the configuration files to be at:</p>
+<div class="highlight"><pre><span></span><code>~/IOTstack/services/mosquitto/mosquitto.conf
+~/IOTstack/services/mosquitto/filter.acl
+</code></pre></div>
+<p>Under this implementation of Mosquitto, the configuration files have moved to:</p>
+<div class="highlight"><pre><span></span><code>~/IOTstack/volumes/mosquitto/config/mosquitto.conf
+~/IOTstack/volumes/mosquitto/config/filter.acl
+</code></pre></div>
+<blockquote>
+<p>The change of location is one of the things that allows self-repair to work properly. </p>
+</blockquote>
+<p>The default versions of each configuration file are the <strong>same</strong>. Only the <strong>locations</strong> have changed. If you did not alter either file when you were running the original IOTstack implementation of Mosquitto, there will be no change in Mosquitto's behaviour when it is built from a <em>Dockerfile</em>.</p>
+<p>However, if you did alter either or both configuration files, then you should compare the old and new versions and decide whether you wish to retain your old settings. For example:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ diff ./services/mosquitto/mosquitto.conf ./volumes/mosquitto/config/mosquitto.conf 
+</code></pre></div>
+<blockquote>
+<p>You can also use the <code>-y</code> option on the <code>diff</code> command to see a side-by-side comparison of the two files.</p>
+</blockquote>
+<p>Using <code>mosquitto.conf</code> as the example, assume you wish to use your existing file instead of the default:</p>
+<ol>
+<li>
+<p>To move your existing file into the new location:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ sudo mv ./services/mosquitto/mosquitto.conf ./volumes/mosquitto/config/mosquitto.conf
+</code></pre></div>
+<blockquote>
+<p>The move overwrites the default. At this point, the moved file will probably be owned by user "pi" but that does not matter.</p>
+</blockquote>
+</li>
+<li>
+<p>Mosquitto will always enforce correct ownership (1883:1883) on any restart but it will not overwrite permissions. If in doubt, use mode 644 as your default for permissions:</p>
+<div class="highlight"><pre><span></span><code>$ sudo chmod <span class="m">644</span> ./services/mosquitto/mosquitto.conf
+</code></pre></div>
+</li>
+<li>
+<p>Restart Mosquitto:</p>
+<div class="highlight"><pre><span></span><code>$ docker-compose restart mosquitto
+</code></pre></div>
+</li>
+<li>
+<p>Check your work:</p>
+<div class="highlight"><pre><span></span><code>$ ls -l ./volumes/mosquitto/config/mosquitto.conf
+-rw-r--r-- <span class="m">1</span> <span class="m">1883</span> <span class="m">1883</span> ssss mmm dd hh:mm ./volumes/mosquitto/config/mosquitto.conf
+</code></pre></div>
+</li>
+<li>
+<p>If necessary, repeat these steps with <code>filter.acl</code>.</p>
+</li>
+</ol>
+<h2 id="logging"><a name="logging"> Logging </a></h2>
+<p>Mosquitto logging is controlled by <code>mosquitto.conf</code>. This is the default configuration:</p>
+<div class="highlight"><pre><span></span><code>#log_dest file /mosquitto/log/mosquitto.log
+log_dest stdout
+log_timestamp_format %Y-%m-%dT%H:%M:%S
+</code></pre></div>
+<p>When <code>log_dest</code> is set to   <code>stdout</code>, you inspect Mosquitto's logs like this:</p>
+<div class="highlight"><pre><span></span><code>$ docker logs mosquitto
+</code></pre></div>
+<p>Logs written to <code>stdout</code> are ephemeral and will disappear when your Mosquitto container is rebuilt, but this type of configuration reduces wear and tear on your SD card.</p>
+<p>The alternative, which <em>may</em> be more appropriate if you are running on an SSD or HD, is to change <code>mosquitto.conf</code> to be like this:</p>
+<div class="highlight"><pre><span></span><code>log_dest file /mosquitto/log/mosquitto.log
+#log_dest stdout
+log_timestamp_format %Y-%m-%dT%H:%M:%S
+</code></pre></div>
+<p>and then restart Mosquitto:</p>
+<div class="highlight"><pre><span></span><code>$ cd ~/IOTstack
+$ docker-compose restart mosquitto
+</code></pre></div>
+<p>The path <code>/mosquitto/log/mosquitto.log</code> is an <strong>internal</strong> path. When this style of logging is active, you inspect Mosquitto's logs using the <strong>external</strong> path like this:</p>
+<div class="highlight"><pre><span></span><code>$ sudo tail ~/IOTstack/volumes/mosquitto/log/mosquitto.log
+</code></pre></div>
+<blockquote>
+<p>You need to use <code>sudo</code> because the log is owned by userID 1883 and Mosquitto creates it without "world" read permission.</p>
+</blockquote>
+<p>Logs written to <code>mosquitto.log</code> do not disappear when your IOTstack is restarted. They persist until you take action to prune the file.</p>
+<h2 id="security"><a name="security"> Security </a></h2>
+<h3 id="configuring-security"><a name="securityConfiguration"> Configuring security </a></h3>
+<p>Mosquitto security is controlled by <code>mosquitto.conf</code>. These are the relevant directives:</p>
+<div class="highlight"><pre><span></span><code>#password_file /mosquitto/pwfile/pwfile
+allow_anonymous true
+</code></pre></div>
+<p>Mosquitto security can be in four different states, which are summarised in the following table:</p>
+<table>
+<thead>
+<tr>
+<th align="center"><code>password_file</code></th>
+<th align="center"><code>allow_anonymous</code></th>
+<th align="center">security enforcement</th>
+<th>remark</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">disabled</td>
+<td align="center">true</td>
+<td align="center">open access</td>
+<td>default</td>
+</tr>
+<tr>
+<td align="center">disabled</td>
+<td align="center">false</td>
+<td align="center">all access denied</td>
+<td>not really useful</td>
+</tr>
+<tr>
+<td align="center">enabled</td>
+<td align="center">true</td>
+<td align="center">credentials optional</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">enabled</td>
+<td align="center">false</td>
+<td align="center">credentials required</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="password-file-management"><a name="passwordManagement"> Password file management </a></h3>
+<p>The password file for Mosquitto is part of a mapped volume:</p>
+<ul>
+<li>The <strong>internal</strong> path is <code>/mosquitto/pwfile/pwfile</code></li>
+<li>The <strong>external</strong> path is <code>~/IOTstack/volumes/mosquitto/pwfile/pwfile</code></li>
+</ul>
+<p>A common problem with the previous version of Mosquitto for IOTstack occurred when the <code>password_file</code> directive was enabled but the <code>pwfile</code> was not present. Mosquitto went into a restart loop.</p>
+<p>The Mosquitto container performs self-repair each time the container is brought up or restarts. If <code>pwfile</code> is missing, an empty file is created as a placeholder. This prevents the restart loop. What happens next depends on <code>allow_anonymous</code>:</p>
+<ul>
+<li>
+<p>If <code>true</code> then:</p>
+<ul>
+<li>Any MQTT request <em>without</em> credentials will be permitted;</li>
+<li>Any MQTT request <em>with</em> credentials will be rejected (because <code>pwfile</code> is empty so there is nothing to match on).</li>
+</ul>
+</li>
+<li>
+<p>If <code>false</code> then <strong>all</strong> MQTT requests will be rejected.</p>
+</li>
+</ul>
+<h4 id="create-username-and-password"><a name="passwordCreation"> create username and password </a></h4>
+<p>To create a username and password, use the following as a template.</p>
+<div class="highlight"><pre><span></span><code>$ docker exec mosquitto mosquitto_passwd -b /mosquitto/pwfile/pwfile «username» «password» 
+</code></pre></div>
+<p>Replace «username» and «password» with appropriate values, then execute the command. For example, to create the username "hello" with password "world":</p>
+<div class="highlight"><pre><span></span><code>$ docker exec mosquitto mosquitto_passwd -b /mosquitto/pwfile/pwfile hello world
+</code></pre></div>
+<p>Note:</p>
+<ul>
+<li>See also <a href="#healthCheckCustom">customising health-check</a>. If you are creating usernames and passwords, you may also want to create credentials for the health-check agent.</li>
+</ul>
+<h4 id="check-password-file"><a name="checkPasswordFile"> check password file </a></h4>
+<p>There are two ways to verify that the password file exists and has the expected content:</p>
+<ol>
+<li>
+<p>View the file using its <strong>external</strong> path: </p>
+<div class="highlight"><pre><span></span><code>$ sudo cat ~/IOTstack/volumes/mosquitto/pwfile/pwfile 
+</code></pre></div>
+<blockquote>
+<p><code>sudo</code> is needed because the file is neither owned nor readable by <code>pi</code>.</p>
+</blockquote>
+</li>
+<li>
+<p>View the file using its <strong>internal</strong> path:</p>
+<div class="highlight"><pre><span></span><code>$ docker <span class="nb">exec</span> mosquitto cat /mosquitto/pwfile/pwfile
+</code></pre></div>
+</li>
+</ol>
+<p>Each credential starts with the username and occupies one line in the file: </p>
+<div class="highlight"><pre><span></span><code>hello:$7$101$ZFOHHVJLp2bcgX+h$MdHsc4rfOAhmGG+65NpIEJkxY0beNeFUyfjNAGx1ILDmI498o4cVOaD9vDmXqlGUH9g6AgHki8RPDEgjWZMkDA==
+</code></pre></div>
+<h4 id="remove-entry-from-password-file"><a name="deletePassword"> remove entry from password file </a></h4>
+<p>To remove an entry from the password file:</p>
+<div class="highlight"><pre><span></span><code>$ docker exec mosquitto mosquitto_passwd -D /mosquitto/pwfile/pwfile «username»
+</code></pre></div>
+<h4 id="reset-the-password-file"><a name="resetPasswordFile"> reset the password file </a></h4>
+<p>There are several ways to reset the password file. Your options are:</p>
+<ol>
+<li>
+<p>Remove the password file and restart Mosquitto:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ sudo rm ./volumes/mosquitto/pwfile/pwfile
+$ docker-compose restart mosquitto 
+</code></pre></div>
+<p>The result is an empty password file.</p>
+</li>
+<li>
+<p>Clear all existing passwords while adding a new password:</p>
+<div class="highlight"><pre><span></span><code>$ docker <span class="nb">exec</span> mosquitto mosquitto_passwd -c -b /mosquitto/pwfile/pwfile «username» «password»
+</code></pre></div>
+<p>The result is a password file with a single entry.</p>
+</li>
+<li>
+<p>Clear all existing passwords in favour of a single dummy password which is then removed:</p>
+<div class="highlight"><pre><span></span><code>$ docker <span class="nb">exec</span> mosquitto mosquitto_passwd -c -b /mosquitto/pwfile/pwfile dummy dummy
+$ docker <span class="nb">exec</span> mosquitto mosquitto_passwd -D /mosquitto/pwfile/pwfile dummy
+</code></pre></div>
+<p>The result is an empty password file.</p>
+</li>
+</ol>
+<h3 id="activate-mosquitto-security"><a name="activateSecurity"> Activate Mosquitto security </a></h3>
+<ol>
+<li>
+<p>Use <code>sudo</code> and your favourite text editor to open the following file:</p>
+<div class="highlight"><pre><span></span><code>~/IOTstack/volumes/mosquitto/config/mosquitto.conf
+</code></pre></div>
+</li>
+<li>
+<p>Remove the comment indicator from the following line:</p>
+<div class="highlight"><pre><span></span><code>#password_file /mosquitto/pwfile/pwfile
+</code></pre></div>
+<p>so that it becomes:</p>
+<div class="highlight"><pre><span></span><code>password_file /mosquitto/pwfile/pwfile
+</code></pre></div>
+</li>
+<li>
+<p>Set <code>allow_anonymous</code> as required:</p>
+<div class="highlight"><pre><span></span><code>allow_anonymous true
+</code></pre></div>
+<p>If <code>true</code> then:</p>
+<ul>
+<li>Any MQTT request without credentials will be permitted;</li>
+<li>The validity of credentials supplied with any MQTT request will be enforced.</li>
+</ul>
+<p>If <code>false</code> then:</p>
+<ul>
+<li>Any MQTT request without credentials will be rejected;</li>
+<li>The validity of credentials supplied with any MQTT request will be enforced.</li>
+</ul>
+</li>
+<li>
+<p>Save the modified configuration file and restart Mosquitto:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ docker-compose restart mosquitto
+</code></pre></div>
+</li>
+</ol>
+<h3 id="testing-mosquitto-security"><a name="testSecurity"> Testing Mosquitto security </a></h3>
+<h4 id="assumptions"><a name="testAssumptions"> assumptions </a></h4>
+<ol>
+<li>You have created at least one username ("hello") and password ("world").</li>
+<li><code>password_file</code> is enabled.</li>
+<li><code>allow_anonymous</code> is <code>false</code>.</li>
+</ol>
+<h4 id="install-testing-tools"><a name="installTestTools"> install testing tools </a></h4>
+<p>If you do not have the Mosquitto clients installed on your Raspberry Pi (ie <code>$ which mosquitto_pub</code> does not return a path), install them using:</p>
+<div class="highlight"><pre><span></span><code>$ sudo apt install -y mosquitto-clients
+</code></pre></div>
+<h4 id="test-anonymous-access-is-prohibited"><a name="anonymousDenied"> test: <em>anonymous access is prohibited</em> </a></h4>
+<p>Test <strong>without</strong> providing credentials:</p>
+<div class="highlight"><pre><span></span><code>$ mosquitto_pub -h 127.0.0.1 -p 1883 -t &quot;/password/test&quot; -m &quot;up up and away&quot;
+Connection Refused: not authorised.
+Error: The connection was refused.
+</code></pre></div>
+<p>Note:</p>
+<ul>
+<li>The error is the expected result and shows that Mosquitto will not allow anonymous access.</li>
+</ul>
+<h4 id="test-access-with-credentials-is-permitted"><a name="pubPermitted"> test: <em>access with credentials is permitted</em> </a></h4>
+<p>Test with credentials</p>
+<div class="highlight"><pre><span></span><code>$ mosquitto_pub -h 127.0.0.1 -p 1883 -t &quot;/password/test&quot; -m &quot;up up and away&quot; -u hello -P world
+$ 
+</code></pre></div>
+<p>Note:</p>
+<ul>
+<li>The absence of any error message means the message was sent. Silence = success!</li>
+</ul>
+<h4 id="test-round-trip-with-credentials-is-permitted"><a name="pubSubPermitted"> test: <em>round-trip with credentials is permitted</em> </a></h4>
+<p>Prove round-trip connectivity will succeed when credentials are provided. First, set up a subscriber as a background process. This mimics the role of a process like Node-Red:</p>
+<div class="highlight"><pre><span></span><code>$ mosquitto_sub -v -h 127.0.0.1 -p 1883 -t &quot;/password/test&quot; -F &quot;%I %t %p&quot; -u hello -P world &amp;
+[1] 25996
+</code></pre></div>
+<p>Repeat the earlier test:</p>
+<div class="highlight"><pre><span></span><code>$ mosquitto_pub -h 127.0.0.1 -p 1883 -t &quot;/password/test&quot; -m &quot;up up and away&quot; -u hello -P world
+2021-02-16T14:40:51+1100 /password/test up up and away
+</code></pre></div>
+<p>Note:</p>
+<ul>
+<li>the second line above is coming from the <code>mosquitto_sub</code> running in the background.</li>
+</ul>
+<p>When you have finished testing you can kill the background process (press return twice after you enter the <code>kill</code> command):</p>
+<div class="highlight"><pre><span></span><code>$ kill %1
+$
+[1]+  Terminated              mosquitto_sub -v -h 127.0.0.1 -p 1883 -t &quot;/password/test&quot; -F &quot;%I %t %p&quot; -u hello -P world
+</code></pre></div>
+<h2 id="container-health-check"><a name="healthCheck"> Container health check </a></h2>
+<h3 id="theory-of-operation"><a name="healthCheckTheory"> theory of operation </a></h3>
+<p>A script , or "agent", to assess the health of the Mosquitto container has been added to the <em>local image</em> via the <em>Dockerfile</em>. In other words, the script is specific to IOTstack.</p>
+<p>The agent is invoked 30 seconds after the container starts, and every 30 seconds thereafter. The agent:</p>
+<ul>
+<li>
+<p>Publishes a retained MQTT message to the broker running in the same container. The message payload is the current date and time, and the default topic string is:</p>
+<div class="highlight"><pre><span></span><code>iotstack/mosquitto/healthcheck
+</code></pre></div>
+</li>
+<li>
+<p>Subscribes to the same broker for the same topic for a single message event.</p>
+</li>
+<li>Compares the payload sent with the payload received. If the payloads (ie time-stamps) match, the agent concludes that the Mosquitto broker (the process running inside the same container) is functioning properly for round-trip messaging.</li>
+</ul>
+<h3 id="monitoring-health-check"><a name="healthCheckMonitor"> monitoring health-check </a></h3>
+<p>Portainer's <em>Containers</em> display contains a <em>Status</em> column which shows health-check results for all containers that support the feature.</p>
+<p>You can also use the <code>docker ps</code> command to monitor health-check results. The following command narrows the focus to mosquitto:</p>
+<div class="highlight"><pre><span></span><code>$ docker ps --format <span class="s2">&quot;table {{.Names}}\t{{.Status}}&quot;</span>  --filter <span class="nv">name</span><span class="o">=</span>mosquitto
+</code></pre></div>
+<p>Possible reply patterns are:</p>
+<ol>
+<li>
+<p>The container is starting and has not yet run the health-check agent:</p>
+<div class="highlight"><pre><span></span><code>NAMES       STATUS
+mosquitto   Up 3 seconds (health: starting)
+</code></pre></div>
+</li>
+<li>
+<p>The container has been running for at least 30 seconds and the health-check agent has returned a positive result within the last 30 seconds:</p>
+<div class="highlight"><pre><span></span><code>NAMES       STATUS
+mosquitto   Up 34 seconds (healthy)
+</code></pre></div>
+</li>
+<li>
+<p>The container has been running for more than 90 seconds but has failed the last three successive health-check tests:</p>
+<div class="highlight"><pre><span></span><code>NAMES       STATUS
+mosquitto   Up About a minute (unhealthy)
+</code></pre></div>
+</li>
+</ol>
+<p>You can also subscribe to the same topic that the health-check agent is using to view the retained messages as they are published:</p>
+<div class="highlight"><pre><span></span><code>$ mosquitto_sub -v -h localhost -p <span class="m">1883</span> -t <span class="s2">&quot;iotstack/mosquitto/healthcheck&quot;</span> -F <span class="s2">&quot;%I %t %p&quot;</span>
+</code></pre></div>
+<p>Notes:</p>
+<ul>
+<li>This assumes you are running the command <em>outside</em> container-space on the <em>same</em> host as your Mosquitto container. If you run this command from <em>another</em> host, replace <code>localhost</code> with the IP address or domain name of the host where your Mosquitto container is running.</li>
+<li>The <code>-p 1883</code> is the <em>external</em> port. You will need to adjust this if you are using a different <em>external</em> port for your MQTT service.</li>
+<li>If you enable authentication for your Mosquitto broker, you will need to add <code>-u «user»</code> and <code>-P «password»</code> parameters to this command.</li>
+<li>You should expect to see a new message appear approximately every 30 seconds. That indicates the health-check agent is functioning normally. Use <kbd>control</kbd>+<kbd>c</kbd> to terminate the command.</li>
+</ul>
+<h3 id="customising-health-check"><a name="healthCheckCustom"> customising health-check </a></h3>
+<p>You can customise the operation of the health-check agent by editing the <code>mosquitto</code> service definition in your <em>Compose</em> file:</p>
+<ol>
+<li>
+<p>By default, the mosquitto broker listens to <strong>internal</strong> port 1883. If you need change that port, you also need to inform the health-check agent via an environment variable. For example, suppose you changed the <strong>internal</strong> port to 12345:</p>
+<div class="highlight"><pre><span></span><code>    <span class="nt">environment</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">HEALTHCHECK_PORT=12345</span>
+</code></pre></div>
+</li>
+<li>
+<p>If the default topic string used by the health-check agent causes a name-space collision, you can override it. For example, you could use a Universally-Unique Identifier (UUID):</p>
+<div class="highlight"><pre><span></span><code>    <span class="nt">environment</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">HEALTHCHECK_TOPIC=4DAA361F-288C-45D5-9540-F1275BDCAF02</span>
+</code></pre></div>
+<p>Note:</p>
+<ul>
+<li>You will also need to use the same topic string in the <code>mosquitto_sub</code> command shown at <a href="#healthCheckMonitor">monitoring health-check</a>.</li>
+</ul>
+</li>
+<li>
+<p>If you have enabled authentication for your Mosquitto broker service, you will need to provide appropriate credentials for your health-check agent:</p>
+<div class="highlight"><pre><span></span><code>    <span class="nt">environment</span><span class="p">:</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">HEALTHCHECK_USER=healthyUser</span>
+      <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">HEALTHCHECK_PASSWORD=healthyUserPassword</span>
+</code></pre></div>
+</li>
+<li>
+<p>If the health-check agent misbehaves in your environment, or if you simply don't want it to be active, you can disable all health-checking for the container by adding the following lines to its service definition:</p>
+<div class="highlight"><pre><span></span><code>    <span class="nt">healthcheck</span><span class="p">:</span>
+      <span class="nt">disable</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+<p>Notes:</p>
+<ul>
+<li>The directives to disable health-checking are independent of the environment variables. If you want to disable health-checking temporarily, there is no need to remove any <code>HEALTHCHECK_</code> environment variables that may already be in place.</li>
+<li>
+<p>Conversely, the mere presence of a <code>healthcheck:</code> clause in the <code>mosquitto</code> service definition overrides the supplied agent. In other words, the following can't be used to re-enable the supplied agent:</p>
+<div class="highlight"><pre><span></span><code>    <span class="nt">healthcheck</span><span class="p">:</span>
+      <span class="nt">disable</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">false</span>
+</code></pre></div>
+<p>You must remove the entire <code>healthcheck:</code> clause.</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="upgrading-mosquitto"><a name="upgradingMosquitto"> Upgrading Mosquitto </a></h2>
+<p>You can update most containers like this:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ docker-compose pull
+$ docker-compose up -d
+$ docker system prune
+</code></pre></div>
+<p>In words:</p>
+<ul>
+<li><code>docker-compose pull</code> downloads any newer images;</li>
+<li><code>docker-compose up -d</code> causes any newly-downloaded images to be instantiated as containers (replacing the old containers); and</li>
+<li>the <code>prune</code> gets rid of the outdated images.</li>
+</ul>
+<p>This strategy doesn't work when a <em>Dockerfile</em> is used to build a <em>local image</em> on top of a <em>base image</em> downloaded from <a href="https://hub.docker.com"><em>DockerHub</em></a>. The <em>local image</em> is what is running so there is no way for the <code>pull</code> to sense when a newer version becomes available.</p>
+<p>The only way to know when an update to Mosquitto is available is to check the <a href="https://hub.docker.com/_/eclipse-mosquitto?tab=tags&amp;page=1&amp;ordering=last_updated">eclipse-mosquitto tags page</a> on <em>DockerHub</em>.</p>
+<p>Once a new version appears on <em>DockerHub</em>, you can upgrade Mosquitto like this:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ docker-compose build --no-cache --pull mosquitto
+$ docker-compose up -d mosquitto
+$ docker system prune
+$ docker system prune
+</code></pre></div>
+<p>Breaking it down into parts:</p>
+<ul>
+<li><code>build</code> causes the named container to be rebuilt;</li>
+<li><code>--no-cache</code> tells the <em>Dockerfile</em> process that it must not take any shortcuts. It really <strong>must</strong> rebuild the <em>local image</em>;</li>
+<li><code>--pull</code> tells the <em>Dockerfile</em> process to actually check with <a href="https://hub.docker.com"><em>DockerHub</em></a> to see if there is a later version of the <em>base image</em> and, if so, to download it before starting the build;</li>
+<li><code>mosquitto</code> is the named container argument required by the <code>build</code> command.</li>
+</ul>
+<p>Your existing Mosquitto container continues to run while the rebuild proceeds. Once the freshly-built <em>local image</em> is ready, the <code>up</code> tells <code>docker-compose</code> to do a new-for-old swap. There is barely any downtime for your MQTT broker service.</p>
+<p>The <code>prune</code> is the simplest way of cleaning up. The first call removes the old <em>local image</em>. The second call cleans up the old <em>base image</em>.</p>
+<h3 id="mosquitto-version-pinning"><a name="versionPinning"> Mosquitto version pinning </a></h3>
+<p>If you need to pin Mosquitto to a particular version:</p>
+<ol>
+<li>
+<p>Use your favourite text editor to open the following file:</p>
+<div class="highlight"><pre><span></span><code>~/IOTstack/.templates/mosquitto/Dockerfile
+</code></pre></div>
+</li>
+<li>
+<p>Find the line:</p>
+<div class="highlight"><pre><span></span><code>FROM eclipse-mosquitto:latest
+</code></pre></div>
+</li>
+<li>
+<p>Replace <code>latest</code> with the version you wish to pin to. For example, to pin to version 2.0.10:</p>
+<div class="highlight"><pre><span></span><code>FROM eclipse-mosquitto:2.0.10
+</code></pre></div>
+</li>
+<li>
+<p>Save the file and tell <code>docker-compose</code> to rebuild the local image:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ docker-compose up -d --build mosquitto
+$ docker system prune
+</code></pre></div>
+<p>The new <em>local image</em> is built, then the new container is instantiated based on that image. The <code>prune</code> deletes the old <em>local image</em>.</p>
+</li>
+</ol>
+<p>Note:</p>
+<ul>
+<li>As well as preventing Docker from updating the <em>base image</em>, pinning will also block incoming updates to the <em>Dockerfile</em> from a <code>git pull</code>. Nothing will change until you decide to remove the pin.</li>
+</ul>
+<h2 id="about-port-9001"><a name="aboutPort9001"> About Port 9001 </a></h2>
+<p>Earlier versions of the IOTstack service definition for Mosquitto included two port mappings:</p>
+<div class="highlight"><pre><span></span><code>ports:
+  - &quot;1883:1883&quot;
+  - &quot;9001:9001&quot;
+</code></pre></div>
+<p><a href="https://github.com/SensorsIot/IOTstack/issues/67">Issue 67</a> explored the topic of port 9001 and showed that:</p>
+<ul>
+<li>The base image for Mosquitto did not expose port 9001; and</li>
+<li>The running container was not listening to port 9001.</li>
+</ul>
+<p>On that basis, the mapping for port 9001 was removed from <code>service.yml</code>.</p>
+<p>If you have a use-case that needs port 9001, you can re-enable support by:</p>
+<ol>
+<li>
+<p>Inserting the port mapping under the <code>mosquitto</code> definition in <code>docker-compose.yml</code>:</p>
+<div class="highlight"><pre><span></span><code>- &quot;9001:9001&quot;
+</code></pre></div>
+</li>
+<li>
+<p>Inserting the additional listener in <code>mosquitto.conf</code>:</p>
+<div class="highlight"><pre><span></span><code>listener 1883
+listener 9001
+</code></pre></div>
+<p>You need <strong>both</strong> lines. If you omit 1883 then Mosquitto will stop listening to port 1883 and will only listen to port 9001.</p>
+</li>
+<li>
+<p>Restarting the container:</p>
+<div class="highlight"><pre><span></span><code>$ cd ~/IOTstack
+$ docker-compose restart mosquitto
+</code></pre></div>
+</li>
+</ol>
+<p>Please consider raising an issue to document your use-case. If you think your use-case has general application then please also consider creating a pull request to make the changes permanent.</p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../MariaDB/" class="md-footer__link md-footer__link--prev" aria-label="Previous: MariaDB" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              MariaDB
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../MotionEye/" class="md-footer__link md-footer__link--next" aria-label="Next: MotionEye" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              MotionEye
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.01824240.min.js"}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.ff0eccb3.min.js"></script>
+      
+    
+  </body>
+</html>

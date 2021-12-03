@@ -1,0 +1,1934 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Docker stack for getting started on IOT on the Raspberry PI">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.2">
+    
+    
+      
+        <title>OctoPrint – the snappy web interface for your 3D printer - IOTstack</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.816931ca.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.9204c3b2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>function __md_scope(e,t,_){return new URL(_||(t===localStorage?"../..":"../.."),location).pathname+"."+e}function __md_get(e,t=localStorage,_){return JSON.parse(t.getItem(__md_scope(e,t,_)))}function __md_set(e,t,_=localStorage,o){try{_.setItem(__md_scope(e,_,o),JSON.stringify(t))}catch(e){}}</script>
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#octoprint-the-snappy-web-interface-for-your-3d-printer" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="IOTstack" class="md-header__button md-logo" aria-label="IOTstack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            IOTstack
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              OctoPrint – the snappy web interface for your 3D printer
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SensorsIot/IOTstack/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="IOTstack" class="md-nav__button md-logo" aria-label="IOTstack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    IOTstack
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SensorsIot/IOTstack/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        IOTStack Wiki
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Accessing-your-Device-from-the-internet/" class="md-nav__link">
+        Accessing your device from the internet
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Backup-and-Restore/" class="md-nav__link">
+        Backing up and restoring IOTstack
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BuildStack-RandomPassword/" class="md-nav__link">
+        Build Stack Random Services Password
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BuildStack-Services/" class="md-nav__link">
+        Build Stack Services system
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Contributing-Services/" class="md-nav__link">
+        Contributing a service to IOTstack
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Custom/" class="md-nav__link">
+        Custom services and overriding default settings for IOTstack
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Default-Configs/" class="md-nav__link">
+        Build Stack Default Passwords for Services
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Docker-commands/" class="md-nav__link">
+        Docker commands
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Getting-Started/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Home/" class="md-nav__link">
+        Wiki
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How-the-script-works/" class="md-nav__link">
+        How the script works
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Menu-System/" class="md-nav__link">
+        Menu system
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Misc/" class="md-nav__link">
+        Miscellaneous
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Native-RTL_433/" class="md-nav__link">
+        Native RTL_433
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Networking/" class="md-nav__link">
+        Networking
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../New-Menu-Release-Notes/" class="md-nav__link">
+        New IOTstack Menu
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PostBuild-Script/" class="md-nav__link">
+        Postbuild BASH Script
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RPIEasy_native/" class="md-nav__link">
+        RPIEasy
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Understanding-Containers/" class="md-nav__link">
+        What is Docker?
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Updating-the-Project/" class="md-nav__link">
+        Updating the project
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gcgarner-migration/" class="md-nav__link">
+        Migrating from gcgarner to SensorsIot
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_23" type="checkbox" id="__nav_23" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_23">
+          Containers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Containers" data-md-level="1">
+        <label class="md-nav__title" for="__nav_23">
+          <span class="md-nav__icon md-icon"></span>
+          Containers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AdGuardHome/" class="md-nav__link">
+        AdGuard Home
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Adminer/" class="md-nav__link">
+        Adminer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Blynk_server/" class="md-nav__link">
+        Blynk server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chronograf/" class="md-nav__link">
+        Chronograf
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DashMachine/" class="md-nav__link">
+        DashMachine
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EspruinoHub/" class="md-nav__link">
+        Espruinohub
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Grafana/" class="md-nav__link">
+        Grafana
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Heimdall/" class="md-nav__link">
+        Heimdall
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Home-Assistant/" class="md-nav__link">
+        Home Assistant
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Homer/" class="md-nav__link">
+        Homer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InfluxDB/" class="md-nav__link">
+        InfluxDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Kapacitor/" class="md-nav__link">
+        Kapacitor
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MariaDB/" class="md-nav__link">
+        MariaDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Mosquitto/" class="md-nav__link">
+        Mosquitto
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MotionEye/" class="md-nav__link">
+        MotionEye
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NextCloud/" class="md-nav__link">
+        Nextcloud
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Node-RED/" class="md-nav__link">
+        Node-RED
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          OctoPrint – the snappy web interface for your 3D printer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        OctoPrint – the snappy web interface for your 3D printer
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-mappings" class="md-nav__link">
+    Device mappings
+  </a>
+  
+    <nav class="md-nav" aria-label="Device mappings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-devttyama0devttyacm0-mapping" class="md-nav__link">
+    the /dev/ttyAMA0:/dev/ttyACM0 mapping
+  </a>
+  
+    <nav class="md-nav" aria-label="the /dev/ttyAMA0:/dev/ttyACM0 mapping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-devttyusbn" class="md-nav__link">
+    option 1 - /dev/ttyUSBn
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-devserialby-idxxxxxxxx" class="md-nav__link">
+    option 2 - /dev/serial/by-id/xxxxxxxx
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-3-devhumanreadablename" class="md-nav__link">
+    option 3 - /dev/humanReadableName
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-devvideo0devvideo0-mapping" class="md-nav__link">
+    the /dev/video0:/dev/video0 mapping
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-usage" class="md-nav__link">
+    Practical usage
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#starting-the-octoprint-container" class="md-nav__link">
+    starting the OctoPrint container
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#first-run-the-setup-wizard" class="md-nav__link">
+    first run – the Setup Wizard
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#after-the-first-run" class="md-nav__link">
+    after the first run
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#popup-messages" class="md-nav__link">
+    popup messages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restarting-the-octoprint-container" class="md-nav__link">
+    restarting the OctoPrint container
+  </a>
+  
+    <nav class="md-nav" aria-label="restarting the OctoPrint container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#restarting-via-the-command-line" class="md-nav__link">
+    restarting via the command line
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restarting-via-octoprint-user-interface" class="md-nav__link">
+    restarting via OctoPrint user interface
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stopping-the-octoprint-container" class="md-nav__link">
+    stopping the OctoPrint container
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#video-feed-built-in-camera-interface" class="md-nav__link">
+    Video feed (built-in camera interface)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#silencing-the-security-warning" class="md-nav__link">
+    Silencing the security warning
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#routine-container-maintenance" class="md-nav__link">
+    Routine container maintenance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-you-forget-your-username-and-password" class="md-nav__link">
+    If you forget your username and password
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-all-else-fails" class="md-nav__link">
+    If all else fails…
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Pi-hole/" class="md-nav__link">
+        Pi-hole
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Plex/" class="md-nav__link">
+        Plex
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Portainer-agent/" class="md-nav__link">
+        Portainer agent
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Portainer-ce/" class="md-nav__link">
+        Portainer CE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PostgreSQL/" class="md-nav__link">
+        PostgreSQL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Prometheus/" class="md-nav__link">
+        Prometheus
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Python/" class="md-nav__link">
+        Python
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RTL_433-docker/" class="md-nav__link">
+        RTL_433 Docker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TasmoAdmin/" class="md-nav__link">
+        TasmoAdmin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Telegraf/" class="md-nav__link">
+        Telegraf
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WireGuard/" class="md-nav__link">
+        WireGuard
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zigbee2MQTT/" class="md-nav__link">
+        Zigbee2MQTT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zigbee2mqttassistant/" class="md-nav__link">
+        Zigbee2Mqtt Assistant
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deconz/" class="md-nav__link">
+        deCONZ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diyHue/" class="md-nav__link">
+        DIY hue
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openHAB/" class="md-nav__link">
+        openHAB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../x2go/" class="md-nav__link">
+        x2go
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    References
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device-mappings" class="md-nav__link">
+    Device mappings
+  </a>
+  
+    <nav class="md-nav" aria-label="Device mappings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-devttyama0devttyacm0-mapping" class="md-nav__link">
+    the /dev/ttyAMA0:/dev/ttyACM0 mapping
+  </a>
+  
+    <nav class="md-nav" aria-label="the /dev/ttyAMA0:/dev/ttyACM0 mapping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-devttyusbn" class="md-nav__link">
+    option 1 - /dev/ttyUSBn
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-devserialby-idxxxxxxxx" class="md-nav__link">
+    option 2 - /dev/serial/by-id/xxxxxxxx
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-3-devhumanreadablename" class="md-nav__link">
+    option 3 - /dev/humanReadableName
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-devvideo0devvideo0-mapping" class="md-nav__link">
+    the /dev/video0:/dev/video0 mapping
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-usage" class="md-nav__link">
+    Practical usage
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#starting-the-octoprint-container" class="md-nav__link">
+    starting the OctoPrint container
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#first-run-the-setup-wizard" class="md-nav__link">
+    first run – the Setup Wizard
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#after-the-first-run" class="md-nav__link">
+    after the first run
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#popup-messages" class="md-nav__link">
+    popup messages
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restarting-the-octoprint-container" class="md-nav__link">
+    restarting the OctoPrint container
+  </a>
+  
+    <nav class="md-nav" aria-label="restarting the OctoPrint container">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#restarting-via-the-command-line" class="md-nav__link">
+    restarting via the command line
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#restarting-via-octoprint-user-interface" class="md-nav__link">
+    restarting via OctoPrint user interface
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stopping-the-octoprint-container" class="md-nav__link">
+    stopping the OctoPrint container
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#video-feed-built-in-camera-interface" class="md-nav__link">
+    Video feed (built-in camera interface)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#silencing-the-security-warning" class="md-nav__link">
+    Silencing the security warning
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#routine-container-maintenance" class="md-nav__link">
+    Routine container maintenance
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-you-forget-your-username-and-password" class="md-nav__link">
+    If you forget your username and password
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-all-else-fails" class="md-nav__link">
+    If all else fails…
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/SensorsIot/IOTstack/edit/master/docs/Containers/Octoprint.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<h1 id="octoprint-the-snappy-web-interface-for-your-3d-printer">OctoPrint – the snappy web interface for your 3D printer</h1>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://octoprint.org">OctoPrint home page</a></li>
+<li><a href="https://community.octoprint.org">OctoPrint Community Forum</a></li>
+<li>DockerHub <a href="https://hub.docker.com/r/octoprint/octoprint">octoprint/octoprint</a></li>
+<li>GitHub <a href="https://github.com/OctoPrint/octoprint-docker">OctoPrint/octoprint-docker</a></li>
+</ul>
+<h2 id="device-mappings">Device mappings</h2>
+<p>When you select "OctoPrint" in the IOTstack menu, the service definition in your <code>docker-compose.yml</code>, contains the following under the <code>devices:</code> heading:</p>
+<div class="highlight"><pre><span></span><code>devices:
+  - /dev/ttyAMA0:/dev/ttyACM0
+# - /dev/video0:/dev/video0
+</code></pre></div>
+<h3 id="the-devttyama0devttyacm0-mapping"><em>the <code>/dev/ttyAMA0:/dev/ttyACM0</code> mapping</em></h3>
+<p>The <code>/dev/ttyAMA0:/dev/ttyACM0</code> mapping should be read as saying "the physical Raspberry Pi device <code>/dev/ttyAMA0</code> is mapped to the logical OctoPrint container device <code>/dev/ttyACM0</code>".</p>
+<p>The <code>/dev/ttyAMA0</code> device is used as a default because it is always present on Raspbian. If you bring up your container like that, the mapping will succeed and the container is unlikely to go into a restart loop.</p>
+<p>However, the OctoPrint container is unlikely to be able to connect to your 3D printer via <code>/dev/ttyAMA0</code> for the very simple reason that that is not how 3D printers usually appear on the Raspberry Pi. You need to work out <em>how</em> your printer presents itself and change the device mapping accordingly.</p>
+<h4 id="option-1-devttyusbn">option 1 - <code>/dev/ttyUSBn</code></h4>
+<p>Using "ttyUSBn" will "work" but, because of the inherent variability in the name, this approach is not recommended.</p>
+<p>The "n" in the "ttyUSBn" can vary depending on which USB devices are attached to your Raspberry Pi and the order in which they are attached. The "n" may also change as you add and remove devices.</p>
+<p>If the OctoPrint container is up when the device number changes, the container will crash, and it will either go into a restart loop if you try to bring it up when the expected device is not "there", or will try to communicate with a device that isn't your 3D printer.</p>
+<h4 id="option-2-devserialby-idxxxxxxxx">option 2 - <code>/dev/serial/by-id/xxxxxxxx</code></h4>
+<p>The "xxxxxxxx" is (usually) unique to your 3D printer. To find it, connect your printer to your Raspberry Pi, then run the command:</p>
+<div class="highlight"><pre><span></span><code>$ ls -1 /dev/serial/by-id
+</code></pre></div>
+<p>You will get an answer like this:</p>
+<div class="highlight"><pre><span></span><code>usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_3b14eaa48a154d5e87032d59459d5206-if00-port0
+</code></pre></div>
+<p>Note:</p>
+<ul>
+<li>If you have multiple serial devices attached, you will get multiple lines in the output. It is up to you to sort out which one belongs to your 3D printer, possibly by disconnecting and re-attaching the printer and observing how the list changes.</li>
+<li>The uniqueness of device IDs is under the control of the device manufacturer. Each manufacturer <em>should</em> ensure their devices are unique but some manufacturers are more diligent than others.</li>
+</ul>
+<p>Assuming the above example output was the answer, edit <code>docker-compose.yml</code> to look like this:</p>
+<div class="highlight"><pre><span></span><code>devices:
+  - /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_3b14eaa48a154d5e87032d59459d5206-if00-port0:/dev/ttyACM0
+</code></pre></div>
+<p>Notes:</p>
+<ul>
+<li>device <em>by-id</em> names follow the device. In other words, if you have two or more Raspberry Pis and a collection of serial devices (3D printers, Zigbee adapters, UARTs, and so on), a 3D printer will always get the same by-id name, irrespective of which Raspberry Pi it is attached to.</li>
+<li>device <em>by-id</em> names do not persist if the physical device is disconnected. If you switch off your 3D printer or disconnect the USB cable while the OctoPrint container is running, the container will crash.</li>
+</ul>
+<h4 id="option-3-devhumanreadablename">option 3 - <code>/dev/humanReadableName</code></h4>
+<p>Suppose your 3D printer is a MasterDisaster5000Pro, and that you would like to be able to set up the device to use a human-readable name like:</p>
+<div class="highlight"><pre><span></span><code>/dev/MasterDisaster5000Pro
+</code></pre></div>
+<p>Start by disconnecting your 3D printer from your Raspberry Pi. Next, run this command:</p>
+<div class="highlight"><pre><span></span><code>$ tail -f /var/log/messages
+</code></pre></div>
+<p>Connect your 3D printer and observe the log output. You are interested in messages that look like this:</p>
+<div class="highlight"><pre><span></span><code>mmm dd hh:mm:ss mypi kernel: [423839.626522] cp210x 1-1.1.3:1.0: device disconnected
+mmm dd hh:mm:ss mypi kernel: [431265.973308] usb 1-1.1.3: new full-speed USB device number 10 using dwc_otg
+mmm dd hh:mm:ss mypi kernel: [431266.109418] usb 1-1.1.3: New USB device found, idVendor=dead, idProduct=beef, bcdDevice= 1.00
+mmm dd hh:mm:ss mypi kernel: [431266.109439] usb 1-1.1.3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+mmm dd hh:mm:ss mypi kernel: [431266.109456] usb 1-1.1.3: Product: CP2102N USB to UART Bridge Controller
+mmm dd hh:mm:ss mypi kernel: [431266.109471] usb 1-1.1.3: Manufacturer: Silicon Labs
+mmm dd hh:mm:ss mypi kernel: [431266.109486] usb 1-1.1.3: SerialNumber: cafe80facefeed
+mmm dd hh:mm:ss mypi kernel: [431266.110657] cp210x 1-1.1.3:1.0: cp210x converter detected
+mmm dd hh:mm:ss mypi kernel: [431266.119225] usb 1-1.1.3: cp210x converter now attached to ttyUSB0
+</code></pre></div>
+<p>and, in particular, these two lines:</p>
+<div class="highlight"><pre><span></span><code>… New USB device found, idVendor=dead, idProduct=beef, bcdDevice= 1.00
+… SerialNumber: cafe80facefeed
+</code></pre></div>
+<p>Terminate the <code>tail</code> command by pressing Control+C.</p>
+<p>Use this line as a template:</p>
+<div class="highlight"><pre><span></span><code>SUBSYSTEM==&quot;tty&quot;, ATTRS{idVendor}==&quot;«idVendor»&quot;, ATTRS{idProduct}==&quot;«idProduct»&quot;, ATTRS{serial}==&quot;«SerialNumber»&quot;, SYMLINK+=&quot;«sensibleName»&quot;
+</code></pre></div>
+<p>Replace the «delimited» values with those you see in the log output. For example, given the above log output, and the desire to associate your 3D printer with the human-readable name of "MasterDisaster5000Pro", the result would be:</p>
+<div class="highlight"><pre><span></span><code>SUBSYSTEM==&quot;tty&quot;, ATTRS{idVendor}==&quot;dead&quot;, ATTRS{idProduct}==&quot;beef&quot;, ATTRS{serial}==&quot;cafe80facefeed&quot;, SYMLINK+=&quot;MasterDisaster5000Pro&quot;
+</code></pre></div>
+<p>Next, ensure the required file exists by executing the following command:</p>
+<div class="highlight"><pre><span></span><code>$ sudo touch /etc/udev/rules.d/99-usb-serial.rules
+</code></pre></div>
+<blockquote>
+<p>If the file does not exist already, the <code>touch</code> command creates an empty file, owned by root, with mode 644 (rw-r--r--) permissions (all of which are correct).</p>
+</blockquote>
+<p>Use <code>sudo</code> and your favourite text editor to edit <code>/etc/udev/rules.d/99-usb-serial.rules</code> and insert the "SUBSYSTEM==" line you prepared earlier into that file, then save the file.</p>
+<blockquote>
+<p>Rules files are read on demand so there is no <code>start</code> or <code>reload</code> command to execute.</p>
+</blockquote>
+<p>Check your work by disconnecting, then re-connecting your 3D printer, and then run:</p>
+<div class="highlight"><pre><span></span><code>$ ls /dev
+</code></pre></div>
+<p>You should expect to see the human-readable name you chose in the list of devices. You can then edit <code>docker-compose.yml</code> to use the name in the device mapping.</p>
+<div class="highlight"><pre><span></span><code>devices:
+  - /dev/MasterDisaster5000Pro:/dev/ttyACM0
+</code></pre></div>
+<p>Notes:</p>
+<ul>
+<li>device names follow the device. In other words, if you have two or more Raspberry Pis and a collection of serial devices (3D printers, Zigbee adapters, UARTs, and so on), you can build a single <code>99-usb-serial.rules</code> file that you install on <em>all</em> of your Raspberry Pis. Then, you can attach a named device to any of your Raspberry Pis and it will always get the same name.</li>
+<li>device names do not persist if the physical device is disconnected. If you switch off your 3D printer or disconnect the USB cable while the OctoPrint container is running, the container will crash.</li>
+</ul>
+<h3 id="the-devvideo0devvideo0-mapping"><em>the <code>/dev/video0:/dev/video0</code> mapping</em></h3>
+<p>The <code>/dev/video0</code> device is assumed to be an official Raspberry Pi camera attached via ribbon cable.</p>
+<blockquote>
+<p>See the <a href="https://community.octoprint.org/c/support/support-webcams/18">Webcams topic of the Octoprint Community Forum</a> for help configuring other kinds of cameras.</p>
+</blockquote>
+<p>The OctoPrint docker image includes an MJPG streamer. You do not need to run another container with a streamer unless you want to.</p>
+<p>To activate a Raspberry Pi camera attached via ribbon cable:</p>
+<ol>
+<li>Follow the instructions at <a href="https://www.raspberrypi.org/documentation/configuration/camera.md">raspberrypi.org</a> to connect and test the camera. There are guides on YouTube (<a href="https://www.youtube.com/watch?v=T8T6S5eFpqE">example</a>) if you need help working out how to insert the ribbon cable.</li>
+<li>Confirm the presence of <code>/dev/video0</code>.</li>
+<li>
+<p>Edit <code>docker-compose.yml</code> and uncomment <strong>all</strong> of the commented-out lines in the following:</p>
+<div class="highlight"><pre><span></span><code>devices:
+# - /dev/video0:/dev/video0
+environment:
+# - ENABLE_MJPG_STREAMER=true
+# - MJPG_STREAMER_INPUT=-r 640x480 -f 10 -y
+# - CAMERA_DEV=/dev/video0
+</code></pre></div>
+<p>Note:</p>
+<ul>
+<li>The device path on the right hand side of the <code>CAMERA_DEV</code> environment variable corresponds with the right hand side (ie <em>after</em> the colon) of the device mapping. There should be no reason to change either.</li>
+</ul>
+</li>
+</ol>
+<p>The three environment variables are required:</p>
+<div class="highlight"><pre><span></span><code>environment:
+  - ENABLE_MJPG_STREAMER=true
+  - MJPG_STREAMER_INPUT=-r 640x480 -f 10 -y
+  - CAMERA_DEV=/dev/video0
+</code></pre></div>
+<p>The "640x480" <code>MJPG_STREAMER_INPUT</code> settings will probably result in your camera feed being "letterboxed" but they will get you started. A full list of options is at <a href="https://community.octoprint.org/t/available-mjpg-streamer-configuration-options/1106">mjpg-streamer-configuration-options</a>.</p>
+<p>The typical specs for a baseline Raspberry Pi camera are:</p>
+<ul>
+<li>1080p 720p 5Mp Webcam</li>
+<li>Max resolution: 2592x1944</li>
+<li>Max frame rate: VGA 90fps, 1080p 30fps</li>
+<li>CODEC: MJPG H.264 AVC</li>
+</ul>
+<p>For that type of camera, the following is probably more appropriate:</p>
+<div class="highlight"><pre><span></span><code>  - MJPG_STREAMER_INPUT=-r 1152x648 -f 10
+</code></pre></div>
+<p>The resolution of 1152x648 is 60% of 1080p 1920x1080 and does not cause letterboxing. The resolution and rate of 10 frames per second won't over-tax your communications links, and the camera is MJPEG-capable so it does not need the <code>-y</code> option.</p>
+<h2 id="practical-usage">Practical usage</h2>
+<h3 id="starting-the-octoprint-container">starting the OctoPrint container</h3>
+<p>To start a print session:</p>
+<ol>
+<li>Turn the 3D printer on.</li>
+<li>
+<p>Bring up the container:</p>
+<div class="highlight"><pre><span></span><code>$ cd ~/IOTstack
+$ docker-compose up -d octoprint
+</code></pre></div>
+</li>
+</ol>
+<p>If you try to start the OctoPrint container before your 3D printer has been switched on and the USB interface has registered with the Raspberry Pi, the container will go into a restart loop.</p>
+<h3 id="first-run-the-setup-wizard">first run – the Setup Wizard</h3>
+<p>Use a browser to point to port 9980 on your Raspberry Pi. For example:</p>
+<div class="highlight"><pre><span></span><code>http://raspberrypi.local:9980
+</code></pre></div>
+<p>This will launch the "Setup Wizard".</p>
+<ol>
+<li>
+<p>Click the "Next" button until you reach the "Access Control" screen:</p>
+<ul>
+<li>Define a Username and Password, and keep a record of your decisions.</li>
+<li>Click "Create Account".</li>
+<li>Ignore the alarming popup alert by clicking "Ignore". This alert is a result of OctoPrint running in a Docker container.</li>
+<li>Click "Next".</li>
+</ul>
+</li>
+<li>
+<p>At the "Online Connectivity Check" screen:</p>
+<ul>
+<li>Click "Disable Connectivity Check".</li>
+<li>Click "Next".</li>
+</ul>
+</li>
+<li>
+<p>At the "Configure Anonymous Usage Tracking" and "Configure plugin blacklist processing" screens:</p>
+<ul>
+<li>Make a decision about whether you want the feature enabled or disabled and click the appropriate button.</li>
+<li>Click "Next".</li>
+</ul>
+</li>
+<li>
+<p>At the "Set up your printer profile" screen:</p>
+<ul>
+<li>It is probably a good idea to visit the tabs and set values appropriate to your printer (build volume, at least).</li>
+<li>Click "Next".</li>
+</ul>
+</li>
+<li>
+<p>At the "Server Commands" screen:</p>
+<ul>
+<li>
+<p>Enter the following in the "Restart OctoPrint" field:</p>
+<div class="highlight"><pre><span></span><code>s6-svc -r /var/run/s6/services/octoprint
+</code></pre></div>
+</li>
+<li>
+<p>Click "Next".</p>
+</li>
+</ul>
+</li>
+<li>
+<p>At the "Webcam &amp; Timelapse Recordings" screen, and assuming you are configuring a PiCamera:</p>
+<ul>
+<li>
+<p>Enter the following in the "Stream URL" field:</p>
+<div class="highlight"><pre><span></span><code>/webcam/?action=stream
+</code></pre></div>
+<p>Click the "Test" button to confirm that the camera is working, then click "Close".</p>
+</li>
+<li>
+<p>Enter the following in the "Snapshot URL" field:</p>
+<div class="highlight"><pre><span></span><code>http://localhost:8080/?action=snapshot
+</code></pre></div>
+<p>Click the "Test" button to confirm that the camera is working, then click "Close".</p>
+</li>
+<li>
+<p>Enter the following in the "Path to FFMPEG" field:</p>
+<div class="highlight"><pre><span></span><code>/usr/bin/ffmpeg
+</code></pre></div>
+<p>The expected result is the message "The path is valid".</p>
+</li>
+<li>
+<p>Click "Next".</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Click "Finish" then click the button to reload the user interface.</p>
+</li>
+</ol>
+<h3 id="after-the-first-run">after the first run</h3>
+<p>Use a browser to point to port 9980 on your Raspberry Pi. For example:</p>
+<div class="highlight"><pre><span></span><code>http://raspberrypi.local:9980
+</code></pre></div>
+<p>Supply your user credentials and login.</p>
+<h3 id="popup-messages">popup messages</h3>
+<p>OctoPrint will display <em>numerous</em> messages in popup windows. These generally fall into two categories:</p>
+<ul>
+<li>Messages that refer to updates; and</li>
+<li>Messages that refer to other events.</li>
+</ul>
+<p>In general, you can ignore messages about updates. You will get all updates automatically the next time the octoprint-docker container is rebuilt and pushed to DockerHub.</p>
+<p>You can, if you wish, allow an update to proceed. It might be appropriate to do that if you want to test an update. Just be aware that:</p>
+<ol>
+<li>Updates are ephemeral and will disappear the next time the Octoprint container is created.</li>
+<li>Updates can change the structure of the persistent storage area in a way which can't be undone, and which may prevent the Octoprint container from starting the next time it is created. In other words, if you want to trial an update, take a backup of OctoPrint's persistent storage area <strong>first</strong>.</li>
+</ol>
+<h3 id="restarting-the-octoprint-container">restarting the OctoPrint container</h3>
+<p>You can restart the OctoPrint service in two ways:</p>
+<ul>
+<li>via the Raspberry Pi command line; or</li>
+<li>via the OctoPrint user interface.</li>
+</ul>
+<p>Whichever method you choose will result in a refresh of the OctoPrint user interface and you will need to follow the prompts to reload your browser page.</p>
+<h4 id="restarting-via-the-command-line">restarting via the command line</h4>
+<p>Run the following commands:</p>
+<div class="highlight"><pre><span></span><code>$ cd ~/IOTstack
+$ docker-compose restart octoprint
+</code></pre></div>
+<h4 id="restarting-via-octoprint-user-interface">restarting via OctoPrint user interface</h4>
+<p>From the "System" icon in the OctoPrint toolbar (looks like a power button symbol):</p>
+<ol>
+<li>Choose "Restart OctoPrint".</li>
+</ol>
+<p>Note:</p>
+<ul>
+<li>
+<p>If you do not see the "System" icon in the toolbar, fix it line this:</p>
+<ol>
+<li>Click the "Settings" icon (looks like a wrench) in the OctoPrint toolbar.</li>
+<li>Choose "Server".</li>
+<li>
+<p>Enter the following into the "Restart OctoPrint" field:</p>
+<div class="highlight"><pre><span></span><code>s6-svc -r /var/run/s6/services/octoprint
+</code></pre></div>
+</li>
+<li>
+<p>Click "Save".</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="stopping-the-octoprint-container">stopping the OctoPrint container</h3>
+<p>Unless you intend to leave your printer switched on 24 hours a day, you will also need to be careful when you switch off the printer:</p>
+<ol>
+<li>
+<p>Terminate the container:</p>
+<div class="highlight"><pre><span></span><code>$ cd ~/IOTstack
+$ docker-compose stop octoprint
+$ docker-compose rm -f octoprint
+</code></pre></div>
+</li>
+<li>
+<p>Turn the 3D printer off.</p>
+</li>
+</ol>
+<p>If you turn the printer off without terminating the container, you will crash the container.</p>
+<h2 id="video-feed-built-in-camera-interface">Video feed (built-in camera interface)</h2>
+<p>You can view the video feed independently of the OctoPrint web interface like this:</p>
+<div class="highlight"><pre><span></span><code>http://raspberrypi.local:9980/webcam/?action=stream
+</code></pre></div>
+<h2 id="silencing-the-security-warning">Silencing the security warning</h2>
+<p>OctoPrint assumes it is running "natively" rather than in a container. From a data-communications perspective, OctoPrint (the process running inside the OctoPrint container) sees itself as running on a computer attached to the internal Docker network. When you connect to OctoPrint's web interface from a client device attached to an external network, OctoPrint sees that your source IP address is not on the internal Docker network and it issues a security warning.</p>
+<p>To silence the warning:</p>
+<ol>
+<li>
+<p>Terminate the container if it is running:</p>
+<div class="highlight"><pre><span></span><code>$ cd ~/IOTstack
+$ docker-compose stop octoprint
+$ docker-compose rm -f octoprint
+</code></pre></div>
+</li>
+<li>
+<p>use <code>sudo</code> and your favourite text editor to open the following file:</p>
+<div class="highlight"><pre><span></span><code>~/IOTstack/volumes/octoprint/octoprint/config.yaml
+</code></pre></div>
+</li>
+<li>
+<p>Implement the following pattern:</p>
+<div class="highlight"><pre><span></span><code>server:
+  …
+  ipCheck:
+    enabled: true
+    trustedSubnets:
+    - 203.0.132.0/24
+</code></pre></div>
+<p>Notes:</p>
+<ul>
+<li>The <code>server:</code>, <code>ipCheck:</code> and <code>enabled:</code> directives may already be in place but the <code>trustedSubnets:</code> directive may not be. Add it, and then add your local subnet(s) where you see the "192.168.1.0/24" example.</li>
+<li>Remember to use spaces in YAML files. Do not use tabs.</li>
+</ul>
+</li>
+<li>
+<p>Save the file.</p>
+</li>
+<li>
+<p>Bring up the container: </p>
+<div class="highlight"><pre><span></span><code>$ cd ~/IOTstack
+$ docker-compose up -d octoprint
+</code></pre></div>
+</li>
+</ol>
+<h2 id="routine-container-maintenance">Routine container maintenance</h2>
+<p>You can check for updates like this:</p>
+<div class="highlight"><pre><span></span><code>$ cd ~/IOTstack
+$ docker-compose pull octoprint
+$ docker-compose up -d octoprint
+$ docker system prune
+</code></pre></div>
+<h2 id="if-you-forget-your-username-and-password">If you forget your username and password</h2>
+<p>You can view a list of usernames like this:</p>
+<div class="highlight"><pre><span></span><code>$ docker exec octoprint octoprint --basedir /octoprint/octoprint user list
+</code></pre></div>
+<p>To reset a user's password:</p>
+<ol>
+<li>
+<p>Use the following line as a template and replace <code>«username»</code> and <code>«password»</code> with appropriate values:</p>
+<div class="highlight"><pre><span></span><code>docker exec octoprint octoprint --basedir /octoprint/octoprint user password --password «password» «username»
+</code></pre></div>
+</li>
+<li>
+<p>Execute the edited command. For example, to set the password for user "me" to "verySecure":</p>
+<div class="highlight"><pre><span></span><code>$ docker exec octoprint octoprint --basedir /octoprint/octoprint user password --password verySecure me
+</code></pre></div>
+</li>
+<li>
+<p>Restart OctoPrint:</p>
+<div class="highlight"><pre><span></span><code>$ cd ~/IOTstack
+$ docker-compose restart octoprint
+</code></pre></div>
+</li>
+</ol>
+<p>Note:</p>
+<ul>
+<li>
+<p>OctoPrint supports more than one username. To explore the further:</p>
+<div class="highlight"><pre><span></span><code>$ docker exec octoprint octoprint --basedir /octoprint/octoprint user --help
+</code></pre></div>
+</li>
+</ul>
+<h2 id="if-all-else-fails">If all else fails…</h2>
+<p>If the OctoPrint container seems to be misbehaving, you can get a "clean slate" by:</p>
+<div class="highlight"><pre><span></span><code>$ cd ~/IOTstack
+$ docker-compose stop octoprint
+$ docker-compose rm -f octoprint
+$ sudo rm -rf ./volumes/octoprint
+$ docker-compose up -d octoprint
+</code></pre></div>
+<p>The OctoPrint container is well-behaved and will re-initialise its persistent storage area correctly. OctoPrint will adopt "first run" behaviour and display the Setup Wizard.</p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../Node-RED/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Node-RED" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Node-RED
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../Pi-hole/" class="md-footer__link md-footer__link--next" aria-label="Next: Pi-hole" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Pi-hole
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.01824240.min.js"}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.ff0eccb3.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1708 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Docker stack for getting started on IOT on the Raspberry PI">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.2">
+    
+    
+      
+        <title>Home Assistant - IOTstack</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.816931ca.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.9204c3b2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>function __md_scope(e,t,_){return new URL(_||(t===localStorage?"../..":"../.."),location).pathname+"."+e}function __md_get(e,t=localStorage,_){return JSON.parse(t.getItem(__md_scope(e,t,_)))}function __md_set(e,t,_=localStorage,o){try{_.setItem(__md_scope(e,_,o),JSON.stringify(t))}catch(e){}}</script>
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#home-assistant" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="IOTstack" class="md-header__button md-logo" aria-label="IOTstack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            IOTstack
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Home Assistant
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SensorsIot/IOTstack/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="IOTstack" class="md-nav__button md-logo" aria-label="IOTstack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    IOTstack
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SensorsIot/IOTstack/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        IOTStack Wiki
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Accessing-your-Device-from-the-internet/" class="md-nav__link">
+        Accessing your device from the internet
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Backup-and-Restore/" class="md-nav__link">
+        Backing up and restoring IOTstack
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BuildStack-RandomPassword/" class="md-nav__link">
+        Build Stack Random Services Password
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../BuildStack-Services/" class="md-nav__link">
+        Build Stack Services system
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Contributing-Services/" class="md-nav__link">
+        Contributing a service to IOTstack
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Custom/" class="md-nav__link">
+        Custom services and overriding default settings for IOTstack
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Default-Configs/" class="md-nav__link">
+        Build Stack Default Passwords for Services
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Docker-commands/" class="md-nav__link">
+        Docker commands
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Getting-Started/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Home/" class="md-nav__link">
+        Wiki
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../How-the-script-works/" class="md-nav__link">
+        How the script works
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Menu-System/" class="md-nav__link">
+        Menu system
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Misc/" class="md-nav__link">
+        Miscellaneous
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Native-RTL_433/" class="md-nav__link">
+        Native RTL_433
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Networking/" class="md-nav__link">
+        Networking
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../New-Menu-Release-Notes/" class="md-nav__link">
+        New IOTstack Menu
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PostBuild-Script/" class="md-nav__link">
+        Postbuild BASH Script
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RPIEasy_native/" class="md-nav__link">
+        RPIEasy
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Understanding-Containers/" class="md-nav__link">
+        What is Docker?
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Updating-the-Project/" class="md-nav__link">
+        Updating the project
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gcgarner-migration/" class="md-nav__link">
+        Migrating from gcgarner to SensorsIot
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_23" type="checkbox" id="__nav_23" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_23">
+          Containers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Containers" data-md-level="1">
+        <label class="md-nav__title" for="__nav_23">
+          <span class="md-nav__icon md-icon"></span>
+          Containers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AdGuardHome/" class="md-nav__link">
+        AdGuard Home
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Adminer/" class="md-nav__link">
+        Adminer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Blynk_server/" class="md-nav__link">
+        Blynk server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chronograf/" class="md-nav__link">
+        Chronograf
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DashMachine/" class="md-nav__link">
+        DashMachine
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../EspruinoHub/" class="md-nav__link">
+        Espruinohub
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Grafana/" class="md-nav__link">
+        Grafana
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Heimdall/" class="md-nav__link">
+        Heimdall
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Home Assistant
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Home Assistant
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+     References 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#home-assistant-two-versions" class="md-nav__link">
+    Home Assistant: two versions
+  </a>
+  
+    <nav class="md-nav" aria-label="Home Assistant: two versions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hassio" class="md-nav__link">
+     Hass.io 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#home-assistant-container" class="md-nav__link">
+     Home Assistant Container 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#menu-installation" class="md-nav__link">
+     Menu installation 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Menu installation ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-hassio" class="md-nav__link">
+     Installing Hass.io 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Installing Hass.io ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-if-docker-is-already-installed-uninstall-it" class="md-nav__link">
+     Step 1: If Docker is already installed, uninstall it 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-ensure-your-system-is-fully-up-to-date" class="md-nav__link">
+     Step 2: Ensure your system is fully up-to-date 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-install-hassio-dependencies-stage-1" class="md-nav__link">
+     Step 3: Install Hass.io dependencies (stage 1) 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-connect-to-your-raspberry-pi-via-ethernet" class="md-nav__link">
+     Step 4: Connect to your Raspberry Pi via Ethernet 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-install-hassio-dependencies-stage-2" class="md-nav__link">
+     Step 5: Install Hass.io dependencies (stage 2) 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-consider-disabling-random-mac-address-allocation" class="md-nav__link">
+     Step 6: Consider disabling random MAC address allocation 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7-re-install-docker" class="md-nav__link">
+     Step 7: Re-install Docker 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-8-run-the-hassio-installation" class="md-nav__link">
+     Step 8: Run the Hass.io installation 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#re-check-random-mac-address-allocation" class="md-nav__link">
+     Re-check random MAC address allocation 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-home-assistant-container" class="md-nav__link">
+     Installing Home Assistant Container 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deactivating-hassio" class="md-nav__link">
+     Deactivating Hass.io 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-random-macs-are-such-a-hassle" class="md-nav__link">
+     Why random MACs are such a hassle 
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Homer/" class="md-nav__link">
+        Homer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../InfluxDB/" class="md-nav__link">
+        InfluxDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Kapacitor/" class="md-nav__link">
+        Kapacitor
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MariaDB/" class="md-nav__link">
+        MariaDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Mosquitto/" class="md-nav__link">
+        Mosquitto
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../MotionEye/" class="md-nav__link">
+        MotionEye
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NextCloud/" class="md-nav__link">
+        Nextcloud
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Node-RED/" class="md-nav__link">
+        Node-RED
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Octoprint/" class="md-nav__link">
+        OctoPrint – the snappy web interface for your 3D printer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Pi-hole/" class="md-nav__link">
+        Pi-hole
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Plex/" class="md-nav__link">
+        Plex
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Portainer-agent/" class="md-nav__link">
+        Portainer agent
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Portainer-ce/" class="md-nav__link">
+        Portainer CE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PostgreSQL/" class="md-nav__link">
+        PostgreSQL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Prometheus/" class="md-nav__link">
+        Prometheus
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Python/" class="md-nav__link">
+        Python
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RTL_433-docker/" class="md-nav__link">
+        RTL_433 Docker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TasmoAdmin/" class="md-nav__link">
+        TasmoAdmin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Telegraf/" class="md-nav__link">
+        Telegraf
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../WireGuard/" class="md-nav__link">
+        WireGuard
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zigbee2MQTT/" class="md-nav__link">
+        Zigbee2MQTT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Zigbee2mqttassistant/" class="md-nav__link">
+        Zigbee2Mqtt Assistant
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../deconz/" class="md-nav__link">
+        deCONZ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diyHue/" class="md-nav__link">
+        DIY hue
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../openHAB/" class="md-nav__link">
+        openHAB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../x2go/" class="md-nav__link">
+        x2go
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+     References 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#home-assistant-two-versions" class="md-nav__link">
+    Home Assistant: two versions
+  </a>
+  
+    <nav class="md-nav" aria-label="Home Assistant: two versions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hassio" class="md-nav__link">
+     Hass.io 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#home-assistant-container" class="md-nav__link">
+     Home Assistant Container 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#menu-installation" class="md-nav__link">
+     Menu installation 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Menu installation ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-hassio" class="md-nav__link">
+     Installing Hass.io 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Installing Hass.io ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-if-docker-is-already-installed-uninstall-it" class="md-nav__link">
+     Step 1: If Docker is already installed, uninstall it 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-ensure-your-system-is-fully-up-to-date" class="md-nav__link">
+     Step 2: Ensure your system is fully up-to-date 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-install-hassio-dependencies-stage-1" class="md-nav__link">
+     Step 3: Install Hass.io dependencies (stage 1) 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-connect-to-your-raspberry-pi-via-ethernet" class="md-nav__link">
+     Step 4: Connect to your Raspberry Pi via Ethernet 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-install-hassio-dependencies-stage-2" class="md-nav__link">
+     Step 5: Install Hass.io dependencies (stage 2) 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-consider-disabling-random-mac-address-allocation" class="md-nav__link">
+     Step 6: Consider disabling random MAC address allocation 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-7-re-install-docker" class="md-nav__link">
+     Step 7: Re-install Docker 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-8-run-the-hassio-installation" class="md-nav__link">
+     Step 8: Run the Hass.io installation 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#re-check-random-mac-address-allocation" class="md-nav__link">
+     Re-check random MAC address allocation 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-home-assistant-container" class="md-nav__link">
+     Installing Home Assistant Container 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deactivating-hassio" class="md-nav__link">
+     Deactivating Hass.io 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-random-macs-are-such-a-hassle" class="md-nav__link">
+     Why random MACs are such a hassle 
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/SensorsIot/IOTstack/edit/master/docs/Containers/Home-Assistant.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<h1 id="home-assistant">Home Assistant</h1>
+<p>Home Assistant is a home automation platform running on Python 3. It is able to track and control all devices at your home and offer a platform for automating control.</p>
+<h2 id="references"><a name="references"> References </a></h2>
+<ul>
+<li>
+<p><a href="https://www.home-assistant.io/">Home Assistant home page</a></p>
+<ul>
+<li><a href="https://www.home-assistant.io/installation/raspberrypi/">Raspberry Pi installation</a></li>
+<li><a href="https://www.home-assistant.io/installation">General installation</a> (may be useful if you are trying to run on other hardware).</li>
+</ul>
+</li>
+<li>
+<p><a href="https://github.com/home-assistant/core">GitHub repository</a></p>
+</li>
+<li><a href="https://hub.docker.com/r/homeassistant/home-assistant/">DockerHub</a></li>
+</ul>
+<h2 id="home-assistant-two-versions"><a name="twoVersions">Home Assistant: two versions</a></h2>
+<p>There are two versions of Home Assistant:</p>
+<ul>
+<li>Hass.io (Home Assistant Core), and</li>
+<li>Home Assistant Container.</li>
+</ul>
+<p>Each version:</p>
+<ul>
+<li>provides a web-based management interface on port 8123; and</li>
+<li>runs in "host mode" in order to discover devices on your LAN, including devices communicating via multicast traffic.</li>
+</ul>
+<p>IOTstack allows you to <strong>install</strong> either, or both, versions.</p>
+<p>Note:</p>
+<ul>
+<li>Technically, both versions can <strong>run</strong> at the same time but it is not <strong>supported</strong>. Each version runs in "host mode" and binds to port 8123 so, in practice, the first version to start will claim the port and the second version will then be blocked.</li>
+</ul>
+<h3 id="hassio"><a name="versionHassio"> Hass.io </a></h3>
+<p>Hass.io uses its own orchestration:</p>
+<ul>
+<li>hassio_supervisor</li>
+<li>hassio_audio</li>
+<li>hassio_cli</li>
+<li>hassio_dns</li>
+<li>hassio_multicast</li>
+<li>hassio_observer</li>
+<li>homeassistant.</li>
+</ul>
+<p>IOTstack can only offer limited configuration of Hass.io since it is its own platform.</p>
+<h3 id="home-assistant-container"><a name="versionHAContainer"> Home Assistant Container </a></h3>
+<p>Home Assistant Container runs as a single Docker container, and doesn't support all the features that Hass.io does (such as add-ons).</p>
+<h2 id="menu-installation"><a name="menuInstallation"> Menu installation </a></h2>
+<h3 id="installing-hassio"><a name="installHassio"> Installing Hass.io </a></h3>
+<p>Hass.io creates a conundrum:</p>
+<ul>
+<li>If you are definitely going to install Hass.io then you <strong>must</strong> install its dependencies <strong>before</strong> you install Docker.</li>
+<li>One of Hass.io's dependencies is <a href="https://wiki.archlinux.org/index.php/NetworkManager">Network Manager</a>. Network Manager makes <strong>serious</strong> changes to your operating system, with side-effects you may not expect such as giving your Raspberry Pi's WiFi interface a random MAC address both during the installation and, then, each time you reboot. You are in for a world of pain if you install Network Manager without first understanding what is going to happen and planning accordingly.</li>
+<li>If you don't install Hass.io's dependencies before you install Docker, you will either have to uninstall Docker or rebuild your system. This is because both Docker and Network Manager adjust your Raspberry Pi's networking. Docker is happy to install after Network Manager, but the reverse is not true.</li>
+</ul>
+<h4 id="step-1-if-docker-is-already-installed-uninstall-it"><a name="uninstallDocker"> Step 1: If Docker is already installed, uninstall it </a></h4>
+<div class="highlight"><pre><span></span><code>$ sudo apt -y purge docker-ce docker-ce-cli containerd.io
+$ sudo apt -y remove docker-compose
+$ sudo pip3 uninstall docker-compose
+</code></pre></div>
+<p>Note:</p>
+<ul>
+<li>Removing Docker does <strong>not</strong> interfere with your existing <code>~/IOTstack</code> folder.</li>
+</ul>
+<h4 id="step-2-ensure-your-system-is-fully-up-to-date"><a name="aptUpdate"> Step 2: Ensure your system is fully up-to-date </a></h4>
+<div class="highlight"><pre><span></span><code>$ sudo apt update
+$ sudo apt upgrade -y
+</code></pre></div>
+<h4 id="step-3-install-hassio-dependencies-stage-1"><a name="hassioDependencies1"> Step 3: Install Hass.io dependencies (stage 1) </a></h4>
+<div class="highlight"><pre><span></span><code>$ sudo apt install -y apparmor apparmor-profiles apparmor-utils
+$ sudo apt install -y software-properties-common apt-transport-https ca-certificates dbus
+</code></pre></div>
+<h4 id="step-4-connect-to-your-raspberry-pi-via-ethernet"><a name="useEthernet"> Step 4: Connect to your Raspberry Pi via Ethernet </a></h4>
+<p>You can skip this step if you interact with your Raspberry Pi via a screen connected to its HDMI port, along with a keyboard and mouse.</p>
+<p>If, however, you are running "headless" (SSH or VNC), we <strong>strongly recommend</strong> connecting your Raspberry Pi to Ethernet. This is only a temporary requirement. You can return to WiFi-only operation after Hass.io is installed.</p>
+<p>When the Ethernet interface initialises, work out its IP address:</p>
+<div class="highlight"><pre><span></span><code>$ ifconfig eth0
+
+eth0: <span class="nv">flags</span><span class="o">=</span><span class="m">4163</span>&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu <span class="m">1500</span>
+        inet <span class="m">192</span>.168.132.9  netmask <span class="m">255</span>.255.255.0  broadcast <span class="m">192</span>.168.132.255
+        ether ab:cd:ef:12:34:56  txqueuelen <span class="m">1000</span>  <span class="o">(</span>Ethernet<span class="o">)</span>
+        RX packets <span class="m">4166292</span>  bytes <span class="m">3545370373</span> <span class="o">(</span><span class="m">3</span>.3 GiB<span class="o">)</span>
+        RX errors <span class="m">0</span>  dropped <span class="m">0</span>  overruns <span class="m">0</span>  frame <span class="m">0</span>
+        TX packets <span class="m">2086814</span>  bytes <span class="m">2024386593</span> <span class="o">(</span><span class="m">1</span>.8 GiB<span class="o">)</span>
+        TX errors <span class="m">0</span>  dropped <span class="m">0</span> overruns <span class="m">0</span>  carrier <span class="m">0</span>  collisions <span class="m">0</span>
+</code></pre></div>
+<p>In the above, the IP address assigned to the Ethernet interface is on the second line of output, to the right of "inet": 192.168.132.9.</p>
+<p>Drop out of your existing session (SSH or VNC) and re-connect to your Raspberry Pi using the IP address assigned to its Ethernet interface:</p>
+<div class="highlight"><pre><span></span><code>$ ssh pi@192.168.132.9
+</code></pre></div>
+<p>or:</p>
+<div class="highlight"><pre><span></span><code>vnc://pi@192.168.132.9
+</code></pre></div>
+<p>The reason for stipulating the IP address, rather than a name like <code>raspberrypi.local</code> is so that you are <em>definitely</em> connected to the Ethernet interface.</p>
+<p>If you ignore the advice about connecting via Ethernet and install Network Manager while your session is connected via WiFi, your connection will freeze part way through the installation (when Network Manager starts running and unconditionally changes your Raspberry Pi's WiFi MAC address).</p>
+<p>You <em>may</em> be able to re-connect after the WiFi interface acquires a new IP address and advertises that via multicast DNS associated with the name of your device (eg <code>raspberrypi.local</code>), but you may also find that the only way to regain control is to power-cycle your Raspberry Pi.</p>
+<p>The advice about using Ethernet is well-intentioned. You should heed this advice even if means you need to temporarily relocate your Raspberry Pi just so you can attach it via Ethernet for the next few steps. You can go back to WiFi later, once everything is set up. You have been warned!</p>
+<h4 id="step-5-install-hassio-dependencies-stage-2"><a name="hassioDependencies2"> Step 5: Install Hass.io dependencies (stage 2) </a></h4>
+<p>Install Network Manager:</p>
+<div class="highlight"><pre><span></span><code>$ sudo apt install -y network-manager
+</code></pre></div>
+<h4 id="step-6-consider-disabling-random-mac-address-allocation"><a name="disableRandomMac1"> Step 6: Consider disabling random MAC address allocation </a></h4>
+<p>To understand why you should consider disabling random MAC address allocation, see <a href="#aboutRandomMACs">why random MACs are such a hassle </a>.</p>
+<p>You can stop Network Manager from allocating random MAC addresses to your WiFi interface by running the following commands:</p>
+<div class="highlight"><pre><span></span><code>$ sudo sed -i.bak <span class="s1">&#39;$a\\n[device]\nwifi.scan-rand-mac-address=no\n&#39;</span> /etc/NetworkManager/NetworkManager.conf
+$ sudo systemctl restart NetworkManager.service
+</code></pre></div>
+<p>Acknowledgement:</p>
+<ul>
+<li>This tip came from <a href="https://discordapp.com/channels/638610460567928832/638610461109256194/758825690715652116">@steveatk on Discord</a>.</li>
+</ul>
+<h4 id="step-7-re-install-docker"><a name="reinstallDocker"> Step 7: Re-install Docker </a></h4>
+<p>You can re-install Docker using the IOTstack menu or one of the scripts provided with IOTstack but the following commands guarantee an up-to-date version of <code>docker-compose</code> and also include a dependency needed if you want to run with the 64-bit kernel:</p>
+<div class="highlight"><pre><span></span><code>$ curl -fsSL https://get.docker.com <span class="p">|</span> sh
+$ sudo usermod -G docker -a <span class="nv">$USER</span>
+$ sudo usermod -G bluetooth -a <span class="nv">$USER</span>
+$ sudo apt install -y python3-pip python3-dev
+$ <span class="o">[</span> <span class="s2">&quot;</span><span class="k">$(</span>uname -m<span class="k">)</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s2">&quot;aarch64&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> sudo apt install libffi-dev
+$ sudo pip3 install -U docker-compose
+$ sudo pip3 install -U ruamel.yaml<span class="o">==</span><span class="m">0</span>.16.12 blessed
+$ sudo reboot
+</code></pre></div>
+<p>Note:</p>
+<ul>
+<li>Installing or re-installing Docker does <strong>not</strong> interfere with your existing <code>~/IOTstack</code> folder.</li>
+</ul>
+<h4 id="step-8-run-the-hassio-installation"><a name="runHassioInstall"> Step 8: Run the Hass.io installation </a></h4>
+<p>Start at:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ ./menu.sh
+</code></pre></div>
+<p>Hass.io installation can be found inside the <code>Native Installs</code> menu on the main menu. You will be asked to select your device type during the installation.</p>
+<p>The installation of Hass.io takes up to 20 minutes (depending on your internet connection). You may also need to respond "Y" to a prompt during the installation process. Refrain from restarting your machine until it has come online and you are able to create a user account.</p>
+<p>Hass.io installation is provided as a convenience. It is independent of, is not maintained by, and does not appear in the <code>docker-compose.yml</code> for IOTstack. Hass.io has its own service for maintaining its uptime.</p>
+<h4 id="re-check-random-mac-address-allocation"><a name="disableRandomMac2"> Re-check random MAC address allocation </a></h4>
+<p>Installing Hass.io can re-enable random MAC address allocation. You should check this via:</p>
+<div class="highlight"><pre><span></span><code>$ tail -3 /etc/NetworkManager/NetworkManager.conf
+<span class="o">[</span>device<span class="o">]</span>
+wifi.scan-rand-mac-address<span class="o">=</span>no
+</code></pre></div>
+<p>If you do <strong>NOT</strong> see <code>wifi.scan-rand-mac-address=no</code>, repeat <a href="#disableRandomMac1">Step 6</a>.</p>
+<h3 id="installing-home-assistant-container"><a name="installHAContainer"> Installing Home Assistant Container </a></h3>
+<p>Home Assistant can be found in the <code>Build Stack</code> menu. Selecting it in this menu results in a service definition being added to:</p>
+<div class="highlight"><pre><span></span><code>~/IOTstack/docker-compose.yml
+</code></pre></div>
+<p>When you choose "Home Assistant", the service definition added to your <code>docker-compose.yml</code> includes the following:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">image</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ghcr.io/home-assistant/home-assistant:stable</span>
+<span class="c1">#image: ghcr.io/home-assistant/raspberrypi3-homeassistant:stable</span>
+<span class="c1">#image: ghcr.io/home-assistant/raspberrypi4-homeassistant:stable</span>
+</code></pre></div>
+<p>The active image is <em>generic</em> in the sense that it should work on any platform. You may wish to edit your <code>docker-compose.yml</code> to deactivate the generic image in favour of an image tailored to your hardware.</p>
+<p>The normal IOTstack commands apply to Home Assistant Container such as:</p>
+<div class="highlight"><pre><span></span><code>$ <span class="nb">cd</span> ~/IOTstack
+$ docker-compose up -d
+</code></pre></div>
+<h2 id="deactivating-hassio"><a name="deactivateHassio"> Deactivating Hass.io </a></h2>
+<p>Because Hass.io is independent of IOTstack, you can't deactivate it with any of the commands you normally use for IOTstack.</p>
+<p>To deactivate Hass.io you first need to stop the service that controls it. Run the following commands in the terminal: </p>
+<div class="highlight"><pre><span></span><code>$ sudo systemctl stop hassio-supervisor.service
+$ sudo systemctl disable hassio-supervisor.service
+</code></pre></div>
+<p>This will stop the main service and prevent it from starting on the next boot. Next you need to stop and remove the dependent services:</p>
+<div class="highlight"><pre><span></span><code>$ docker stop hassio_audio hassio_cli hassio_dns hassio_multicast hassio_observer homeassistant
+$ docker rm hassio_audio hassio_cli hassio_dns hassio_multicast hassio_observer homeassistant 
+</code></pre></div>
+<p>Double-check with <code>docker ps</code> to see if there are other containers running with a <code>hassio_</code> prefix. They can stopped and removed in the same fashion for <code>hassio_audio</code> and so-on.</p>
+<p>The stored files are located in <code>/usr/share/hassio</code> which can be removed if you need to.</p>
+<p>You can use Portainer to view what is running and clean up the unused images.</p>
+<p>At this point, Hass.io is stopped and will not start again after a reboot. Your options are:</p>
+<ul>
+<li>Leave things as they are; or</li>
+<li>Re-install Hass.io by starting over at <a href="#installHassio">Installing Hass.io</a>; or</li>
+<li>
+<p>Re-activate Hass.io by:</p>
+<div class="highlight"><pre><span></span><code>$ sudo systemctl <span class="nb">enable</span> hassio-supervisor.service
+$ sudo systemctl start hassio-supervisor.service
+</code></pre></div>
+</li>
+</ul>
+<h2 id="why-random-macs-are-such-a-hassle"><a name="aboutRandomMACs"> Why random MACs are such a hassle </a></h2>
+<blockquote>
+<p>This material was originally posted as part of <a href="https://github.com/SensorsIot/IOTstack/issues/312">Issue 312</a>. It was moved here following a suggestion by <a href="https://github.com/lole-elol">lole-elol</a>.</p>
+</blockquote>
+<p>When you connect to a Raspberry Pi via SSH (Secure Shell), that's a layer 7 protocol that is riding on top of TCP/IP. TCP (Transmission Control Protocol) is a layer 4 connection-oriented protocol which rides on IP (Internet Protocol) which is a layer 3 protocol. So far, so good.</p>
+<p>But you also need to know what happens at layers 2 and 1. When your SSH client (eg Mac or PC or another Unix box) opens its SSH connection, at layer 3 the IP stack applies the subnet mask against the IP addresses of both the source device (your Mac, PC, etc) and destination device (Raspberry Pi) to split them into "network portion" (on the left) and "host portion" on the right. It then compares the two network portions and, if they are the same, it says "local network".</p>
+<blockquote>
+<p>To complete the picture, if they do not compare the same, then IP substitutes the so-called "default gateway" address (ie your router) and repeats the mask-and-compare process which, unless something is seriously mis-configured, will result in those comparing the same and being "local network". This is why data-comms gurus sometimes say, "all networking is local".</p>
+</blockquote>
+<p>What happens next depends on the data communications media but we'll assume Ethernet and WiFi seeing as they are pretty much interchangeable for our purposes.</p>
+<p>The source machine (Mac, PC, etc) issues an ARP (address resolution protocol). It is a broadcast frame (we talk about "frames" rather than "packets" at Layer 2) asking the question, "who has this destination IP address?" The Raspberry Pi responds with a unicast packet saying, "that's me" and part of that includes the MAC (media access control) address of the Raspberry Pi. The source machine only does this <strong>once</strong> (and this is a key point). It assumes the relationship between IP address and MAC address will not change and it adds the relationship to its "ARP cache". You can see the cache on any Unix computer with:</p>
+<div class="highlight"><pre><span></span><code>$ arp -a
+</code></pre></div>
+<p>The Raspberry Pi makes the same assumption: it has learned both the IP and MAC address of the source machine (Mac, PC, etc) from the ARP request and has added that to its own ARP cache.</p>
+<p>In addition, every layer two switch (got one of those in your home?) has been snooping on this traffic and has learned, for each of its ports, which MAC address(es) are on those ports.</p>
+<p>Not "MAC <strong>and</strong> IP". A switch works at Layer 2. All it sees are frames. It only caches MAC addresses!</p>
+<p>When the switch saw the "who has?" ARP broadcast, it replicated that out of all of its ports but when the "that's me" came back from the Raspberry Pi as a unicast response, it only went out on the switch port where the source machine (Mac, PC, etc) was attached.</p>
+<p>After that, it's all caching. The Mac or PC has a packet to send to the Pi. It finds the hit in its ARP cache, wraps the packet in a frame and sends it out its Ethernet or WiFi interface. Any switches receive the frame, consult their own tables, and send the frame out the port on the next hop to the destination device. It doesn't matter whether you have one switch or several in a cascade, they have all learned the "next hop" to each destination MAC address they have seen. </p>
+<p>Ditto when the Pi sends back any reply packets. ARP. Switch. Mac/PC. All cached.</p>
+<p>The same basic principles apply, irrespective of whether the "switching function" is wired (Ethernet) or WiFi, so it doesn't really matter if your home arrangement is as straightforward as Mac or PC and Pi, both WiFi, via a local WiFi "hub" which is either standalone or part of your router. If something is capable of learning where a MAC is, it does.</p>
+<p>Still so far so good.</p>
+<p>Now comes the problem. You have established an SSH session connected to the Pi over its WiFi interface. You install Network Manager. As part of its setup, Network Manager discards the <strong>fixed</strong> MAC address which is burned into the Pi's WiFi interface and substitutes a randomly generated MAC address. It doesn't ask for permission to do that. It doesn't warn you it's about to do it. It just does it.</p>
+<p>When the WiFi interface comes up, it almost certainly "speaks" straight away via DHCP to ask for an IP address. The DHCP server looks in its own table of MAC-to-IP associations (fixed or dynamic, doesn't matter) and says "never seen <strong>that</strong> MAC before - here's a brand new IP address lease".</p>
+<p>The DHCP request is broadcast so all the switches will have learned the new MAC but they'll also still have the old MAC (until it times out). The Mac/PC will receive the DHCP broadcast but, unless it's the DHCP server, will discard it. Either way, it has no means of knowing that this new random MAC belongs to the Pi so it can't do anything sensible with the information.</p>
+<p>Meanwhile, SSH is trying to keep the session alive. It still thinks "old IP address" and its ARP cache still thinks old IP belongs to old MAC. Switches know where the frames are meant to go but even if a frame does get somewhere near the Pi, the Pi's NIC (network interface card) ignores it because it's now the wrong destination MAC. The upshot is that SSH looks like the session has frozen and it will eventually time-out with a broken pipe.</p>
+<p>To summarise: Network Manager has changed the MAC without so much as a by-your-leave and, unless you have assigned static IP addresses <strong>in the Raspberry Pi</strong> it's quite likely that the Pi will have a different IP address as well. But even a static IP can't save you from the machinations of Network Manager!</p>
+<p>The Pi is as happy as the proverbial Larry. It goes on, blissfully unaware that it has just confused the heck out of everything else. You can speed-up some of the activities that need to happen before everything gets going again. You can do things like clear the old entry from the ARP cache on the Mac/PC. You can try to force a multicast DNS daemon restart so that the "raspberrypi.local" address gets updated more quickly but mDNS is a distributed database so it can be hit and miss (and can sometimes lead to complaints about two devices trying to use the same name). Usually, the most effective thing you can do is pull power from the Pi, reboot your Mac/PC (easiest way to clear its ARP cache) and then apply power to the Pi so that it announces its mDNS address at the right time for the newly-booted Mac/PC to hear it and update its mDNS records. </p>
+<p>That's why the installation advice says words to the effect of:</p>
+<blockquote>
+<p>whatever else you do, <strong>don't</strong> try to install Network Manager while you're connected over WiFi. If SSH is how you're going to do it, you're in for a world of pain if you don't run an Ethernet cable for at least that part of the process.</p>
+</blockquote>
+<p>And it does get worse, of course. Installing Network Manager turns on random WiFi MAC. You can turn it off and go back to the fixed MAC. But then, when you install Docker, it happens again. It may also be that other packages come along in future and say, "hey, look, Network Manager is installed - let's take advantage of that" and it happens again when you least expect it.</p>
+<p>Devices changing their MACs at random is becoming reasonably common. If you have a mobile device running a reasonably current OS, it is probably changing its MAC all the time. The idea is to make it hard for Fred's Corner Store to track you and conclude, "Hey, Alex is back in the shop again."</p>
+<p>Random MACs are not a problem for a <strong>client</strong> device like a phone, tablet or laptop. But they are definitely a serious problem for a <strong>server</strong> device.</p>
+<blockquote>
+<p>In TCP/IP any device can be a client or a server for any protocol. The distinction here is about <em>typical</em> use. A mobile device is not usually set up to <em>offer</em> services like MQTT or Node-RED. It typically <em>initiates</em> connections with servers like Docker containers running on a Raspberry Pi.</p>
+</blockquote>
+<p>It is not just configuration-time SSH sessions that break. If you decide to leave Raspberry Pi random Wifi MAC active <strong>and</strong> you have other clients (eq IoT devices) communicating with the Pi over WiFi, you will wrong-foot those clients each time the Raspberry Pi reboots. Data communications services from those clients will be impacted until those client devices time-out and catch up.</p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../Heimdall/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Heimdall" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Heimdall
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../Homer/" class="md-footer__link md-footer__link--next" aria-label="Next: Homer" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Homer
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.01824240.min.js"}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.ff0eccb3.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1758 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Docker stack for getting started on IOT on the Raspberry PI">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.3, mkdocs-material-8.0.2">
+    
+    
+      
+        <title>Migrating from gcgarner to SensorsIot - IOTstack</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.816931ca.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.9204c3b2.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>function __md_scope(e,t,_){return new URL(_||(t===localStorage?"..":".."),location).pathname+"."+e}function __md_get(e,t=localStorage,_){return JSON.parse(t.getItem(__md_scope(e,t,_)))}function __md_set(e,t,_=localStorage,o){try{_.setItem(__md_scope(e,_,o),JSON.stringify(t))}catch(e){}}</script>
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#migrating-from-gcgarner-to-sensorsiot" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="IOTstack" class="md-header__button md-logo" aria-label="IOTstack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            IOTstack
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Migrating from gcgarner to SensorsIot
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SensorsIot/IOTstack/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="IOTstack" class="md-nav__button md-logo" aria-label="IOTstack" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    IOTstack
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SensorsIot/IOTstack/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        IOTStack Wiki
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Accessing-your-Device-from-the-internet/" class="md-nav__link">
+        Accessing your device from the internet
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Backup-and-Restore/" class="md-nav__link">
+        Backing up and restoring IOTstack
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BuildStack-RandomPassword/" class="md-nav__link">
+        Build Stack Random Services Password
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../BuildStack-Services/" class="md-nav__link">
+        Build Stack Services system
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Contributing-Services/" class="md-nav__link">
+        Contributing a service to IOTstack
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Custom/" class="md-nav__link">
+        Custom services and overriding default settings for IOTstack
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Default-Configs/" class="md-nav__link">
+        Build Stack Default Passwords for Services
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Docker-commands/" class="md-nav__link">
+        Docker commands
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Getting-Started/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Home/" class="md-nav__link">
+        Wiki
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../How-the-script-works/" class="md-nav__link">
+        How the script works
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Menu-System/" class="md-nav__link">
+        Menu system
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Misc/" class="md-nav__link">
+        Miscellaneous
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Native-RTL_433/" class="md-nav__link">
+        Native RTL_433
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Networking/" class="md-nav__link">
+        Networking
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../New-Menu-Release-Notes/" class="md-nav__link">
+        New IOTstack Menu
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PostBuild-Script/" class="md-nav__link">
+        Postbuild BASH Script
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RPIEasy_native/" class="md-nav__link">
+        RPIEasy
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Understanding-Containers/" class="md-nav__link">
+        What is Docker?
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Updating-the-Project/" class="md-nav__link">
+        Updating the project
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Migrating from gcgarner to SensorsIot
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Migrating from gcgarner to SensorsIot
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#migration-steps" class="md-nav__link">
+     Migration Steps 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Migration Steps ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-check-your-assumptions" class="md-nav__link">
+     Step 1 – Check your assumptions 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-take-iotstack-down" class="md-nav__link">
+     Step 2 – Take IOTstack down 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-choose-your-migration-method" class="md-nav__link">
+     Step 3 – Choose your migration method 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Step 3 – Choose your migration method ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#migration-option-1-change-upstream-repository" class="md-nav__link">
+     Migration Option 1 – change upstream repository 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Migration Option 1 – change upstream repository ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#check-for-local-changes" class="md-nav__link">
+     Check for local changes 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synchronise-with-gcgarner-on-github" class="md-nav__link">
+     Synchronise with gcgarner on GitHub 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-rid-of-any-upstream-reference" class="md-nav__link">
+     Get rid of any upstream reference 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#point-to-sensorsiot" class="md-nav__link">
+     Point to SensorsIot 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synchronise-with-sensorsiot-on-github" class="md-nav__link">
+     Synchronise with SensorsIot on GitHub 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finish-with-a-pull" class="md-nav__link">
+     Finish with a pull 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-option-2-clone-and-merge" class="md-nav__link">
+     Migration Option 2 – clone and merge 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Migration Option 2 – clone and merge ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rename-your-existing-iotstack-folder" class="md-nav__link">
+     Rename your existing IOTstack folder 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fetch-a-clean-clone-of-sensorsiotiotstack" class="md-nav__link">
+     Fetch a clean clone of SensorsIot/IOTstack 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merge-old-into-new" class="md-nav__link">
+     Merge old into new 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-choose-your-menu" class="md-nav__link">
+     Step 4 – Choose your menu 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-bring-up-your-stack" class="md-nav__link">
+     Step 5 – Bring up your stack 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+     See also 
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_23" type="checkbox" id="__nav_23" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_23">
+          Containers
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Containers" data-md-level="1">
+        <label class="md-nav__title" for="__nav_23">
+          <span class="md-nav__icon md-icon"></span>
+          Containers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/AdGuardHome/" class="md-nav__link">
+        AdGuard Home
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Adminer/" class="md-nav__link">
+        Adminer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Blynk_server/" class="md-nav__link">
+        Blynk server
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Chronograf/" class="md-nav__link">
+        Chronograf
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/DashMachine/" class="md-nav__link">
+        DashMachine
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/EspruinoHub/" class="md-nav__link">
+        Espruinohub
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Grafana/" class="md-nav__link">
+        Grafana
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Heimdall/" class="md-nav__link">
+        Heimdall
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Home-Assistant/" class="md-nav__link">
+        Home Assistant
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Homer/" class="md-nav__link">
+        Homer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/InfluxDB/" class="md-nav__link">
+        InfluxDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Kapacitor/" class="md-nav__link">
+        Kapacitor
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/MariaDB/" class="md-nav__link">
+        MariaDB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Mosquitto/" class="md-nav__link">
+        Mosquitto
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/MotionEye/" class="md-nav__link">
+        MotionEye
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/NextCloud/" class="md-nav__link">
+        Nextcloud
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Node-RED/" class="md-nav__link">
+        Node-RED
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Octoprint/" class="md-nav__link">
+        OctoPrint – the snappy web interface for your 3D printer
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Pi-hole/" class="md-nav__link">
+        Pi-hole
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Plex/" class="md-nav__link">
+        Plex
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Portainer-agent/" class="md-nav__link">
+        Portainer agent
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Portainer-ce/" class="md-nav__link">
+        Portainer CE
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/PostgreSQL/" class="md-nav__link">
+        PostgreSQL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Prometheus/" class="md-nav__link">
+        Prometheus
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Python/" class="md-nav__link">
+        Python
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/RTL_433-docker/" class="md-nav__link">
+        RTL_433 Docker
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/TasmoAdmin/" class="md-nav__link">
+        TasmoAdmin
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Telegraf/" class="md-nav__link">
+        Telegraf
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/WireGuard/" class="md-nav__link">
+        WireGuard
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Zigbee2MQTT/" class="md-nav__link">
+        Zigbee2MQTT
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/Zigbee2mqttassistant/" class="md-nav__link">
+        Zigbee2Mqtt Assistant
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/deconz/" class="md-nav__link">
+        deCONZ
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/diyHue/" class="md-nav__link">
+        DIY hue
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/openHAB/" class="md-nav__link">
+        openHAB
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Containers/x2go/" class="md-nav__link">
+        x2go
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#migration-steps" class="md-nav__link">
+     Migration Steps 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Migration Steps ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-check-your-assumptions" class="md-nav__link">
+     Step 1 – Check your assumptions 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-take-iotstack-down" class="md-nav__link">
+     Step 2 – Take IOTstack down 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-choose-your-migration-method" class="md-nav__link">
+     Step 3 – Choose your migration method 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Step 3 – Choose your migration method ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#migration-option-1-change-upstream-repository" class="md-nav__link">
+     Migration Option 1 – change upstream repository 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Migration Option 1 – change upstream repository ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#check-for-local-changes" class="md-nav__link">
+     Check for local changes 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synchronise-with-gcgarner-on-github" class="md-nav__link">
+     Synchronise with gcgarner on GitHub 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-rid-of-any-upstream-reference" class="md-nav__link">
+     Get rid of any upstream reference 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#point-to-sensorsiot" class="md-nav__link">
+     Point to SensorsIot 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synchronise-with-sensorsiot-on-github" class="md-nav__link">
+     Synchronise with SensorsIot on GitHub 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finish-with-a-pull" class="md-nav__link">
+     Finish with a pull 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#migration-option-2-clone-and-merge" class="md-nav__link">
+     Migration Option 2 – clone and merge 
+  </a>
+  
+    <nav class="md-nav" aria-label=" Migration Option 2 – clone and merge ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rename-your-existing-iotstack-folder" class="md-nav__link">
+     Rename your existing IOTstack folder 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fetch-a-clean-clone-of-sensorsiotiotstack" class="md-nav__link">
+     Fetch a clean clone of SensorsIot/IOTstack 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#merge-old-into-new" class="md-nav__link">
+     Merge old into new 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-choose-your-menu" class="md-nav__link">
+     Step 4 – Choose your menu 
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-bring-up-your-stack" class="md-nav__link">
+     Step 5 – Bring up your stack 
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+     See also 
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+<a href="https://github.com/SensorsIot/IOTstack/edit/master/docs/gcgarner-migration.md" title="Edit this page" class="md-content__button md-icon">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+</a>
+
+
+<h1 id="migrating-from-gcgarner-to-sensorsiot">Migrating from gcgarner to SensorsIot</h1>
+<p>These instructions explain how to migrate from <a href="https://github.com/gcgarner/IOTstack">gcgarner/IOTstack</a> to <a href="https://github.com/SensorsIot/IOTstack">SensorsIot/IOTstack</a>.</p>
+<p>Migrating to SensorsIot/IOTstack was fairly easy when this repository was first forked from gcgarner/IOTstack. Unfortunately, what was a fairly simple switching procedure no longer works properly because conflicts have emerged.</p>
+<p>The probability of conflicts developing increases as a function of time since the fork. Conflicts were and are pretty much inevitable so a more involved procedure is needed.</p>
+<h2 id="migration-steps"><a name="migrationSteps"> Migration Steps </a></h2>
+<h3 id="step-1-check-your-assumptions"><a name="checkAssumptions"> Step 1 – Check your assumptions </a></h3>
+<p>Make sure that you are, <em>actually</em>, on gcgarner. Don't assume!</p>
+<div class="highlight"><pre><span></span><code>$ git remote -v
+origin  https://github.com/gcgarner/IOTstack.git (fetch)
+origin  https://github.com/gcgarner/IOTstack.git (push)
+</code></pre></div>
+<p>Do not proceed if you don't see those URLs!</p>
+<h3 id="step-2-take-iotstack-down"><a name="downStack"> Step 2 – Take IOTstack down </a></h3>
+<p>Take your stack down. This is not <em>strictly</em> necessary but we'll be moving the goalposts a bit so it's better to be on the safe side.</p>
+<div class="highlight"><pre><span></span><code>$ cd ~/IOTstack
+$ docker-compose down
+</code></pre></div>
+<h3 id="step-3-choose-your-migration-method"><a name="chooseMigrationMethod"> Step 3 – Choose your migration method </a></h3>
+<p>There are two basic approaches to switching from gcgarner/IOTstack to SensorsIot/IOTstack:</p>
+<ul>
+<li><a href="#migrateChangeUpstream">Migration by changing upstream repository</a></li>
+<li><a href="#migrateCloneMerge">Migration by clone and merge</a></li>
+</ul>
+<p>You can think of the first as "working <em>with</em> git" while the second is "using brute force".</p>
+<p>The first approach will work if you haven't tried any other migration steps and/or have not made too many changes to items in your gcgarner/IOTstack that are under git control.</p>
+<p>If you are already stuck or you try the first approach and get a mess, or it all looks far too hard to sort out, then try the <a href="#migrateCloneMerge">Migration by clone and merge</a> approach.</p>
+<h4 id="migration-option-1-change-upstream-repository"><a name="migrateChangeUpstream"> Migration Option 1 – change upstream repository </a></h4>
+<h5 id="check-for-local-changes"><a name="checkLocalChanges"> Check for local changes </a></h5>
+<p>Make sure you are on the master branch (you probably are so this is just a precaution), and then see if Git thinks you have made any local changes:</p>
+<div class="highlight"><pre><span></span><code>$ cd ~/IOTstack
+$ git checkout master
+$ git status
+</code></pre></div>
+<p>If Git reports any "modified" files, those will probably get in the way of a successful migration so it's a good idea to get those out of the way.</p>
+<p>For example, suppose you edited <code>menu.sh</code> at some point. Git would report that as:</p>
+<div class="highlight"><pre><span></span><code>    modified:   menu.sh
+</code></pre></div>
+<p>The simplest way to deal with modified files is to rename them to move them out of the way, and then restore the original:</p>
+<ol>
+<li>
+<p>Rename your customised version by adding your initials to the end of the filename. Later, you can come back and compare your customised version with the version from GitHub and see if you want to preserve any changes.</p>
+<p>Here I'm assuming your initials are "jqh":</p>
+<div class="highlight"><pre><span></span><code>$ mv menu.sh menu.sh.jqh
+</code></pre></div>
+</li>
+<li>
+<p>Tell git to restore the unmodified version:</p>
+<div class="highlight"><pre><span></span><code>$ git checkout -- menu.sh
+</code></pre></div>
+</li>
+<li>
+<p>Now, repeat the Git command that complained about the file:</p>
+<div class="highlight"><pre><span></span><code>$ git status
+</code></pre></div>
+<p>The modified file will show up as "untracked" which is OK (ignore it)</p>
+<div class="highlight"><pre><span></span><code>Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+
+    menu.sh.jqh
+</code></pre></div>
+</li>
+</ol>
+<h5 id="synchronise-with-gcgarner-on-github"><a name="synchroniseGcgarner"> Synchronise with gcgarner on GitHub </a></h5>
+<p>Make sure your local copy of gcgarner is in sync with GitHub.</p>
+<div class="highlight"><pre><span></span><code>$ git pull
+</code></pre></div>
+<h5 id="get-rid-of-any-upstream-reference"><a name="removeUpstream"> Get rid of any upstream reference </a></h5>
+<p>There may or may not be any "upstream" set. The most likely reason for this to happen is if you used your local copy as the basis of a Pull Request.</p>
+<p>The next command will probably return an error, which you should ignore. It's just a precaution.</p>
+<div class="highlight"><pre><span></span><code>$ git remote remove upstream
+</code></pre></div>
+<h5 id="point-to-sensorsiot"><a name="pointToSensorsIoT"> Point to SensorsIot </a></h5>
+<p>Change your local repository to point to SensorsIot.</p>
+<div class="highlight"><pre><span></span><code>$ git remote set-url origin https://github.com/SensorsIot/IOTstack.git
+</code></pre></div>
+<h5 id="synchronise-with-sensorsiot-on-github"><a name="syncSensorsIoT"> Synchronise with SensorsIot on GitHub </a></h5>
+<p>This is where things can get a bit tricky so please read these instructions carefully <strong>before</strong> you proceed.</p>
+<p>When you run the next command, it will probably give you a small fright by opening a text-editor window. Don't panic - just keep reading. Now, run this command:</p>
+<div class="highlight"><pre><span></span><code>$ git pull -X theirs origin master
+</code></pre></div>
+<p>The text editor window will look something like this:</p>
+<div class="highlight"><pre><span></span><code>Merge branch &#39;master&#39; of https://github.com/SensorsIot/IOTstack
+
+# Please enter a commit message to explain why this merge is necessary,
+# especially if it merges an updated upstream into a topic branch.
+#
+# Lines starting with &#39;#&#39; will be ignored, and an empty message aborts
+# the commit.
+</code></pre></div>
+<p>The first line is a pre-prepared commit message, the remainder is boilerplate instructions which you can ignore.</p>
+<p>Exactly which text editor opens is a function of your <code>EDITOR</code> environment variable and the <code>core.editor</code> set in your global Git configuration. If you:</p>
+<ul>
+<li>
+<p>remember changing <code>EDITOR</code> and/or <code>core.editor</code> then, presumably, you will know how to interact with your chosen text editor. You don't need to make any changes to this file. All you need to do is save the file and exit;</p>
+</li>
+<li>
+<p><strong>don't</strong> remember changing either <code>EDITOR</code> or <code>core.editor</code> then the editor will probably be the default <code>vi</code> (aka <code>vim</code>). You need to type ":wq" (without the quotes) and then press return. The ":" puts <code>vi</code> into command mode, the "w" says "save the file" and "q" means "quit <code>vi</code>". Pressing return runs the commands.  </p>
+</li>
+</ul>
+<p>Git will display a long list of stuff. It's very tempting to ignore it but it's a good idea to take a closer look, particularly for signs of error or any lines beginning with:</p>
+<div class="highlight"><pre><span></span><code>Auto-merging
+</code></pre></div>
+<p>At the time of writing, you can expect Git to mention these two files:</p>
+<div class="highlight"><pre><span></span><code>Auto-merging menu.sh
+Auto-merging .templates/zigbee2mqtt/service.yml
+</code></pre></div>
+<p>Those are known issues and the merge strategy <code>-X theirs</code> on the <code>git pull</code> command you have just executed deals with both, correctly, by preferring the SensorsIot version.</p>
+<p>Similar conflicts may emerge in future and those will <strong>probably</strong> be dealt with, correctly, by the same merge strategy. Nevertheless, you should still check the output very carefully for other signs of merge conflict so that you can at least be alive to the possibility that the affected files may warrant closer inspection.</p>
+<p>For example, suppose you saw:</p>
+<div class="highlight"><pre><span></span><code>Auto-merging .templates/someRandomService/service.yml
+</code></pre></div>
+<p>If you don't use <code>someRandomService</code> then you could safely ignore this on the basis that it was "probably right". However, if you did use that service and it started to misbehave after migration, you would know that the <code>service.yml</code> file was a good place to start looking for explanations.</p>
+<h5 id="finish-with-a-pull"><a name="finishWithPull"> Finish with a pull </a></h5>
+<p>At this point, only the migrated master branch is present on your local copy of the repository. The next command brings you fully in-sync with GitHub:</p>
+<div class="highlight"><pre><span></span><code>$ git pull
+</code></pre></div>
+<h4 id="migration-option-2-clone-and-merge"><a name="migrateCloneMerge"> Migration Option 2 – clone and merge </a></h4>
+<p>If you have been following the process correctly, your IOTstack will already be down.</p>
+<h5 id="rename-your-existing-iotstack-folder"><a name="renameOldIOTstack"> Rename your existing IOTstack folder </a></h5>
+<p>Move your old IOTstack folder out of the way, like this:</p>
+<div class="highlight"><pre><span></span><code>$ cd ~
+$ mv IOTstack IOTstack.old
+</code></pre></div>
+<p>Note:</p>
+<ul>
+<li>You should not need <code>sudo</code> for the <code>mv</code> command but it is OK to use it if necessary.</li>
+</ul>
+<h5 id="fetch-a-clean-clone-of-sensorsiotiotstack"><a name="fetchCleanClone"> Fetch a clean clone of SensorsIot/IOTstack </a></h5>
+<div class="highlight"><pre><span></span><code>$ git clone https://github.com/SensorsIot/IOTstack.git ~/IOTstack
+</code></pre></div>
+<p>Explore the result:</p>
+<div class="highlight"><pre><span></span><code>$ tree -aFL 1 --noreport ~/IOTstack
+/home/pi/IOTstack
+├── .bash_aliases
+├── .git/
+├── .github/
+├── .gitignore
+├── .native/
+├── .templates/
+├── .tmp/
+├── LICENSE
+├── README.md
+├── docs/
+├── duck/
+├── install.sh*
+├── menu.sh*
+├── mkdocs.yml
+└── scripts/
+</code></pre></div>
+<p>Note:</p>
+<ul>
+<li>If the <code>tree</code> command is not installed for some reason, use <code>ls -A1F ~/IOTstack</code>.</li>
+</ul>
+<p>Observe what is <strong>not</strong> there:</p>
+<ul>
+<li>There is no <code>docker-compose.yml</code></li>
+<li>There is no <code>backups</code> directory</li>
+<li>There is no <code>services</code> directory</li>
+<li>There is no <code>volumes</code> directory</li>
+</ul>
+<p>From this, it should be self-evident that a clean checkout from GitHub is the factory for <em>all</em> IOTstack installations, while the contents of <code>backups</code>, <code>services</code>, <code>volumes</code> and <code>docker-compose.yml</code> represent each user's individual choices, configuration options and data.</p>
+<h5 id="merge-old-into-new"><a name="mergeOldWithNew"> Merge old into new </a></h5>
+<p>Execute the following commands:</p>
+<div class="highlight"><pre><span></span><code>$ mv ~/IOTstack.old/docker-compose.yml ~/IOTstack
+$ mv ~/IOTstack.old/services ~/IOTstack
+$ sudo mv ~/IOTstack.old/volumes ~/IOTstack 
+</code></pre></div>
+<p>You should not need to use <code>sudo</code> for the first two commands. However, if you get a permissions conflict on either, you should proceed like this:</p>
+<ul>
+<li>
+<p>docker-compose.yml</p>
+<div class="highlight"><pre><span></span><code>$ sudo mv ~/IOTstack.old/docker-compose.yml ~/IOTstack
+$ sudo chown pi:pi ~/IOTstack/docker-compose.yml
+</code></pre></div>
+</li>
+<li>
+<p>services</p>
+<div class="highlight"><pre><span></span><code>$ sudo mv ~/IOTstack.old/services ~/IOTstack
+$ sudo chown -R pi:pi ~/IOTstack/services
+</code></pre></div>
+</li>
+</ul>
+<p>There is no need to migrate the <code>backups</code> directory. You are better off creating it by hand:</p>
+<div class="highlight"><pre><span></span><code>$ mkdir ~/IOTstack/backups
+</code></pre></div>
+<h3 id="step-4-choose-your-menu"><a name="chooseMenu"> Step 4 – Choose your menu </a></h3>
+<p>If you have reached this point, you have migrated to SensorsIot/IOTstack where you are on the "master" branch. This implies "new menu".</p>
+<p>The choice of menu is entirely up to you. Differences include:</p>
+<ol>
+<li>New menu takes a <strong>lot</strong> more screen real-estate than old menu. If you do a fair bit of work on small screens (eg iPad) you might find it hard to work with new menu.</li>
+<li>New menu creates a large number of internal Docker networks whereas old menu has <em>one internal network to rule them all</em>. The practical consequence is that most users see error messages for networks being defined but not used, and occasionally run into problems where two containers can't talk to each other without tinkering with the networks. Neither of those happen under old menu. See <a href="https://github.com/SensorsIot/IOTstack/issues/245">Issue 245</a> if you want more information on this.</li>
+<li>New menu has moved the definition of environment variables into <code>docker-compose.yml</code>. Old menu keeps environment variables in "environment files" in <code>~/IOTstack/services</code>. There is no "right" or "better" about either approach. It's just something to be aware of.</li>
+<li>Under new menu, the <code>service.yml</code> files in <code>~/IOTstack/.templates</code> have all been left-shifted by two spaces. That means you can no longer use copy and paste to test containers - you're stuck with the extra work of re-adding the spaces. Again, this doesn't <em>matter</em> but you do need to be aware of it.</li>
+</ol>
+<p>What you give up when you choose old menu is summarised in the following. If a container appears on the right hand side but not the left then it is only available in new menu.</p>
+<div class="highlight"><pre><span></span><code>old-menu                master (new menu)
+├── adminer             ├── adminer
+├── blynk_server        ├── blynk_server
+├── dashmachine         ├── dashmachine
+├── deconz              ├── deconz
+├── diyhue              ├── diyhue
+├── domoticz            ├── domoticz
+├── dozzle              ├── dozzle
+├── espruinohub         ├── espruinohub
+                      &gt; ├── example_template
+├── gitea               ├── gitea
+├── grafana             ├── grafana
+├── heimdall            ├── heimdall
+                      &gt; ├── home_assistant
+├── homebridge          ├── homebridge
+├── homer               ├── homer
+├── influxdb            ├── influxdb
+├── mariadb             ├── mariadb
+├── mosquitto           ├── mosquitto
+├── motioneye           ├── motioneye
+├── nextcloud           ├── nextcloud
+├── nodered             ├── nodered
+├── openhab             ├── openhab
+├── pihole              ├── pihole
+├── plex                ├── plex
+├── portainer           ├── portainer
+├── portainer_agent     ├── portainer_agent
+├── portainer-ce        ├── portainer-ce
+├── postgres            ├── postgres
+├── prometheus          ├── prometheus
+├── python              ├── python
+├── qbittorrent         ├── qbittorrent
+├── rtl_433             ├── rtl_433
+├── tasmoadmin          ├── tasmoadmin
+├── telegraf            ├── telegraf
+├── timescaledb         ├── timescaledb
+├── transmission        ├── transmission
+├── webthings_gateway   ├── webthings_gateway
+├── wireguard           ├── wireguard
+└── zigbee2mqtt         ├── zigbee2mqtt
+                      &gt; └── zigbee2mqtt_assistant
+</code></pre></div>
+<p>You also give up the <code>compose-override.yml</code> functionality. On the other hand, Docker has its own <code>docker-compose.override.yml</code> which works with both menus.</p>
+<p>If you want to switch to the old menu:</p>
+<div class="highlight"><pre><span></span><code>$ git checkout old-menu
+</code></pre></div>
+<p>Any time you want to switch back to the new menu:</p>
+<div class="highlight"><pre><span></span><code>$ git checkout master
+</code></pre></div>
+<p>You can switch back and forth as much as you like and as often as you like. It's no harm, no foul. The branch you are on just governs what you see when you run:</p>
+<div class="highlight"><pre><span></span><code>$ ./menu.sh
+</code></pre></div>
+<p>Although you can freely change branches, it's probably not a good idea to try to mix-and-match your menus. Pick one menu and stick to it.</p>
+<p>Even so, nothing will change <strong>until</strong> you run your chosen menu to completion and allow it to generate a new <code>docker-compose.yml</code>.</p>
+<h3 id="step-5-bring-up-your-stack"><a name="upStack"> Step 5 – Bring up your stack </a></h3>
+<p>Unless you have gotten ahead of yourself and have already run the menu (old or new) then nothing will have changed in the parts of your <code>~/IOTstack</code> folder that define your IOTstack implementation. You can safely:</p>
+<div class="highlight"><pre><span></span><code>$ docker-compose up -d
+</code></pre></div>
+<h2 id="see-also"><a name="seeAlso"> See also </a></h2>
+<p>There is another gist <a href="https://gist.github.com/Paraphraser/d119ae81f9e60a94e1209986d8c9e42f">Installing Docker for IOTstack</a> which explains how to overcome problems with outdated Docker and Docker-Compose installations.</p>
+<p>Depending on the age of your gcgarner installation, you <strong>may</strong> run into problems which will be cured by working through that gist. </p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../Updating-the-Project/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Updating the project" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Updating the project
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../Containers/AdGuardHome/" class="md-footer__link md-footer__link--next" aria-label="Next: AdGuard Home" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              AdGuard Home
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.01824240.min.js"}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.ff0eccb3.min.js"></script>
+      
+    
+  </body>
+</html>
