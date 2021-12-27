@@ -1,0 +1,113 @@
+version: '3.6'
+services:
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    restart: unless-stopped
+    user: "0"
+    ports:
+    - "3000:3000"
+    environment:
+    - GF_PATHS_DATA=/var/lib/grafana
+    - GF_PATHS_LOGS=/var/log/grafana
+    volumes:
+    - ./volumes/grafana/data:/var/lib/grafana
+    - ./volumes/grafana/log:/var/log/grafana
+    networks:
+    - iotstack_nw
+
+  influxdb:
+    container_name: influxdb
+    image: "influxdb:1.8"
+    restart: unless-stopped
+    ports:
+    - "8086:8086"
+    environment:
+    - INFLUXDB_HTTP_FLUX_ENABLED=false
+    - INFLUXDB_REPORTING_DISABLED=false
+    - INFLUXDB_HTTP_AUTH_ENABLED=false
+    - INFLUX_USERNAME=dba
+    - INFLUX_PASSWORD=supremo
+    - INFLUXDB_UDP_ENABLED=false
+    - INFLUXDB_UDP_BIND_ADDRESS=0.0.0.0:8086
+    - INFLUXDB_UDP_DATABASE=udp
+    volumes:
+    - ./volumes/influxdb/data:/var/lib/influxdb
+    - ./backups/influxdb/db:/var/lib/influxdb/backup
+    networks:
+    - iotstack_nw
+
+  motioneye:
+    image: "ccrisan/motioneye:master-armhf"
+    container_name: "motioneye"
+    restart: unless-stopped
+    ports:
+    - "8765:8765"
+    - "8081:8081"
+    volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - ./volumes/motioneye/etc_motioneye:/etc/motioneye
+    - ./volumes/motioneye/var_lib_motioneye:/var/lib/motioneye
+    networks:
+    - iotstack_nw
+
+  nodered:
+    container_name: nodered
+    build: ./services/nodered/.
+    restart: unless-stopped
+    user: "0"
+    environment:
+    - TZ=Etc/UTC
+    ports:
+    - "1880:1880"
+    volumes:
+    - ./volumes/nodered/data:/data
+    - ./volumes/nodered/ssh:/root/.ssh
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket
+    devices:
+     - "/dev/ttyAMA0:/dev/ttyAMA0"
+     - "/dev/vcio:/dev/vcio"
+     - "/dev/gpiomem:/dev/gpiomem"
+    networks:
+    - iotstack_nw
+networks:
+  iotstack_nw: # Exposed by your host.
+    # external: true
+    name: IOTstack_Net
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 10.77.60.0/24
+        # - gateway: 10.77.60.1
+
+  iotstack_nw_internal: # For interservice communication. No access to outside
+    name: IOTstack_Net_Internal
+    driver: bridge
+    internal: true
+    ipam:
+      driver: default
+      config:
+      - subnet: 10.77.76.0/24
+        # - gateway: 10.77.76.1
+  vpn_nw: # Network specifically for VPN
+    name: IOTstack_VPN
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 10.77.88.0/24
+        # - gateway: 192.18.200.1
+
+  nextcloud_internal: # Network for NextCloud service
+    name: IOTstack_NextCloud
+    driver: bridge
+    internal: true
+
+  # default:
+  #   external: true
+  #   name: iotstack_nw
+
+  # hosts_nw:
+  #   driver: hosts
