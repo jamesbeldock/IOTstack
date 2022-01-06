@@ -1,6 +1,8 @@
 #ignore data folders for containers
+#but modified for Pinehill
 /services/
 /volumes/
+!/home/pi/IOTstack/volumes/mosquitto/config/mosquitto.conf
 /backups/
 /.tmp/*
 __pycache__

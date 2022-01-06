@@ -65,10 +65,25 @@ services:
     - ./volumes/nodered/ssh:/root/.ssh
     - /var/run/docker.sock:/var/run/docker.sock
     - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket
-    devices: [] 
-#      - "/dev/ttyAMA0:/dev/ttyAMA0"
-#      - "/dev/vcio:/dev/vcio"
-#      - "/dev/gpiomem:/dev/gpiomem"
+    devices: []
+      #   - "/dev/ttyAMA0:/dev/ttyAMA0"
+      #- "/dev/vcio:/dev/vcio"
+      #- "/dev/gpiomem:/dev/gpiomem"
+    networks:
+    - iotstack_nw
+  mosquitto:
+    container_name: mosquitto
+    build: ./.templates/mosquitto/.
+    restart: unless-stopped
+    environment:
+    - TZ=Etc/UTC
+    ports:
+    - "1883:1883"
+    volumes:
+    - ./volumes/mosquitto/config:/mosquitto/config
+    - ./volumes/mosquitto/data:/mosquitto/data
+    - ./volumes/mosquitto/log:/mosquitto/log
+    - ./volumes/mosquitto/pwfile:/mosquitto/pwfile
     networks:
     - iotstack_nw
 networks:
