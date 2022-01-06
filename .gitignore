@@ -1,7 +1,12 @@
 #ignore data folders for containers
 #but modified for Pinehill
 /services/
-/volumes/
+!/volumes/
+/volumes/*
+!/volumes/mosquitto/
+/volumes/mosquitto/*
+!/volumes/mosquitto/config/
+/volumes/mosquitto/config/*
 !/volumes/mosquitto/config/mosquitto.conf
 /backups/
 /.tmp/*
